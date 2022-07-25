@@ -1,0 +1,400 @@
+JFDML JFormDesigner: "7.0.6.0.1131" Java: "17.0.1" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1::::918:x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
+		} ) {
+			name: "this"
+			"title": "DEMO!!"
+			"defaultCloseOperation": 2
+			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
+				name: "tabbedPane1"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {comp panel2::l:::x, seq l {space :::p, comp button1:::p:160:p, space ::743:x}}"
+					"$verticalGroup": "par l {seq l {comp panel2:::::x, space u:::p, comp button1:::p:40:p, space :::p}}"
+				} ) {
+					name: "TAB1"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {space :0:913:x}"
+						"$verticalGroup": "par l {space :0:446:x}"
+					} ) {
+						name: "panel2"
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "button1"
+						"text": "text"
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "TAB1"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {comp panel6::l:::x, seq l {space :::p, comp button3:::p:160:p, space ::743:x}}"
+					"$verticalGroup": "par l {seq l {comp panel6:::::x, space u:::p, comp button3:::p:40:p, space :::p}}"
+				} ) {
+					name: "TAB2"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {space :0:913:x}"
+						"$verticalGroup": "par l {space :0:446:x}"
+					} ) {
+						name: "panel6"
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "button3"
+						"text": "text"
+						"font": #Font0
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "TAB2"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq l {space :::p, comp updateButton:1::p:140:p, space ::613:x, comp saveButton:1::p:120:p, space :::p}, comp ObserverPanel::l:::x}"
+					"$verticalGroup": "par l {seq {comp ObserverPanel:::::x, space u:::p, par b {comp saveButton:2:b:p:30:p, comp updateButton:2:b:p:30:p}, space :::p}}"
+				} ) {
+					name: "observerTab"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq l {space :::p, par l {comp scrollPane2::::0:x, comp systemParamsPanel:::::x}, space :::p, par l {comp locationPanel:::p::p, comp observerNotesPanel:::::p}}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp locationPanel:::p::p, space :::p, comp observerNotesPanel:::::x}, seq l {comp scrollPane2::::349:x, space :::p, comp systemParamsPanel:::p::p, space :::p}}"
+					} ) {
+						name: "ObserverPanel"
+						auxiliary() {
+							"JavaCodeGenerator.variableName": "observerPanel"
+						}
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq {space :::p, par l {comp label15::t:p::p, comp label14::t:p::p, comp label16::t:p::p, comp label17::t:p::p}, space :::p, par t:::p {comp altitudeField:::::x, comp longitudeText::l:p:207:p, comp latitudeField::l:::x, comp utcOffsetField:::::x}, space u:::p, par l:::p {comp eastWestField::::57:x, comp northSouthField:::::x}, space ::32:x}}"
+							"$verticalGroup": "par l {seq l {space :::p, par b {comp label14::b:p::p, comp latitudeField::b:p::p, comp northSouthField::b:p::p}, space :::p, par b {comp label15::b:p::p, comp longitudeText::b:p::p, comp eastWestField::b:p::p}, space :::p, par b {comp label16::b:p::p, comp altitudeField::b:p::p}, space :::p, par b {comp label17::b:p::p, comp utcOffsetField::b:p::p}, space :::x}}"
+						} ) {
+							name: "locationPanel"
+							"border": new javax.swing.border.TitledBorder( null, "Observer Location", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label14"
+								"text": "Latitude:"
+								"font": &Font1 new java.awt.Font( "Tahoma", 1, 12 )
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "latitudeField"
+								"editable": false
+								"focusable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "northSouthField"
+								"editable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label15"
+								"text": "Longitude:"
+								"font": #Font1
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "longitudeText"
+								"editable": false
+								"focusable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "eastWestField"
+								"editable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label16"
+								"text": "Altitude (m):"
+								"font": #Font1
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "altitudeField"
+								"editable": false
+								"focusable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label17"
+								"text": "UTC Offset (hr):"
+								"font": new java.awt.Font( "Tahoma", 0, 12 )
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "utcOffsetField"
+								"editable": false
+								"focusable": false
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq t {space :p:73:p, par l {comp label18::t:p::p, comp label19::t:p::p}, space :::p, par t:::p {seq {comp horizFovAminField:3::::x, space u:::p, comp vertFovAminField:3::p:94:p}, seq {comp horizPixelSizeAsecField:3::p:109:p, space u:::p, comp vertPixelSizeAsecField:3::p:94:p}}, space ::53:x}}"
+							"$verticalGroup": "par l {seq l {space :::p, par b {comp horizPixelSizeAsecField::b:p::p, comp label18::b:p::p, comp vertPixelSizeAsecField::b:::x}, space :::p, par b {comp horizFovAminField::b:p::p, comp label19::b:p::p, comp vertFovAminField::b:p::p}, space :p:14:p}}"
+						} ) {
+							name: "systemParamsPanel"
+							"border": new javax.swing.border.TitledBorder( null, "Derived Parameters", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label18"
+								"text": "Pixel Size (arcsec):"
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "horizPixelSizeAsecField"
+								"editable": false
+								"focusable": false
+								"toolTipText": "Horiz pixel size / arcsec"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label19"
+								"text": "Field-of-View (arcmin):"
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "horizFovAminField"
+								"editable": false
+								"focusable": false
+								"toolTipText": "Horiz FOV / arcmin"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "vertPixelSizeAsecField"
+								"editable": false
+								"focusable": false
+								"toolTipText": "Vert pixel size / arcsec"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "vertFovAminField"
+								"editable": false
+								"focusable": false
+								"toolTipText": "Vert FOV / arcmin"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {comp scrollPane1::l::408:x}"
+							"$verticalGroup": "par l {comp scrollPane1::l::280:x}"
+						} ) {
+							name: "observerNotesPanel"
+							"border": new javax.swing.border.TitledBorder( null, "NOTES:", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
+							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+								name: "scrollPane1"
+								add( new FormComponent( "javax.swing.JTextArea" ) {
+									name: "textArea1"
+								} )
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane2"
+							"horizontalScrollBarPolicy": 31
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq {space :::p, par l {comp label20::t:p::p, comp label21::t:p::p, comp label22::t:p::p, comp label23::t:p::p, comp label24::t:p::p, comp label25::t:p::p, comp label26::t:p::p, comp label27::t:p::p, comp label28::t:p::p, comp label29::t:p::p, comp label30::t:p::p, comp label31::t:p::p, comp label32::t:p::p}, space :::p, par l {par t:::p {comp darkCurrentField::l::244:x, comp vertArraySizeField::l::244:x, comp horizArraySizeField::l::244:x, comp vertPixelSizeUmField::l::244:x, comp horizPixelSizeUmField::l::244:x, comp cameraField::l::244:x, comp focalLengthField::l::244:x, comp apertureField::l::244:x, comp teleShortField::l::244:x, comp nameField::l::244:x, comp codeField::l::244:x, comp readoutNoiseField::::244:x}, comp teleFullField::::256:x}, space :p:141:p}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label20::b:p::p, comp codeField::b:p::p}, space :::p, par b {comp label21::b:p::p, comp nameField::b:p::p}, space s:::p, par b {comp label22::b:p::p, comp teleShortField::b:p::p}, space :::p, par b {comp label23::b:p::p, comp teleFullField::b:p::p}, space :::p, par b {comp label24::b:p::p, comp apertureField::b:p::p}, space :::p, par b {comp label25::b:p::p, comp focalLengthField::b:p::p}, space s:::p, par b {comp label26::b:p::p, comp cameraField::b:p::p}, space :::p, par b {comp label27::b:p::p, comp horizPixelSizeUmField::b:p::p}, space :::p, par b {comp label28::b:p::p, comp vertPixelSizeUmField::b:p::p}, space :::p, par b {comp label29::b:p::p, comp horizArraySizeField::b:p::p}, space :::p, par b {comp label30::b:p::p, comp vertArraySizeField::b:p::p}, space :::p, par b {comp label31::b:p::p, comp darkCurrentField::b:p::p}, space :::p, par b {comp label32::b:p::p, comp readoutNoiseField::b:p::p}, space ::52:x}}"
+							} ) {
+								name: "equipmentPanel2"
+								"border": new javax.swing.border.TitledBorder( null, "Observer & Equipment Details", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label20"
+									"text": "BAA VSS Observer Code:"
+									"font": new java.awt.Font( "Tahoma", 1, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "codeField"
+									"font": &Font2 new java.awt.Font( "Tahoma", 0, 12 )
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label21"
+									"text": "Observer Name:"
+									"font": &Font3 new java.awt.Font( "Tahoma", 0, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "nameField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label22"
+									"text": "Telescope Short Description:"
+									"font": new java.awt.Font( "Tahoma", 1, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "teleShortField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label23"
+									"text": "Telescope Full Description:"
+									"font": #Font3
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "teleFullField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label24"
+									"text": "Aperture (mm):"
+									"font": #Font3
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "apertureField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label25"
+									"text": "Focal Length (mm):"
+									"font": #Font3
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "focalLengthField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label26"
+									"text": "Camera:"
+									"font": new java.awt.Font( "Tahoma", 1, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "cameraField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label27"
+									"text": "Pixel Size (H) (um)"
+									"font": &Font4 new java.awt.Font( "Tahoma", 1, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "horizPixelSizeUmField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label28"
+									"text": "Pixel Size (V) (um):"
+									"font": #Font4
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "vertPixelSizeUmField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label29"
+									"text": "Array Size(H) (pixels):"
+									"font": #Font4
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "horizArraySizeField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label30"
+									"text": "Array Size(V) (pixels):"
+									"font": #Font4
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "vertArraySizeField"
+									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label31"
+									"text": "Dark current (e-/s/pixel):"
+									"font": new java.awt.Font( "Tahoma", 0, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "darkCurrentField"
+									"font": #Font2
+									"editable": false
+									"focusable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label32"
+									"text": "Readout Noise (e-/pixel):"
+									"font": new java.awt.Font( "Tahoma", 0, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "readoutNoiseField"
+									"font": #Font2
+									"editable": false
+									"focusable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+							} )
+						} )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "saveButton"
+						"text": "Save"
+						"font": #Font0
+						auxiliary() {
+							"JavaCodeGenerator.variableGetter": true
+						}
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "updateButton"
+						"text": "Update Params"
+						"font": #Font0
+						auxiliary() {
+							"JavaCodeGenerator.variableGetter": true
+						}
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Observer"
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 20, 5 )
+			"size": new java.awt.Dimension( 940, 585 )
+		} )
+	}
+}
