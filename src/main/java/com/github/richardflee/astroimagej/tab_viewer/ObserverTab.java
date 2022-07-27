@@ -1,6 +1,7 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
 import java.awt.Color;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -10,6 +11,7 @@ import com.github.richardflee.astroimagej.utils.InputsVerifier;
 import com.github.richardflee.astroimagej.data_objects.NoiseData;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
+import com.github.richardflee.astroimagej.fileio.ObserverTabProerties;
 import com.github.richardflee.astroimagej.listeners.ObserverTabListener;
 
 public class ObserverTab implements ObserverTabListener {
@@ -166,13 +168,15 @@ public class ObserverTab implements ObserverTabListener {
 		fLengthText.setText(String.format("%3.1f", observer.getTelescopeFocalLength()));
 		
 		cameraText.setText(observer.getCamera());
-		horizPixelUmText.setText(String.format("%d", observer.getHorizPixelSize()));
-		vertPixelUmText.setText(String.format("%d", observer.getVertPixelSize()));
+		horizPixelUmText.setText(String.format("%.2f", observer.getHorizPixelSize()));
+		vertPixelUmText.setText(String.format("%.2f", observer.getVertPixelSize()));
 		horizArrayText.setText(String.format("%d", observer.getHorizArraySize()));
 		vertArrayText.setText(String.format("%d", observer.getVertArraySize()));
 		
 		darkCurrentText.setText(String.format("%.3f", observer.getDarkCurrent()));
 		readoutNoiseText.setText(String.format("%.4f", observer.getReadoutNoise()));
+		
+		computeDerivedParameters();
 		
 	}
 	
@@ -190,8 +194,8 @@ public class ObserverTab implements ObserverTabListener {
 		observer.setTelescopeFocalLength(Double.valueOf(fLengthText.getText()));
 
 		observer.setCamera(cameraText.getText());
-		observer.setHorizPixelSize(Integer.valueOf(horizPixelUmText.getText()));
-		observer.setVertPixelSize(Integer.valueOf(vertPixelUmText.getText()));
+		observer.setHorizPixelSize(Double.valueOf(horizPixelUmText.getText()));
+		observer.setVertPixelSize(Double.valueOf(vertPixelUmText.getText()));
 		
 		observer.setHorizArraySize(Integer.valueOf(horizArrayText.getText()));
 		observer.setVertArraySize(Integer.valueOf(vertArrayText.getText()));
@@ -201,10 +205,6 @@ public class ObserverTab implements ObserverTabListener {
 		
 		return observer;
 	}
-
-	
-	
-	
 
 	private void setUpActionHandlers() {
 
@@ -227,7 +227,9 @@ public class ObserverTab implements ObserverTabListener {
 
 		// update & save
 		update.addActionListener(e -> updateAll());
-		save.addActionListener(e -> System.out.println("save"));
+		save.addActionListener(e -> {
+			ObserverTabProerties.writeProperties(this.getObserverData());			
+		});
 	}
 
 	private void verifyVertArraySize() {
@@ -301,7 +303,7 @@ public class ObserverTab implements ObserverTabListener {
 				&& InputsVerifier.isPositiveDecimal(vertArrayText.getText());
 
 		if (isValid) {
-			deriveParameters();
+			computeDerivedParameters();
 		} else {
 			var message = "At least one data entry is invalid";
 			JOptionPane.showMessageDialog(null, message);
@@ -309,7 +311,7 @@ public class ObserverTab implements ObserverTabListener {
 
 	}
 
-	private void deriveParameters() {
+	private void computeDerivedParameters() {
 		setfLength();
 		setHorizPixelAsecText();
 		setVertPixelAsecText();
@@ -322,6 +324,13 @@ public class ObserverTab implements ObserverTabListener {
 	public void setfLength() {
 		this.fLength = Double.valueOf(this.fLengthText.getText());
 	}
+	
+	
+	public void writeObserTabProps(Properties prop) {
+		
+		
+	}
+	
 	
 //	public void setHorizPixelUm() {
 //		this.horizPixelUm = Double.valueOf(this.horizPixelUmText.getText());

@@ -23,12 +23,6 @@ public class AijPrefsFileIO {
 //		this.aijPrefsFilePath = Paths.get(homePath, ".astroimagej", AIJ_PREFS_FILE).toString();
 	}
 	
-	
-	public static boolean aijPrefsFileExists() {
-		var file = new File(getAijPrefsFilePath());
-		return file.exists();
-	}
-
 	public static ObservationSite readObservationSitePrefsData() {
 		ObservationSite site = null;
 		try (InputStream input = new FileInputStream(getAijPrefsFilePath())) {
@@ -69,7 +63,15 @@ public class AijPrefsFileIO {
 
 	}
 	
-	public static String aijPrefsErrorMessage() {
+	
+	
+	public static boolean fileExists() {
+		var file = new File(getAijPrefsFilePath());
+		return file.exists();
+	}
+
+	
+	public static String errorMessage() {
 		var message = String.format("%s not found\n\n", AijPrefsFileIO.getAijPrefsFilePath());
 		message += "1. If necessary, download and install AstroImageJ \n";
 		message +=      "https://www.astro.louisville.edu/software/astroimagej/installation_packages\n";
@@ -85,9 +87,9 @@ public class AijPrefsFileIO {
 	
 	public static void main(String[] args) {
 		
-		if (! AijPrefsFileIO.aijPrefsFileExists()) {
-			JOptionPane.showMessageDialog(null,  AijPrefsFileIO.aijPrefsErrorMessage());
-			System.out.println(AijPrefsFileIO.aijPrefsErrorMessage());
+		if (! AijPrefsFileIO.fileExists()) {
+			JOptionPane.showMessageDialog(null,  AijPrefsFileIO.errorMessage());
+			System.out.println(AijPrefsFileIO.errorMessage());
 			System.exit(0);
 		}
 		

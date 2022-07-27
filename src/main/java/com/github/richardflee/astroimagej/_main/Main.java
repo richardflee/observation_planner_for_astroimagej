@@ -9,6 +9,8 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
+import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
+import com.github.richardflee.astroimagej.fileio.ObserverTabProerties;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUI;
 
 
@@ -25,24 +27,31 @@ public class Main {
 
 		public static void runApp() {
 			
-			if (! AijPrefsFileIO.aijPrefsFileExists()) {
-				JOptionPane.showMessageDialog(null,  AijPrefsFileIO.aijPrefsErrorMessage());
+			// aborts with extended error message if AIJ_Prefs.txt not found
+			if (! AijPrefsFileIO.fileExists()) {
+				JOptionPane.showMessageDialog(null,  AijPrefsFileIO.errorMessage());
 				System.exit(0);
 			}
 			
-			// Properties file exists
+			var site = AijPrefsFileIO.readObservationSitePrefsData();			
+			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();			
+			
+			
+			
+			if (! AijPropsReadWriter.fileExists()) {
+				AijPropsReadWriter.writeDefaultPropsFile();
+				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.newFileMessage());
+				System.exit(0);
+			}
+			
+			var observer = ObserverTabProerties.readProerties();
+			
 			
 			// User  interface
 			var viewerUI = new ViewerUI();
-			
-			// populates civil solar times and geographic location controls
-			var site = AijPrefsFileIO.readObservationSitePrefsData();
-			viewerUI.observer.setObservationSiteData(site);
-			
-			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();
-			viewerUI.observer.setNoiseData(noiseData);
-			
-			
+			viewerUI.observertab.setObservationSiteData(site);
+			viewerUI.observertab.setNoiseData(noiseData);
+			viewerUI.observertab.setObserverData(observer);
 			
 			// Plan catalogUi = new CatalogUI(handler, ctm);
 			

@@ -19,8 +19,23 @@ public class Observer {
 	private double darkCurrent;
 	private double readoutNoise;
 	
+	// set defaults
 	public Observer() {
+		this.observerCode = "xxx";
+		this.observerName = "observer";
 		
+		this.telescopeShortName = "MORC24";
+		this.telescopeLongName = "Moore Observatory 24-inch Ritchie-Chretien";
+		this.telescopeAperture = 600.0;
+		this.telescopeFocalLength = 4800.0;
+		this.camera = "Apogee U16M CCD";
+		this.horizPixelSize = 9.0;
+		this.vertPixelSize = 9.0;
+		this.horizArraySize = 4096;
+		this.vertArraySize = 4096;
+		
+		this.darkCurrent = 0.05;
+		this.readoutNoise = 9.0;
 	}
 	
 	
