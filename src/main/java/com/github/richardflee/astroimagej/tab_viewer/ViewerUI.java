@@ -148,6 +148,10 @@ public class ViewerUI extends JFrame {
 		return readoutNoiseField;
 	}
 
+	public JTextField getFocalRatio() {
+		return focalRatio;
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
@@ -209,6 +213,8 @@ public class ViewerUI extends JFrame {
 		darkCurrentField = new JTextField();
 		label32 = new JLabel();
 		readoutNoiseField = new JTextField();
+		focalRatio = new JTextField();
+		label1 = new JLabel();
 		saveButton = new JButton();
 		updateButton = new JButton();
 
@@ -234,7 +240,7 @@ public class ViewerUI extends JFrame {
 					);
 					panel2Layout.setVerticalGroup(
 						panel2Layout.createParallelGroup()
-							.addGap(0, 446, Short.MAX_VALUE)
+							.addGap(0, 471, Short.MAX_VALUE)
 					);
 				}
 
@@ -277,7 +283,7 @@ public class ViewerUI extends JFrame {
 					);
 					panel6Layout.setVerticalGroup(
 						panel6Layout.createParallelGroup()
-							.addGap(0, 446, Short.MAX_VALUE)
+							.addGap(0, 471, Short.MAX_VALUE)
 					);
 				}
 
@@ -491,7 +497,7 @@ public class ViewerUI extends JFrame {
 						);
 						observerNotesPanelLayout.setVerticalGroup(
 							observerNotesPanelLayout.createParallelGroup()
-								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+								.addComponent(scrollPane1)
 						);
 					}
 
@@ -541,7 +547,7 @@ public class ViewerUI extends JFrame {
 
 							//---- label25 ----
 							label25.setText("Focal Length (mm):");
-							label25.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							label25.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 							//---- focalLengthField ----
 							focalLengthField.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -599,42 +605,60 @@ public class ViewerUI extends JFrame {
 							readoutNoiseField.setEditable(false);
 							readoutNoiseField.setFocusable(false);
 
+							//---- focalRatio ----
+							focalRatio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							focalRatio.setEditable(false);
+
+							//---- label1 ----
+							label1.setText("f/#:");
+							label1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
 							GroupLayout equipmentPanel2Layout = new GroupLayout(equipmentPanel2);
 							equipmentPanel2.setLayout(equipmentPanel2Layout);
 							equipmentPanel2Layout.setHorizontalGroup(
 								equipmentPanel2Layout.createParallelGroup()
 									.addGroup(equipmentPanel2Layout.createSequentialGroup()
 										.addContainerGap()
-										.addGroup(equipmentPanel2Layout.createParallelGroup()
-											.addComponent(label20, GroupLayout.Alignment.TRAILING)
-											.addComponent(label21, GroupLayout.Alignment.TRAILING)
-											.addComponent(label22, GroupLayout.Alignment.TRAILING)
-											.addComponent(label23, GroupLayout.Alignment.TRAILING)
-											.addComponent(label24, GroupLayout.Alignment.TRAILING)
-											.addComponent(label25, GroupLayout.Alignment.TRAILING)
-											.addComponent(label26, GroupLayout.Alignment.TRAILING)
-											.addComponent(label27, GroupLayout.Alignment.TRAILING)
-											.addComponent(label28, GroupLayout.Alignment.TRAILING)
-											.addComponent(label29, GroupLayout.Alignment.TRAILING)
-											.addComponent(label30, GroupLayout.Alignment.TRAILING)
-											.addComponent(label31, GroupLayout.Alignment.TRAILING)
-											.addComponent(label32, GroupLayout.Alignment.TRAILING))
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(equipmentPanel2Layout.createParallelGroup()
-											.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-												.addComponent(darkCurrentField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(vertArraySizeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(horizArraySizeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(vertPixelSizeUmField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(horizPixelSizeUmField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(cameraField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(focalLengthField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(apertureField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(teleShortField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(nameField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(codeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(readoutNoiseField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
-											.addComponent(teleFullField, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+											.addGroup(equipmentPanel2Layout.createSequentialGroup()
+												.addGroup(equipmentPanel2Layout.createParallelGroup()
+													.addComponent(label20, GroupLayout.Alignment.TRAILING)
+													.addComponent(label21, GroupLayout.Alignment.TRAILING)
+													.addComponent(label22, GroupLayout.Alignment.TRAILING)
+													.addComponent(label23, GroupLayout.Alignment.TRAILING)
+													.addComponent(label24, GroupLayout.Alignment.TRAILING)
+													.addComponent(label25, GroupLayout.Alignment.TRAILING)
+													.addComponent(label1, GroupLayout.Alignment.TRAILING))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(equipmentPanel2Layout.createParallelGroup()
+													.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+														.addComponent(focalLengthField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+														.addComponent(apertureField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+														.addComponent(teleShortField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+														.addComponent(nameField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+														.addComponent(codeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+														.addComponent(focalRatio, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+													.addComponent(teleFullField, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)))
+											.addGroup(GroupLayout.Alignment.LEADING, equipmentPanel2Layout.createSequentialGroup()
+												.addGap(35, 35, 35)
+												.addGroup(equipmentPanel2Layout.createParallelGroup()
+													.addComponent(label26, GroupLayout.Alignment.TRAILING)
+													.addComponent(label27, GroupLayout.Alignment.TRAILING)
+													.addComponent(label28, GroupLayout.Alignment.TRAILING)
+													.addComponent(label29, GroupLayout.Alignment.TRAILING)
+													.addComponent(label30, GroupLayout.Alignment.TRAILING)
+													.addComponent(label31, GroupLayout.Alignment.TRAILING)
+													.addComponent(label32, GroupLayout.Alignment.TRAILING))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+													.addComponent(darkCurrentField, GroupLayout.Alignment.LEADING)
+													.addComponent(vertArraySizeField, GroupLayout.Alignment.LEADING)
+													.addComponent(horizArraySizeField, GroupLayout.Alignment.LEADING)
+													.addComponent(vertPixelSizeUmField, GroupLayout.Alignment.LEADING)
+													.addComponent(horizPixelSizeUmField, GroupLayout.Alignment.LEADING)
+													.addComponent(cameraField, GroupLayout.Alignment.LEADING)
+													.addComponent(readoutNoiseField, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)))
 										.addGap(141, 141, 141))
 							);
 							equipmentPanel2Layout.setVerticalGroup(
@@ -664,6 +688,10 @@ public class ViewerUI extends JFrame {
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label25)
 											.addComponent(focalLengthField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label1)
+											.addComponent(focalRatio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addGap(18, 18, 18)
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label26)
@@ -692,7 +720,7 @@ public class ViewerUI extends JFrame {
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label32)
 											.addComponent(readoutNoiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(52, Short.MAX_VALUE))
+										.addContainerGap(61, Short.MAX_VALUE))
 							);
 						}
 						scrollPane2.setViewportView(equipmentPanel2);
@@ -705,8 +733,8 @@ public class ViewerUI extends JFrame {
 							.addGroup(observerPanelLayout.createSequentialGroup()
 								.addContainerGap()
 								.addGroup(observerPanelLayout.createParallelGroup()
-									.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-									.addComponent(systemParamsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addComponent(systemParamsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(observerPanelLayout.createParallelGroup()
 									.addComponent(locationPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -715,14 +743,16 @@ public class ViewerUI extends JFrame {
 					observerPanelLayout.setVerticalGroup(
 						observerPanelLayout.createParallelGroup()
 							.addGroup(observerPanelLayout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(locationPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGroup(observerPanelLayout.createSequentialGroup()
-								.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(systemParamsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(observerPanelLayout.createParallelGroup()
+									.addGroup(observerPanelLayout.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(locationPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGroup(observerPanelLayout.createSequentialGroup()
+										.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(systemParamsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 								.addContainerGap())
 					);
 				}
@@ -742,9 +772,9 @@ public class ViewerUI extends JFrame {
 						.addGroup(observerTabLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
+							.addContainerGap(613, Short.MAX_VALUE))
 						.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 				observerTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {saveButton, updateButton});
@@ -754,8 +784,8 @@ public class ViewerUI extends JFrame {
 							.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addGroup(observerTabLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+								.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())
 				);
 				observerTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {saveButton, updateButton});
@@ -769,14 +799,14 @@ public class ViewerUI extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1, GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+					.addComponent(tabbedPane1)
 					.addContainerGap())
 		);
 		contentPaneLayout.setVerticalGroup(
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1)
+					.addComponent(tabbedPane1, GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		pack();
@@ -844,6 +874,8 @@ public class ViewerUI extends JFrame {
 	private JTextField darkCurrentField;
 	private JLabel label32;
 	private JTextField readoutNoiseField;
+	private JTextField focalRatio;
+	private JLabel label1;
 	private JButton saveButton;
 	private JButton updateButton;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
