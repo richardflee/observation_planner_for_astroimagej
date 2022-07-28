@@ -151,7 +151,7 @@ public class ObserverTab implements ObserverTabListener {
 		darkCurrentText.setText(String.format("%.3f", observer.getDarkCurrent()));
 		readoutNoiseText.setText(String.format("%.4f", observer.getReadoutNoise()));
 		
-		computeDerivedParameters();
+		getDerivedParameters();
 		
 	}
 	
@@ -201,7 +201,7 @@ public class ObserverTab implements ObserverTabListener {
 		vertArrayText.addActionListener(e -> verifier.verifyVertArraySize());
 
 		// update & save
-		update.addActionListener(e -> updateAll());
+		update.addActionListener(e -> verifier.updateAll());
 		save.addActionListener(e -> {
 			ObserverTabFileProps.writeProperties(this.getObserverData());
 			JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
@@ -209,22 +209,7 @@ public class ObserverTab implements ObserverTabListener {
 	}
 	
 
-	// update inputs, compute pixel asec and fov params
-	private void updateAll() {
-
-		boolean isValid =  verifier.verifyAperture() && verifier.verifyFocalLength()
-				&& verifier.verfiyHorizPixelSize() && verifier.verifyVertPixelSize()
-				&& verifier.verifyHorizArraySize()  && verifier.verifyVertArraySize();
-
-		if (isValid) {
-			computeDerivedParameters();
-		} else {
-			var message = "At least one data entry is invalid";
-			JOptionPane.showMessageDialog(null, message);
-		}
-	}
-
-	private void computeDerivedParameters() {
+	private void getDerivedParameters() {
 		setfLength();
 		setHorizPixelAsecText();
 		setVertPixelAsecText();
@@ -264,9 +249,6 @@ public class ObserverTab implements ObserverTabListener {
 		this.vertFovAminText.setText(String.format("%4.2f", fovAsec / 60.0));		
 	}
 	
-//	private void testValidate() {
-//		new VerifyTextFields("here i am");
-//	}
 	
 	private class VerifyTextFields {
 		
@@ -348,14 +330,22 @@ public class ObserverTab implements ObserverTabListener {
 				vertArrayText.requestFocus();
 			}
 			return isValid;
+		}	
+		
+		 // update inputs, compute pixel asec and fov params
+		private void updateAll() {
+	
+			boolean isValid =  verifyAperture() && verifyFocalLength()
+					&& verfiyHorizPixelSize() && verifyVertPixelSize()
+					&& verifyHorizArraySize()  && verifyVertArraySize();
+	
+			if (isValid) {
+				getDerivedParameters();
+			} else {
+				var message = "At least one data entry is invalid";
+				JOptionPane.showMessageDialog(null, message);
+			}
 		}
-		
-		
 	}
 	
-	public static void main(String[] args) {
-		var x = new ObserverTab();
-		
-		
-	}
 }

@@ -4,8 +4,10 @@
 
 package com.github.richardflee.astroimagej.tab_viewer;
 
+import java.awt.*;
 import java.awt.Component;
 import java.awt.Font;
+import javax.swing.*;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.*;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -152,7 +155,44 @@ public class ViewerUI extends JFrame {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
 		tabbedPane1 = new JTabbedPane();
-		TAB1 = new JPanel();
+		targetTab = new JPanel();
+		targetPanel = new JPanel();
+		panel1 = new JPanel();
+		panel3 = new JPanel();
+		label1 = new JLabel();
+		objectIdField = new JTextField();
+		label2 = new JLabel();
+		raField = new JTextField();
+		label3 = new JLabel();
+		decField = new JTextField();
+		label4 = new JLabel();
+		fovField = new JTextField();
+		label5 = new JLabel();
+		magLimitField = new JTextField();
+		label7 = new JLabel();
+		label8 = new JLabel();
+		label9 = new JLabel();
+		label10 = new JLabel();
+		catalogCombo = new JComboBox<>();
+		label11 = new JLabel();
+		filterCombo = new JComboBox<>();
+		label12 = new JLabel();
+		isSaveDssCheckBox = new JCheckBox();
+		panel4 = new JPanel();
+		idLabel = new JLabel();
+		raLabel = new JLabel();
+		decLabel = new JLabel();
+		simbadIdLabel = new JLabel();
+		simbadRaLabel = new JLabel();
+		simbadDecLabel = new JLabel();
+		idLabel2 = new JLabel();
+		idLabel3 = new JLabel();
+		idLabel4 = new JLabel();
+		idLabel5 = new JLabel();
+		simbadMagBLabel = new JLabel();
+		simbadMagVLabel = new JLabel();
+		simbadMagRLabel = new JLabel();
+		simbadMagILabel = new JLabel();
 		panel2 = new JPanel();
 		button1 = new JButton();
 		TAB2 = new JPanel();
@@ -220,21 +260,342 @@ public class ViewerUI extends JFrame {
 		//======== tabbedPane1 ========
 		{
 
-			//======== TAB1 ========
+			//======== targetTab ========
 			{
 
-				//======== panel2 ========
+				//======== targetPanel ========
 				{
 
-					GroupLayout panel2Layout = new GroupLayout(panel2);
-					panel2.setLayout(panel2Layout);
-					panel2Layout.setHorizontalGroup(
-						panel2Layout.createParallelGroup()
-							.addGap(0, 913, Short.MAX_VALUE)
+					//======== panel1 ========
+					{
+
+						//======== panel3 ========
+						{
+							panel3.setBorder(new TitledBorder("Catalog Query settings"));
+
+							//---- label1 ----
+							label1.setText("ObjectID");
+
+							//---- objectIdField ----
+							objectIdField.setText("WASP-12");
+							objectIdField.setFocusCycleRoot(true);
+							objectIdField.setBackground(Color.white);
+							objectIdField.setToolTipText("<html>\nEnter target name\n<p> Note: This field is <b>not </b>changed after a SIMBAD query</p>\n<p>Examples: WASP-12, wasp_12, Wasp12</p>\n</html>");
+
+							//---- label2 ----
+							label2.setText("RA:");
+
+							//---- raField ----
+							raField.setText("06:30:32.80");
+							raField.setToolTipText("<html>\nEnter target J2000 RA (hours), in sexagesimal format  HH:MM:SS.SS\n<p>Note 1: Use  ':' delimiter</p>\n<p>Note 2: RA updates after a successful SIMBAD query</p>\n<p>RA range: 00:00:00 to 23:59:59.99</p>\n<p>Examples: 12:34:56.78,  1: 2:3.456, => 01:02:03.46</p>\n</html>");
+
+							//---- label3 ----
+							label3.setText("Dec:");
+
+							//---- decField ----
+							decField.setText("+20:40:20.27");
+							decField.setToolTipText("<html>\nEnter target J2000 DEC (degrees), in sexagesimal format  \u00b1DD:MM:SS.SS\n<p>Note 1: Use  ':' delimiter</p>\n<p>Note 2: DEC updates after a successful SIMBAD query</p>\n<p>DEC range: 00:00:00 to \u00b190:00:00</p>\n<p>Examples: 12:34:56.78 => +12:34:56.78,  -1:2:3.456, => -01:02:03.46</p>\n</html>");
+
+							//---- label4 ----
+							label4.setText("Fov:");
+
+							//---- fovField ----
+							fovField.setText("60.0");
+							fovField.setToolTipText("<html>\nEnter square field-of-view width (arcmin)\n<p>FOV range: 1.0 to 1199.9 amin\n<p>Examples: 25.0, 1150.0</p>\n</html>");
+
+							//---- label5 ----
+							label5.setText("Limit:");
+
+							//---- magLimitField ----
+							magLimitField.setText("17.0");
+							magLimitField.setToolTipText("<html>\nEnter magnitude limit\n<p>Range: 1.0 to 99.9 mag\n<p>Example: 15.5</p>\n</html>");
+
+							//---- label7 ----
+							label7.setText(" HH:MM:SS.SS");
+
+							//---- label8 ----
+							label8.setText("\u00b1DD:MM:SS.SS");
+
+							//---- label9 ----
+							label9.setText("arcmin");
+
+							//---- label10 ----
+							label10.setText("mag");
+
+							//---- catalogCombo ----
+							catalogCombo.setToolTipText("<html>\nSelect on-line astronomical database from list\n</html>");
+
+							//---- label11 ----
+							label11.setText("Catalog:");
+
+							//---- filterCombo ----
+							filterCombo.setToolTipText("<html>\nSelect photometric filter from list\n<p>Listed filters depends on selected catalog</p>\n</html>");
+
+							//---- label12 ----
+							label12.setText("Filter:");
+
+							//---- isSaveDssCheckBox ----
+							isSaveDssCheckBox.setText("Save DSS Fits File");
+							isSaveDssCheckBox.setSelected(true);
+
+							GroupLayout panel3Layout = new GroupLayout(panel3);
+							panel3.setLayout(panel3Layout);
+							panel3Layout.setHorizontalGroup(
+								panel3Layout.createParallelGroup()
+									.addGroup(panel3Layout.createSequentialGroup()
+										.addGap(15, 15, 15)
+										.addGroup(panel3Layout.createParallelGroup()
+											.addComponent(label1, GroupLayout.Alignment.TRAILING)
+											.addComponent(label2, GroupLayout.Alignment.TRAILING)
+											.addComponent(label3, GroupLayout.Alignment.TRAILING)
+											.addComponent(label4, GroupLayout.Alignment.TRAILING)
+											.addComponent(label5, GroupLayout.Alignment.TRAILING)
+											.addComponent(label11, GroupLayout.Alignment.TRAILING)
+											.addComponent(label12, GroupLayout.Alignment.TRAILING))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel3Layout.createParallelGroup()
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(isSaveDssCheckBox))
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addGroup(panel3Layout.createParallelGroup()
+													.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+													.addGroup(panel3Layout.createSequentialGroup()
+														.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+															.addComponent(fovField, GroupLayout.Alignment.LEADING)
+															.addComponent(decField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+															.addComponent(raField, GroupLayout.Alignment.LEADING)
+															.addComponent(magLimitField))
+														.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+														.addGroup(panel3Layout.createParallelGroup()
+															.addComponent(label7)
+															.addComponent(label8)
+															.addComponent(label9)
+															.addComponent(label10)))
+													.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
+												.addGap(0, 0, Short.MAX_VALUE)))
+										.addContainerGap())
+							);
+							panel3Layout.setVerticalGroup(
+								panel3Layout.createParallelGroup()
+									.addGroup(panel3Layout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label1)
+											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(panel3Layout.createParallelGroup()
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addGap(16, 16, 16)
+												.addComponent(label2))
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(raField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label7))))
+										.addGroup(panel3Layout.createParallelGroup()
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addGap(16, 16, 16)
+												.addComponent(label3))
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(decField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label8))))
+										.addGroup(panel3Layout.createParallelGroup()
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addGap(16, 16, 16)
+												.addComponent(label4))
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(fovField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label9))))
+										.addGroup(panel3Layout.createParallelGroup()
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addGap(16, 16, 16)
+												.addComponent(label5))
+											.addGroup(panel3Layout.createSequentialGroup()
+												.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(magLimitField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label10))))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label11))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label12)
+											.addComponent(isSaveDssCheckBox))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+						}
+
+						//======== panel4 ========
+						{
+							panel4.setBorder(new TitledBorder("SIMBAD Data"));
+							panel4.setPreferredSize(new Dimension(190, 164));
+
+							//---- idLabel ----
+							idLabel.setText("ObjectId:");
+
+							//---- raLabel ----
+							raLabel.setText("RA:");
+
+							//---- decLabel ----
+							decLabel.setText("DEC:");
+
+							//---- simbadIdLabel ----
+							simbadIdLabel.setText(".");
+
+							//---- simbadRaLabel ----
+							simbadRaLabel.setText("HH:MM:SS.SS");
+
+							//---- simbadDecLabel ----
+							simbadDecLabel.setText("DD:MM:SS.SS");
+
+							//---- idLabel2 ----
+							idLabel2.setText("MagB:");
+
+							//---- idLabel3 ----
+							idLabel3.setText("MagV:");
+
+							//---- idLabel4 ----
+							idLabel4.setText("MagR:");
+
+							//---- idLabel5 ----
+							idLabel5.setText("MagI:");
+
+							//---- simbadMagBLabel ----
+							simbadMagBLabel.setText(".");
+
+							//---- simbadMagVLabel ----
+							simbadMagVLabel.setText(".");
+
+							//---- simbadMagRLabel ----
+							simbadMagRLabel.setText(".");
+
+							//---- simbadMagILabel ----
+							simbadMagILabel.setText(".");
+
+							GroupLayout panel4Layout = new GroupLayout(panel4);
+							panel4.setLayout(panel4Layout);
+							panel4Layout.setHorizontalGroup(
+								panel4Layout.createParallelGroup()
+									.addGroup(panel4Layout.createSequentialGroup()
+										.addContainerGap(12, Short.MAX_VALUE)
+										.addGroup(panel4Layout.createParallelGroup()
+											.addComponent(idLabel, GroupLayout.Alignment.TRAILING)
+											.addComponent(raLabel, GroupLayout.Alignment.TRAILING)
+											.addComponent(decLabel, GroupLayout.Alignment.TRAILING)
+											.addComponent(idLabel2, GroupLayout.Alignment.TRAILING)
+											.addComponent(idLabel3, GroupLayout.Alignment.TRAILING)
+											.addComponent(idLabel4, GroupLayout.Alignment.TRAILING)
+											.addComponent(idLabel5, GroupLayout.Alignment.TRAILING))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel4Layout.createParallelGroup()
+											.addComponent(simbadIdLabel)
+											.addComponent(simbadRaLabel)
+											.addComponent(simbadDecLabel)
+											.addComponent(simbadMagBLabel)
+											.addComponent(simbadMagVLabel)
+											.addComponent(simbadMagRLabel)
+											.addComponent(simbadMagILabel))
+										.addGap(0, 125, Short.MAX_VALUE))
+							);
+							panel4Layout.setVerticalGroup(
+								panel4Layout.createParallelGroup()
+									.addGroup(panel4Layout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(simbadIdLabel)
+											.addComponent(idLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(raLabel)
+											.addComponent(simbadRaLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(decLabel)
+											.addComponent(simbadDecLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(idLabel2)
+											.addComponent(simbadMagBLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(idLabel3)
+											.addComponent(simbadMagVLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(idLabel4)
+											.addComponent(simbadMagRLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(idLabel5)
+											.addComponent(simbadMagILabel))
+										.addContainerGap(16, Short.MAX_VALUE))
+							);
+						}
+
+						GroupLayout panel1Layout = new GroupLayout(panel1);
+						panel1.setLayout(panel1Layout);
+						panel1Layout.setHorizontalGroup(
+							panel1Layout.createParallelGroup()
+								.addGroup(panel1Layout.createSequentialGroup()
+									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(0, 0, Short.MAX_VALUE))
+								.addGroup(panel1Layout.createSequentialGroup()
+									.addComponent(panel4, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						);
+						panel1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {panel3, panel4});
+						panel1Layout.setVerticalGroup(
+							panel1Layout.createParallelGroup()
+								.addGroup(panel1Layout.createSequentialGroup()
+									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+						);
+					}
+
+					//======== panel2 ========
+					{
+						panel2.setBorder(new EtchedBorder());
+
+						GroupLayout panel2Layout = new GroupLayout(panel2);
+						panel2.setLayout(panel2Layout);
+						panel2Layout.setHorizontalGroup(
+							panel2Layout.createParallelGroup()
+								.addGap(0, 616, Short.MAX_VALUE)
+						);
+						panel2Layout.setVerticalGroup(
+							panel2Layout.createParallelGroup()
+								.addGap(0, 426, Short.MAX_VALUE)
+						);
+					}
+
+					GroupLayout targetPanelLayout = new GroupLayout(targetPanel);
+					targetPanel.setLayout(targetPanelLayout);
+					targetPanelLayout.setHorizontalGroup(
+						targetPanelLayout.createParallelGroup()
+							.addGroup(targetPanelLayout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addContainerGap())
 					);
-					panel2Layout.setVerticalGroup(
-						panel2Layout.createParallelGroup()
-							.addGap(0, 446, Short.MAX_VALUE)
+					targetPanelLayout.setVerticalGroup(
+						targetPanelLayout.createParallelGroup()
+							.addGroup(targetPanelLayout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(targetPanelLayout.createParallelGroup()
+									.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addContainerGap())
 					);
 				}
 
@@ -242,26 +603,26 @@ public class ViewerUI extends JFrame {
 				button1.setText("text");
 				button1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-				GroupLayout TAB1Layout = new GroupLayout(TAB1);
-				TAB1.setLayout(TAB1Layout);
-				TAB1Layout.setHorizontalGroup(
-					TAB1Layout.createParallelGroup()
-						.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(TAB1Layout.createSequentialGroup()
+				GroupLayout targetTabLayout = new GroupLayout(targetTab);
+				targetTab.setLayout(targetTabLayout);
+				targetTabLayout.setHorizontalGroup(
+					targetTabLayout.createParallelGroup()
+						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(targetTabLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(button1, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(743, Short.MAX_VALUE))
 				);
-				TAB1Layout.setVerticalGroup(
-					TAB1Layout.createParallelGroup()
-						.addGroup(TAB1Layout.createSequentialGroup()
-							.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+				targetTabLayout.setVerticalGroup(
+					targetTabLayout.createParallelGroup()
+						.addGroup(targetTabLayout.createSequentialGroup()
+							.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 							.addComponent(button1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 				);
 			}
-			tabbedPane1.addTab("TAB1", TAB1);
+			tabbedPane1.addTab("Target", targetTab);
 
 			//======== TAB2 ========
 			{
@@ -787,7 +1148,44 @@ public class ViewerUI extends JFrame {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
 	private JTabbedPane tabbedPane1;
-	private JPanel TAB1;
+	private JPanel targetTab;
+	private JPanel targetPanel;
+	private JPanel panel1;
+	private JPanel panel3;
+	private JLabel label1;
+	protected JTextField objectIdField;
+	private JLabel label2;
+	protected JTextField raField;
+	private JLabel label3;
+	protected JTextField decField;
+	private JLabel label4;
+	protected JTextField fovField;
+	private JLabel label5;
+	protected JTextField magLimitField;
+	private JLabel label7;
+	private JLabel label8;
+	private JLabel label9;
+	private JLabel label10;
+	protected JComboBox<String> catalogCombo;
+	private JLabel label11;
+	protected JComboBox<String> filterCombo;
+	private JLabel label12;
+	protected JCheckBox isSaveDssCheckBox;
+	private JPanel panel4;
+	private JLabel idLabel;
+	private JLabel raLabel;
+	private JLabel decLabel;
+	private JLabel simbadIdLabel;
+	private JLabel simbadRaLabel;
+	private JLabel simbadDecLabel;
+	private JLabel idLabel2;
+	private JLabel idLabel3;
+	private JLabel idLabel4;
+	private JLabel idLabel5;
+	private JLabel simbadMagBLabel;
+	private JLabel simbadMagVLabel;
+	private JLabel simbadMagRLabel;
+	private JLabel simbadMagILabel;
 	private JPanel panel2;
 	private JButton button1;
 	private JPanel TAB2;
