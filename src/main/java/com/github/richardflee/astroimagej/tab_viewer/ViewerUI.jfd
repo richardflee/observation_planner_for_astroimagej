@@ -4,7 +4,7 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1::::918:x, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
 			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
 		} ) {
 			name: "this"
@@ -51,8 +51,8 @@ new FormModel {
 					"title": "TAB2"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :::p, comp updateButton:1::p:140:p, space ::613:x, comp saveButton:1::p:120:p, space :::p}, comp ObserverPanel::l:::x}"
-					"$verticalGroup": "par l {seq {comp ObserverPanel:::::x, space u:::p, par b {comp saveButton:2:b:p:30:p, comp updateButton:2:b:p:30:p}, space :::p}}"
+					"$horizontalGroup": "par l {seq l {space :::p, comp updateButton:1::p:140:p, space u:::p, comp saveButton:1::p:120:p, space ::613:x}, comp ObserverPanel::l:::x}"
+					"$verticalGroup": "par l {seq {comp ObserverPanel:::::x, space u:::p, par b {comp updateButton:2:b:p:30:p, comp saveButton:2:b:p:30:p}, space :::p}}"
 				} ) {
 					name: "observerTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {

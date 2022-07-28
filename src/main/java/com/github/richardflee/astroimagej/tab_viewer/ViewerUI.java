@@ -742,9 +742,9 @@ public class ViewerUI extends JFrame {
 						.addGroup(observerTabLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
+							.addContainerGap(613, Short.MAX_VALUE))
 						.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 				observerTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {saveButton, updateButton});
@@ -754,8 +754,8 @@ public class ViewerUI extends JFrame {
 							.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addGroup(observerTabLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+								.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())
 				);
 				observerTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {saveButton, updateButton});
@@ -769,7 +769,7 @@ public class ViewerUI extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1, GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+					.addComponent(tabbedPane1)
 					.addContainerGap())
 		);
 		contentPaneLayout.setVerticalGroup(

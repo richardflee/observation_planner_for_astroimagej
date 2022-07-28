@@ -28,17 +28,9 @@ public class ObserverTab implements ObserverTabListener {
 	private double fLength = 0.0;
 	
 	private JTextField horizPixelUmText;
-//	private double horizPixelUm = 0.0;
-	
 	private JTextField vertPixelUmText;
-//	private double vertPixelUm = 0.0;
-	
-	
 	private JTextField horizArrayText;
-//	private double horizArraySize = 0.0;
-	
 	private JTextField vertArrayText;
-//	private double vertArraySize = 0.0;
 
 	// computed pixel array params
 	private JTextField horizPixelAsecText;
@@ -48,14 +40,10 @@ public class ObserverTab implements ObserverTabListener {
 	private double vertPixelAsec = 0.0;
 	
 	private JTextField horizFovAminText;
-	//private double horizFovAmin = 0.0;
-	
 	private JTextField vertFovAminText;
-	//private double vertFovAmin = 0.0;
 	
 	private JTextField darkCurrentText;
 	private JTextField readoutNoiseText;
-	
 	
 	private JTextField latitudeText;
 	private JTextField longitudeText;
@@ -67,16 +55,6 @@ public class ObserverTab implements ObserverTabListener {
 
 	private JButton save;
 	private JButton update;
-
-//	private double fLength = 0.0;
-//	private double horizPixelSizeDeg = 0.0;
-//	private double vertPixelSizeDeg = 0.0;
-//	private double horizFovDeg = 0.0;
-//	private double vertFovDeg = 0.0;
-
-//	public ObserverTab( viewer) {
-//
-//	}
 	
 	private ViewerUI viewer;
 	
@@ -118,10 +96,6 @@ public class ObserverTab implements ObserverTabListener {
 		update = viewer.getUpdateButton();
 
 		setUpActionHandlers();
-
-		//
-		// System.out.println(observerPanel.code);
-		// System.out.println();
 	}
 	
 	@Override
@@ -134,10 +108,6 @@ public class ObserverTab implements ObserverTabListener {
 		noData = Double.valueOf(noiseData.getCcdNoise()).isNaN();
 		data = noData ? "" : String.format("%.1f",  noiseData.getCcdNoise());
 		readoutNoiseText.setText(data);
-		
-		
-		//darkCurrentField.setText(String.format("%1.4f", noiseData.getCcdDark()));
-		//readoutNoiseField.setText(String.format("%.1f",  noiseData.getCcdNoise()));
 	}
 	
 	
@@ -231,78 +201,101 @@ public class ObserverTab implements ObserverTabListener {
 			ObserverTabProerties.writeProperties(this.getObserverData());			
 		});
 	}
-
-	private void verifyVertArraySize() {
-		var input = vertArrayText.getText();
-		if (InputsVerifier.isPositiveDecimal(input)) {
-			vertArrayText.setForeground(Color.BLACK);
-			codeText.requestFocus();
+	
+	private boolean verifyAperture() {
+		var isValid = InputsVerifier.isPositiveDecimal(apertureText.getText());
+		if (isValid) {
+			apertureText.setForeground(Color.BLACK);
+			fLengthText.requestFocus();
 		} else {
-			vertArrayText.setForeground(Color.RED);
+			apertureText.setForeground(Color.RED);
+			apertureText.requestFocus();
 		}
+		return isValid;
 	}
-
-	private void verifyHorizArraySize() {
-		var input = horizArrayText.getText();
-		if (InputsVerifier.isPositiveDecimal(input)) {
-			horizArrayText.setForeground(Color.BLACK);
-			vertArrayText.requestFocus();
-		} else {
-			horizArrayText.setForeground(Color.RED);
-		}
-	}
-
-	private void verifyVertPixelSize() {
-		var input = vertPixelUmText.getText();
-		if (InputsVerifier.isPositiveDecimal(input)) {
-			// vertPixelSizeAsec.setText(getPixelSizeAsec(input));
-			vertPixelUmText.setForeground(Color.BLACK);
-			horizArrayText.requestFocus();
-		} else {
-			vertPixelUmText.setForeground(Color.RED);
-		}
-	}
-
-	private void verfiyHorizPixelSize() {
-		var input = horizPixelUmText.getText();
-		if (InputsVerifier.isPositiveDecimal(input)) {
-			// horizPixelSizeAsec.setText(getPixelSizeAsec(input));
-			horizPixelUmText.setForeground(Color.BLACK);
-			vertPixelUmText.requestFocus();
-		} else {
-			horizPixelUmText.setForeground(Color.RED);
-		}
-	}
-
-	private void verifyFocalLength() {
-		if (InputsVerifier.isPositiveDecimal(fLengthText.getText())) {
+	
+	private boolean verifyFocalLength() {
+		var isValid = InputsVerifier.isPositiveDecimal(fLengthText.getText());
+		if (isValid) {
 			this.fLength = Double.valueOf(fLengthText.getText());
 			fLengthText.setForeground(Color.BLACK);
 			cameraText.requestFocus();
 		} else {
 			fLengthText.setForeground(Color.RED);
+			fLengthText.requestFocus();
 		}
+		return isValid;
+	}
+	
+	private boolean verfiyHorizPixelSize() {
+		var input = horizPixelUmText.getText();
+		var isValid = InputsVerifier.isPositiveDecimal(input);
+		if (isValid) {
+			// horizPixelSizeAsec.setText(getPixelSizeAsec(input));
+			horizPixelUmText.setForeground(Color.BLACK);
+			vertPixelUmText.requestFocus();
+		} else {
+			horizPixelUmText.setForeground(Color.RED);
+			horizArrayText.requestFocus();
+		}
+		return isValid;
+	}
+	
+	private boolean verifyVertPixelSize() {
+		var input = vertPixelUmText.getText();
+		var isValid = InputsVerifier.isPositiveDecimal(input);
+		if (isValid) {
+			// vertPixelSizeAsec.setText(getPixelSizeAsec(input));
+			vertPixelUmText.setForeground(Color.BLACK);
+			horizArrayText.requestFocus();
+		} else {
+			vertPixelUmText.setForeground(Color.RED);
+			vertArrayText.requestFocus();
+		}
+		return isValid;
 	}
 
-	private void verifyAperture() {
-		if (InputsVerifier.isPositiveDecimal(apertureText.getText())) {
-			apertureText.setForeground(Color.BLACK);
-			fLengthText.requestFocus();
+	private boolean verifyHorizArraySize() {
+		var input = horizArrayText.getText();
+		var isValid = InputsVerifier.isPositiveDecimal(input);
+		if (isValid) {
+			horizArrayText.setForeground(Color.BLACK);
+			vertArrayText.requestFocus();
 		} else {
-			apertureText.setForeground(Color.RED);
+			horizArrayText.setForeground(Color.RED);
+			horizArrayText.requestFocus();
 		}
+		return isValid;
 	}
+
+	private boolean verifyVertArraySize() {
+		var input = vertArrayText.getText();
+		var isValid = InputsVerifier.isPositiveDecimal(input);
+		if (isValid) {
+			vertArrayText.setForeground(Color.BLACK);
+			codeText.requestFocus();
+		} else {
+			vertArrayText.setForeground(Color.RED);
+			vertArrayText.requestFocus();
+		}
+		return isValid;
+	}
+
 
 	// update inputs, compute pixel asec and fov params
 	private void updateAll() {
 
+		boolean b =  verifyAperture() && verifyFocalLength()
+				&& verfiyHorizPixelSize() && verifyVertPixelSize()
+				&& verifyHorizArraySize()  && verifyVertArraySize();
+		
 		boolean isValid = InputsVerifier.isPositiveDecimal(fLengthText.getText())
 				&& InputsVerifier.isPositiveDecimal(horizPixelUmText.getText())
 				&& InputsVerifier.isPositiveDecimal(vertPixelUmText.getText())
 				&& InputsVerifier.isPositiveDecimal(horizArrayText.getText())
 				&& InputsVerifier.isPositiveDecimal(vertArrayText.getText());
 
-		if (isValid) {
+		if (b) {
 			computeDerivedParameters();
 		} else {
 			var message = "At least one data entry is invalid";
