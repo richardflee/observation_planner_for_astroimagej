@@ -58,10 +58,14 @@ public class ObserverTab implements ObserverTabListener {
 	private JButton update;
 	
 	private ViewerUI viewer;
+	private VerifyTextFields verifier;
+	
+	public ObserverTab() {}
 	
 	public ObserverTab(ViewerUI viewer) {
 		
 		this.viewer = viewer;
+		this.verifier = new VerifyTextFields();
 
 		codeText = viewer.getCodeField();
 		nameText = viewer.getNameField();
@@ -96,7 +100,7 @@ public class ObserverTab implements ObserverTabListener {
 		save = viewer.getSaveButton();
 		update = viewer.getUpdateButton();
 
-		setUpActionHandlers();
+		setUpActionHandlers();		
 	}
 	
 	@Override
@@ -186,15 +190,15 @@ public class ObserverTab implements ObserverTabListener {
 		// telescope
 		teleShortText.addActionListener(e -> teleFullText.requestFocus());
 		teleFullText.addActionListener(e -> apertureText.requestFocus());
-		apertureText.addActionListener(e -> verifyAperture());
-		fLengthText.addActionListener(e -> verifyFocalLength());
+		apertureText.addActionListener(e -> verifier.verifyAperture());
+		fLengthText.addActionListener(e -> verifier.verifyFocalLength());
 
 		// camera
 		cameraText.addActionListener(e -> horizPixelUmText.requestFocus());
-		horizPixelUmText.addActionListener(e -> verfiyHorizPixelSize());
-		vertPixelUmText.addActionListener(e -> verifyVertPixelSize());
-		horizArrayText.addActionListener(e -> verifyHorizArraySize());
-		vertArrayText.addActionListener(e -> verifyVertArraySize());
+		horizPixelUmText.addActionListener(e -> verifier.verfiyHorizPixelSize());
+		vertPixelUmText.addActionListener(e -> verifier.verifyVertPixelSize());
+		horizArrayText.addActionListener(e -> verifier.verifyHorizArraySize());
+		vertArrayText.addActionListener(e -> verifier.verifyVertArraySize());
 
 		// update & save
 		update.addActionListener(e -> updateAll());
@@ -204,92 +208,13 @@ public class ObserverTab implements ObserverTabListener {
 		});
 	}
 	
-	private boolean verifyAperture() {
-		var isValid = InputsVerifier.isPositiveDecimal(apertureText.getText());
-		if (isValid) {
-			apertureText.setForeground(Color.BLACK);
-			fLengthText.requestFocus();
-		} else {
-			apertureText.setForeground(Color.RED);
-			apertureText.requestFocus();
-		}
-		return isValid;
-	}
-	
-	private boolean verifyFocalLength() {
-		var isValid = InputsVerifier.isPositiveDecimal(fLengthText.getText());
-		if (isValid) {
-			this.fLength = Double.valueOf(fLengthText.getText());
-			fLengthText.setForeground(Color.BLACK);
-			cameraText.requestFocus();
-		} else {
-			fLengthText.setForeground(Color.RED);
-			fLengthText.requestFocus();
-		}
-		return isValid;
-	}
-	
-	private boolean verfiyHorizPixelSize() {
-		var input = horizPixelUmText.getText();
-		var isValid = InputsVerifier.isPositiveDecimal(input);
-		if (isValid) {
-			// horizPixelSizeAsec.setText(getPixelSizeAsec(input));
-			horizPixelUmText.setForeground(Color.BLACK);
-			vertPixelUmText.requestFocus();
-		} else {
-			horizPixelUmText.setForeground(Color.RED);
-			horizArrayText.requestFocus();
-		}
-		return isValid;
-	}
-	
-	private boolean verifyVertPixelSize() {
-		var input = vertPixelUmText.getText();
-		var isValid = InputsVerifier.isPositiveDecimal(input);
-		if (isValid) {
-			// vertPixelSizeAsec.setText(getPixelSizeAsec(input));
-			vertPixelUmText.setForeground(Color.BLACK);
-			horizArrayText.requestFocus();
-		} else {
-			vertPixelUmText.setForeground(Color.RED);
-			vertArrayText.requestFocus();
-		}
-		return isValid;
-	}
-
-	private boolean verifyHorizArraySize() {
-		var input = horizArrayText.getText();
-		var isValid = InputsVerifier.isPositiveDecimal(input);
-		if (isValid) {
-			horizArrayText.setForeground(Color.BLACK);
-			vertArrayText.requestFocus();
-		} else {
-			horizArrayText.setForeground(Color.RED);
-			horizArrayText.requestFocus();
-		}
-		return isValid;
-	}
-
-	private boolean verifyVertArraySize() {
-		var input = vertArrayText.getText();
-		var isValid = InputsVerifier.isPositiveDecimal(input);
-		if (isValid) {
-			vertArrayText.setForeground(Color.BLACK);
-			codeText.requestFocus();
-		} else {
-			vertArrayText.setForeground(Color.RED);
-			vertArrayText.requestFocus();
-		}
-		return isValid;
-	}
-
 
 	// update inputs, compute pixel asec and fov params
 	private void updateAll() {
 
-		boolean isValid =  verifyAperture() && verifyFocalLength()
-				&& verfiyHorizPixelSize() && verifyVertPixelSize()
-				&& verifyHorizArraySize()  && verifyVertArraySize();
+		boolean isValid =  verifier.verifyAperture() && verifier.verifyFocalLength()
+				&& verifier.verfiyHorizPixelSize() && verifier.verifyVertPixelSize()
+				&& verifier.verifyHorizArraySize()  && verifier.verifyVertArraySize();
 
 		if (isValid) {
 			computeDerivedParameters();
@@ -338,5 +263,99 @@ public class ObserverTab implements ObserverTabListener {
 		var fovAsec = this.vertPixelAsec * npix;			
 		this.vertFovAminText.setText(String.format("%4.2f", fovAsec / 60.0));		
 	}
+	
+//	private void testValidate() {
+//		new VerifyTextFields("here i am");
+//	}
+	
+	private class VerifyTextFields {
+		
+		VerifyTextFields() { }
+		private boolean verifyAperture() {
+			var isValid = InputsVerifier.isPositiveDecimal(apertureText.getText());
+			if (isValid) {
+				apertureText.setForeground(Color.BLACK);
+				fLengthText.requestFocus();
+			} else {
+				apertureText.setForeground(Color.RED);
+				apertureText.requestFocus();
+			}
+			return isValid;
+		}
+		
+		private boolean verifyFocalLength() {
+			var isValid = InputsVerifier.isPositiveDecimal(fLengthText.getText());
+			if (isValid) {
+				ObserverTab.this.fLength = Double.valueOf(fLengthText.getText());
+				fLengthText.setForeground(Color.BLACK);
+				cameraText.requestFocus();
+			} else {
+				fLengthText.setForeground(Color.RED);
+				fLengthText.requestFocus();
+			}
+			return isValid;
+		}
+		
+		private boolean verfiyHorizPixelSize() {
+			var input = horizPixelUmText.getText();
+			var isValid = InputsVerifier.isPositiveDecimal(input);
+			if (isValid) {
+				// horizPixelSizeAsec.setText(getPixelSizeAsec(input));
+				horizPixelUmText.setForeground(Color.BLACK);
+				vertPixelUmText.requestFocus();
+			} else {
+				horizPixelUmText.setForeground(Color.RED);
+				horizArrayText.requestFocus();
+			}
+			return isValid;
+		}
+		
+		private boolean verifyVertPixelSize() {
+			var input = vertPixelUmText.getText();
+			var isValid = InputsVerifier.isPositiveDecimal(input);
+			if (isValid) {
+				// vertPixelSizeAsec.setText(getPixelSizeAsec(input));
+				vertPixelUmText.setForeground(Color.BLACK);
+				horizArrayText.requestFocus();
+			} else {
+				vertPixelUmText.setForeground(Color.RED);
+				vertArrayText.requestFocus();
+			}
+			return isValid;
+		}
 
+		private boolean verifyHorizArraySize() {
+			var input = horizArrayText.getText();
+			var isValid = InputsVerifier.isPositiveDecimal(input);
+			if (isValid) {
+				horizArrayText.setForeground(Color.BLACK);
+				vertArrayText.requestFocus();
+			} else {
+				horizArrayText.setForeground(Color.RED);
+				horizArrayText.requestFocus();
+			}
+			return isValid;
+		}
+
+		private boolean verifyVertArraySize() {
+			var input = vertArrayText.getText();
+			var isValid = InputsVerifier.isPositiveDecimal(input);
+			if (isValid) {
+				vertArrayText.setForeground(Color.BLACK);
+				codeText.requestFocus();
+			} else {
+				vertArrayText.setForeground(Color.RED);
+				vertArrayText.requestFocus();
+			}
+			return isValid;
+		}
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		var x = new ObserverTab();
+		
+		
+	}
 }
