@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
-public class ObserverTabProerties {
+public class ObserverTabFileProps {
 
 	private static final String CLASS_PROPS_ID = "observertab.";
 
@@ -30,8 +30,6 @@ public class ObserverTabProerties {
 	private static final String VERT_ARRAY_SIZE = CLASS_PROPS_ID.concat("vertArraySize");
 
 	public static void writeProperties(Observer observer) {
-		System.out.println(observer.toString());
-
 		try (OutputStream output = new FileOutputStream(AijPropsReadWriter.getPropertiesFilePath())) {
 
 			Properties prop = new Properties();

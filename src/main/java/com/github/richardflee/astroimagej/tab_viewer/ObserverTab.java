@@ -11,7 +11,8 @@ import com.github.richardflee.astroimagej.utils.InputsVerifier;
 import com.github.richardflee.astroimagej.data_objects.NoiseData;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
-import com.github.richardflee.astroimagej.fileio.ObserverTabProerties;
+import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
+import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
 import com.github.richardflee.astroimagej.listeners.ObserverTabListener;
 
 public class ObserverTab implements ObserverTabListener {
@@ -198,7 +199,8 @@ public class ObserverTab implements ObserverTabListener {
 		// update & save
 		update.addActionListener(e -> updateAll());
 		save.addActionListener(e -> {
-			ObserverTabProerties.writeProperties(this.getObserverData());			
+			ObserverTabFileProps.writeProperties(this.getObserverData());
+			JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
 		});
 	}
 	
@@ -285,23 +287,16 @@ public class ObserverTab implements ObserverTabListener {
 	// update inputs, compute pixel asec and fov params
 	private void updateAll() {
 
-		boolean b =  verifyAperture() && verifyFocalLength()
+		boolean isValid =  verifyAperture() && verifyFocalLength()
 				&& verfiyHorizPixelSize() && verifyVertPixelSize()
 				&& verifyHorizArraySize()  && verifyVertArraySize();
-		
-		boolean isValid = InputsVerifier.isPositiveDecimal(fLengthText.getText())
-				&& InputsVerifier.isPositiveDecimal(horizPixelUmText.getText())
-				&& InputsVerifier.isPositiveDecimal(vertPixelUmText.getText())
-				&& InputsVerifier.isPositiveDecimal(horizArrayText.getText())
-				&& InputsVerifier.isPositiveDecimal(vertArrayText.getText());
 
-		if (b) {
+		if (isValid) {
 			computeDerivedParameters();
 		} else {
 			var message = "At least one data entry is invalid";
 			JOptionPane.showMessageDialog(null, message);
 		}
-
 	}
 
 	private void computeDerivedParameters() {
@@ -318,29 +313,6 @@ public class ObserverTab implements ObserverTabListener {
 		this.fLength = Double.valueOf(this.fLengthText.getText());
 	}
 	
-	
-	public void writeObserTabProps(Properties prop) {
-		
-		
-	}
-	
-	
-//	public void setHorizPixelUm() {
-//		this.horizPixelUm = Double.valueOf(this.horizPixelUmText.getText());
-//	}
-	
-//	public void setVertPixelUm() {
-//		this.vertPixelUm = Double.valueOf(this.vertPixelUmText.getText());
-//	}
-	
-	
-//	public void setHorizArraySize() {
-//		this.horizArraySize = Double.valueOf(this.horizArrayText.getText());
-//	}
-	
-//	public void setVertArraySize() {
-//		this.vertArraySize = Double.valueOf(this.vertArrayText.getText());
-//	}
 	
 	public void setHorizPixelAsecText() {
 		var wpix = Double.valueOf(this.horizPixelUmText.getText());

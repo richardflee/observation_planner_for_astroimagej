@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.ObserverTabProerties;
+import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUI;
 
 
@@ -41,10 +41,9 @@ public class Main {
 			if (! AijPropsReadWriter.fileExists()) {
 				AijPropsReadWriter.writeDefaultPropsFile();
 				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.newFileMessage());
-				System.exit(0);
 			}
 			
-			var observer = ObserverTabProerties.readProerties();
+			var observer = ObserverTabFileProps.readProerties();
 			
 			
 			// User  interface

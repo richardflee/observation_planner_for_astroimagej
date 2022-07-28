@@ -17,7 +17,7 @@ public class AijPropsReadWriter {
 	public static void writeDefaultPropsFile() {
 
 		try (OutputStream output = new FileOutputStream(getPropertiesFilePath())) {
-			ObserverTabProerties.writeProperties(new Observer());
+			ObserverTabFileProps.writeProperties(new Observer());
 			
 			
 			
@@ -34,6 +34,11 @@ public class AijPropsReadWriter {
 
 	public static String newFileMessage() {
 		return "Created new properties file:\n" + getPropertiesFilePath();
+	}
+	
+	
+	public static String savedFileMessage() {
+		return "Saved to properties file:\n" + getPropertiesFilePath();
 	}
 
 	public static String getPropertiesFilePath() {
