@@ -84,12 +84,12 @@ public class InputsVerifier {
 		return (input.trim().length() > 0) && input.matches(rx);
 	}
 	
-	// positive integer input
-	public static boolean isPositiveInteger(String input) {
-		// positive integer regex
-		var rx = "^[+]?\\d+";
-		return (input.trim().length() > 0) && input.matches(rx);
-	}
+//	// positive integer input
+//	public static boolean isPositiveInteger(String input) {
+//		// positive iinteger regex
+//		var rx = "^[+]?\\d+";
+//		return (input.trim().length() > 0) && input.matches(rx);
+//	}
 	
 	public static boolean isPositiveDecimal(String input) {
 		var rx = "\\d+(\\.)?(\\d+)?";
