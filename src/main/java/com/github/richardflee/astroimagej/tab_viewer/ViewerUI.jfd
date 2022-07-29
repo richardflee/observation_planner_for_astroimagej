@@ -13,18 +13,18 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {comp targetPanel::l:::x, seq l {space :::p, comp button1:::p:160:p, space ::743:x}}"
-					"$verticalGroup": "par l {seq l {comp targetPanel:::::x, space :::p, comp button1:::p:40:p, space :::p}}"
+					"$horizontalGroup": "par l {comp targetPanel::l:::x, seq l {space :::p, comp runSimbadButton:::p:140:p, space u:::p, comp saveQueryButton:::p:140:p, space ::613:x}}"
+					"$verticalGroup": "par l {seq {comp targetPanel:::::x, space u:::p, par c {comp saveQueryButton:5:c:p:30:p, comp runSimbadButton:5:c:p:30:p}, space :::p}}"
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p:263:p, space u:::p, comp panel2:::::x, space :::p}}"
+						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p:263:p, space :::p, comp panel2:::::x, space :::p}}"
 						"$verticalGroup": "par l {seq l {space :::p, par l {comp panel1:::::x, comp panel2:::::x}, space :::p}}"
 					} ) {
 						name: "targetPanel"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 							"$horizontalGroup": "par l {seq {comp panel3:4::p::p, space :0:0:x}, seq l {comp panel4:4::p:263:p, space :::x}}"
-							"$verticalGroup": "par l {seq l {comp panel3:::p::p, space :::p, comp panel4::::190:x}}"
+							"$verticalGroup": "par l {seq l {comp panel3:::p::p, space :::p, comp panel4::::196:x}}"
 						} ) {
 							name: "panel1"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -45,6 +45,7 @@ new FormModel {
 									"toolTipText": "<html>\nEnter target name\n<p> Note: This field is <b>not </b>changed after a SIMBAD query</p>\n<p>Examples: WASP-12, wasp_12, Wasp12</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -57,6 +58,7 @@ new FormModel {
 									"toolTipText": "<html>\nEnter target J2000 RA (hours), in sexagesimal format  HH:MM:SS.SS\n<p>Note 1: Use  ':' delimiter</p>\n<p>Note 2: RA updates after a successful SIMBAD query</p>\n<p>RA range: 00:00:00 to 23:59:59.99</p>\n<p>Examples: 12:34:56.78,  1: 2:3.456, => 01:02:03.46</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -69,6 +71,7 @@ new FormModel {
 									"toolTipText": "<html>\nEnter target J2000 DEC (degrees), in sexagesimal format  ±DD:MM:SS.SS\n<p>Note 1: Use  ':' delimiter</p>\n<p>Note 2: DEC updates after a successful SIMBAD query</p>\n<p>DEC range: 00:00:00 to ±90:00:00</p>\n<p>Examples: 12:34:56.78 => +12:34:56.78,  -1:2:3.456, => -01:02:03.46</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -81,6 +84,7 @@ new FormModel {
 									"toolTipText": "<html>\nEnter square field-of-view width (arcmin)\n<p>FOV range: 1.0 to 1199.9 amin\n<p>Examples: 25.0, 1150.0</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -93,6 +97,7 @@ new FormModel {
 									"toolTipText": "<html>\nEnter magnitude limit\n<p>Range: 1.0 to 99.9 mag\n<p>Example: 15.5</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -117,6 +122,7 @@ new FormModel {
 									auxiliary() {
 										"JavaCodeGenerator.typeParameters": "String"
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -129,6 +135,7 @@ new FormModel {
 									auxiliary() {
 										"JavaCodeGenerator.typeParameters": "String"
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -141,12 +148,13 @@ new FormModel {
 									"selected": true
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 								"$horizontalGroup": "par l {seq {space ::12:x, par l {comp idLabel::t:p::p, comp raLabel::t:p::p, comp decLabel::t:p::p, comp idLabel2::t:p::p, comp idLabel3::t:p::p, comp idLabel4::t:p::p, comp idLabel5::t:p::p}, space :::p, par l {comp simbadIdLabel::l:p::p, comp simbadRaLabel::l:p::p, comp simbadDecLabel::l:p::p, comp simbadMagBLabel::l:p::p, comp simbadMagVLabel::l:p::p, comp simbadMagRLabel::l:p::p, comp simbadMagILabel::l:p::p}, space :0:125:x}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp simbadIdLabel::b:p::p, comp idLabel::b:p::p}, space :::p, par b {comp raLabel::b:p::p, comp simbadRaLabel::b:p::p}, space :::p, par b {comp decLabel::b:p::p, comp simbadDecLabel::b:p::p}, space u:::p, par b {comp idLabel2::b:p::p, comp simbadMagBLabel::b:p::p}, space u:::p, par b {comp idLabel3::b:p::p, comp simbadMagVLabel::b:p::p}, space u:::p, par b {comp idLabel4::b:p::p, comp simbadMagRLabel::b:p::p}, space u:::p, par b {comp idLabel5::b:p::p, comp simbadMagILabel::b:p::p}, space ::16:x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp simbadIdLabel::b:p::p, comp idLabel::b:p::p}, space :::p, par b {comp raLabel::b:p::p, comp simbadRaLabel::b:p::p}, space :::p, par b {comp decLabel::b:p::p, comp simbadDecLabel::b:p::p}, space u:::p, par b {comp idLabel2::b:p::p, comp simbadMagBLabel::b:p::p}, space u:::p, par b {comp idLabel3::b:p::p, comp simbadMagVLabel::b:p::p}, space u:::p, par b {comp idLabel4::b:p::p, comp simbadMagRLabel::b:p::p}, space u:::p, par b {comp idLabel5::b:p::p, comp simbadMagILabel::b:p::p}, space :::x}}"
 							} ) {
 								name: "panel4"
 								"border": new javax.swing.border.TitledBorder( "SIMBAD Data" )
@@ -210,17 +218,28 @@ new FormModel {
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {space :0:616:x}"
-							"$verticalGroup": "par l {space :0:426:x}"
+							"$horizontalGroup": "par l {space :0:620:x}"
+							"$verticalGroup": "par l {space :0:0:x}"
 						} ) {
 							name: "panel2"
 							"border": new javax.swing.border.EtchedBorder( 1, null, null )
 						} )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button1"
-						"text": "text"
+						name: "runSimbadButton"
+						"text": "Run SIMBAD Query"
 						"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
+						auxiliary() {
+							"JavaCodeGenerator.variableGetter": true
+						}
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "saveQueryButton"
+						"text": "Save Query Data"
+						"font": #Font0
+						auxiliary() {
+							"JavaCodeGenerator.variableGetter": true
+						}
 					} )
 				}, new FormLayoutConstraints( null ) {
 					"title": "Target"
@@ -245,8 +264,8 @@ new FormModel {
 					"title": "TAB2"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :::p, comp updateButton:1::p:140:p, space u:::p, comp saveButton:1::p:120:p, space ::613:x}, comp observerPanel::l:::x}"
-					"$verticalGroup": "par l {seq {comp observerPanel:::::x, space u:::p, par b {comp updateButton:2:b:p:30:p, comp saveButton:2:b:p:30:p}, space :::p}}"
+					"$horizontalGroup": "par l {seq l {space :::p, comp updateParamsButton:1::p:140:p, space u:::p, comp saveObserverButton:1::p:120:p, space ::613:x}, comp observerPanel::l:::x}"
+					"$verticalGroup": "par l {seq {comp observerPanel:::::x, space u:::p, par b {comp updateParamsButton:2:b:p:30:p, comp saveObserverButton:2:b:p:30:p}, space :::p}}"
 				} ) {
 					name: "observerTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -567,7 +586,7 @@ new FormModel {
 						} )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "saveButton"
+						name: "saveObserverButton"
 						"text": "Save"
 						"font": #Font0
 						auxiliary() {
@@ -575,7 +594,7 @@ new FormModel {
 						}
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "updateButton"
+						name: "updateParamsButton"
 						"text": "Update Params"
 						"font": #Font0
 						auxiliary() {

@@ -8,9 +8,11 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
+import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUI;
 
 
@@ -33,18 +35,21 @@ public class Main {
 				System.exit(0);
 			}
 			
-			var site = AijPrefsFileIO.readObservationSitePrefsData();			
-			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();			
-			
-			
-			
+			// creates new properties file with default data if AIJ_Planner.properties not found
 			if (! AijPropsReadWriter.fileExists()) {
 				AijPropsReadWriter.writeDefaultPropsFile();
 				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.newFileMessage());
 			}
 			
-			var observer = ObserverTabFileProps.readProerties();
+			// creates AIJ_Prefs data objects
+			var site = AijPrefsFileIO.readObservationSitePrefsData();			
+			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();			
 			
+			// creates aij_planner data objects
+			var observer = ObserverTabFileProps.readProerties();
+			CatalogQuery catalogQuery = TargetTabFileProps.readProerties();
+			
+			System.exit(0);
 			
 			// User  interface
 			var viewerUI = new ViewerUI();

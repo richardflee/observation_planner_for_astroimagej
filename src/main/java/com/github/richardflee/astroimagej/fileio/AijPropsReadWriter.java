@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
 
+import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
 public class AijPropsReadWriter {
@@ -16,15 +19,25 @@ public class AijPropsReadWriter {
 
 	public static void writeDefaultPropsFile() {
 
-		try (OutputStream output = new FileOutputStream(getPropertiesFilePath())) {
-			ObserverTabFileProps.writeProperties(new Observer());
-			
-			
-			
-		} catch (IOException io) {
-			var message = String.format("Properties file error: \n%s", getPropertiesFilePath());
-			JOptionPane.showMessageDialog(null, message);
+//		try (OutputStream output = new FileOutputStream(getPropertiesFilePath())) {
+//			
+//		} catch (IOException io) {
+//			var message = String.format("Properties file error: \n%s", getPropertiesFilePath());
+//			JOptionPane.showMessageDialog(null, message);
+//		}
+		
+		Path x = Paths.get(getPropertiesFilePath());
+		try {
+			Files.createFile(x);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
+		ObserverTabFileProps.writeProperties(new Observer());
+		
+		TargetTabFileProps.writeProperties(new CatalogQuery());
 	}
 
 	public static boolean fileExists() {

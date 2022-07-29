@@ -97,8 +97,8 @@ public class ObserverTab implements ObserverTabListener {
 		northSouthText = viewer.getNorthSouthField();
 		eastWestText = viewer.getEastWestField();
 
-		save = viewer.getSaveButton();
-		update = viewer.getUpdateButton();
+		save = viewer.getSaveObserverButton();
+		update = viewer.getUpdateParamsButton();
 
 		setUpActionHandlers();		
 	}

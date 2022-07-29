@@ -107,12 +107,12 @@ public class ViewerUI extends JFrame {
 		return vertArraySizeField;
 	}
 
-	public JButton getUpdateButton() {
-		return updateButton;
+	public JButton getUpdateParamsButton() {
+		return updateParamsButton;
 	}
 
-	public JButton getSaveButton() {
-		return saveButton;
+	public JButton getSaveObserverButton() {
+		return saveObserverButton;
 	}
 
 	public JTextField getLatitudeField() {
@@ -149,6 +149,46 @@ public class ViewerUI extends JFrame {
 
 	public JTextField getReadoutNoiseField() {
 		return readoutNoiseField;
+	}
+
+	public JButton getRunSimbadButton() {
+		return runSimbadButton;
+	}
+
+	public JButton getSaveQueryButton() {
+		return saveQueryButton;
+	}
+
+	public JTextField getObjectIdField() {
+		return objectIdField;
+	}
+
+	public JTextField getRaField() {
+		return raField;
+	}
+
+	public JTextField getDecField() {
+		return decField;
+	}
+
+	public JTextField getFovField() {
+		return fovField;
+	}
+
+	public JTextField getMagLimitField() {
+		return magLimitField;
+	}
+
+	public JComboBox<String> getCatalogCombo() {
+		return catalogCombo;
+	}
+
+	public JComboBox<String> getFilterCombo() {
+		return filterCombo;
+	}
+
+	public JCheckBox getIsSaveDssCheckBox() {
+		return isSaveDssCheckBox;
 	}
 
 	private void initComponents() {
@@ -194,7 +234,8 @@ public class ViewerUI extends JFrame {
 		simbadMagRLabel = new JLabel();
 		simbadMagILabel = new JLabel();
 		panel2 = new JPanel();
-		button1 = new JButton();
+		runSimbadButton = new JButton();
+		saveQueryButton = new JButton();
 		TAB2 = new JPanel();
 		panel6 = new JPanel();
 		button3 = new JButton();
@@ -249,8 +290,8 @@ public class ViewerUI extends JFrame {
 		darkCurrentField = new JTextField();
 		label32 = new JLabel();
 		readoutNoiseField = new JTextField();
-		saveButton = new JButton();
-		updateButton = new JButton();
+		saveObserverButton = new JButton();
+		updateParamsButton = new JButton();
 
 		//======== this ========
 		setTitle("DEMO!!");
@@ -536,7 +577,7 @@ public class ViewerUI extends JFrame {
 										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(idLabel5)
 											.addComponent(simbadMagILabel))
-										.addContainerGap(16, Short.MAX_VALUE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
 						}
 
@@ -557,7 +598,7 @@ public class ViewerUI extends JFrame {
 								.addGroup(panel1Layout.createSequentialGroup()
 									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
 						);
 					}
 
@@ -569,11 +610,11 @@ public class ViewerUI extends JFrame {
 						panel2.setLayout(panel2Layout);
 						panel2Layout.setHorizontalGroup(
 							panel2Layout.createParallelGroup()
-								.addGap(0, 616, Short.MAX_VALUE)
+								.addGap(0, 620, Short.MAX_VALUE)
 						);
 						panel2Layout.setVerticalGroup(
 							panel2Layout.createParallelGroup()
-								.addGap(0, 426, Short.MAX_VALUE)
+								.addGap(0, 0, Short.MAX_VALUE)
 						);
 					}
 
@@ -584,7 +625,7 @@ public class ViewerUI extends JFrame {
 							.addGroup(targetPanelLayout.createSequentialGroup()
 								.addContainerGap()
 								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addContainerGap())
 					);
@@ -599,9 +640,13 @@ public class ViewerUI extends JFrame {
 					);
 				}
 
-				//---- button1 ----
-				button1.setText("text");
-				button1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				//---- runSimbadButton ----
+				runSimbadButton.setText("Run SIMBAD Query");
+				runSimbadButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+				//---- saveQueryButton ----
+				saveQueryButton.setText("Save Query Data");
+				saveQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 				GroupLayout targetTabLayout = new GroupLayout(targetTab);
 				targetTab.setLayout(targetTabLayout);
@@ -610,17 +655,22 @@ public class ViewerUI extends JFrame {
 						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(targetTabLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(button1, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(743, Short.MAX_VALUE))
+							.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+							.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(613, Short.MAX_VALUE))
 				);
 				targetTabLayout.setVerticalGroup(
 					targetTabLayout.createParallelGroup()
 						.addGroup(targetTabLayout.createSequentialGroup()
 							.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-							.addComponent(button1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+							.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+								.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+								.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())
 				);
+				targetTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {runSimbadButton, saveQueryButton});
 			}
 			tabbedPane1.addTab("Target", targetTab);
 
@@ -1088,13 +1138,13 @@ public class ViewerUI extends JFrame {
 					);
 				}
 
-				//---- saveButton ----
-				saveButton.setText("Save");
-				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				//---- saveObserverButton ----
+				saveObserverButton.setText("Save");
+				saveObserverButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-				//---- updateButton ----
-				updateButton.setText("Update Params");
-				updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				//---- updateParamsButton ----
+				updateParamsButton.setText("Update Params");
+				updateParamsButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 				GroupLayout observerTabLayout = new GroupLayout(observerTab);
 				observerTab.setLayout(observerTabLayout);
@@ -1102,24 +1152,24 @@ public class ViewerUI extends JFrame {
 					observerTabLayout.createParallelGroup()
 						.addGroup(observerTabLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+							.addComponent(updateParamsButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addComponent(saveObserverButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(613, Short.MAX_VALUE))
 						.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
-				observerTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {saveButton, updateButton});
+				observerTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {saveObserverButton, updateParamsButton});
 				observerTabLayout.setVerticalGroup(
 					observerTabLayout.createParallelGroup()
 						.addGroup(observerTabLayout.createSequentialGroup()
 							.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addGroup(observerTabLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addComponent(updateParamsButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+								.addComponent(saveObserverButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 							.addContainerGap())
 				);
-				observerTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {saveButton, updateButton});
+				observerTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {saveObserverButton, updateParamsButton});
 			}
 			tabbedPane1.addTab("Observer", observerTab);
 		}
@@ -1187,7 +1237,8 @@ public class ViewerUI extends JFrame {
 	private JLabel simbadMagRLabel;
 	private JLabel simbadMagILabel;
 	private JPanel panel2;
-	private JButton button1;
+	private JButton runSimbadButton;
+	private JButton saveQueryButton;
 	private JPanel TAB2;
 	private JPanel panel6;
 	private JButton button3;
@@ -1242,7 +1293,7 @@ public class ViewerUI extends JFrame {
 	private JTextField darkCurrentField;
 	private JLabel label32;
 	private JTextField readoutNoiseField;
-	private JButton saveButton;
-	private JButton updateButton;
+	private JButton saveObserverButton;
+	private JButton updateParamsButton;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

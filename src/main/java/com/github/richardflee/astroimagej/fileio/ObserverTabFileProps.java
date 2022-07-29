@@ -9,11 +9,12 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
 public class ObserverTabFileProps {
 
-	private static final String CLASS_PROPS_ID = "observertab.";
+	private static final String CLASS_PROPS_ID = "observer_tab.";
 
 	private static final String OBSERVER_CODE = CLASS_PROPS_ID.concat("observerCode");
 	private static final String OBSERVER_NAME = CLASS_PROPS_ID.concat("observerName");
@@ -70,10 +71,12 @@ public class ObserverTabFileProps {
 			prop.store(output, null);
 		} catch (IOException io) {
 			var message = String.format("File write error:%s", AijPropsReadWriter.getPropertiesFilePath());
+			JOptionPane.showMessageDialog(null, message);
 		}
 
 	}
 
+	
 	public static Observer readProerties() {
 
 		var observer = new Observer();
