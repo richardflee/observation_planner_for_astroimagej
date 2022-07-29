@@ -100,7 +100,7 @@ public class ObserverTab implements ObserverTabListener {
 		save = viewer.getSaveObserverButton();
 		update = viewer.getUpdateParamsButton();
 
-		setUpActionHandlers();		
+		setUpActionListeners();		
 	}
 	
 	@Override
@@ -181,7 +181,7 @@ public class ObserverTab implements ObserverTabListener {
 		return observer;
 	}
 
-	private void setUpActionHandlers() {
+	private void setUpActionListeners() {
 
 		// observer
 		codeText.addActionListener(e -> nameText.requestFocus());
@@ -252,7 +252,7 @@ public class ObserverTab implements ObserverTabListener {
 	
 	private class VerifyTextFields {
 		
-		VerifyTextFields() { }
+//		VerifyTextFields() { }
 		private boolean verifyAperture() {
 			var isValid = InputsVerifier.isPositiveDecimal(apertureText.getText());
 			if (isValid) {

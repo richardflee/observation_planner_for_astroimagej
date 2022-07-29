@@ -49,13 +49,11 @@ public class Main {
 			var observer = ObserverTabFileProps.readProerties();
 			CatalogQuery catalogQuery = TargetTabFileProps.readProerties();
 			
-			System.exit(0);
-			
 			// User  interface
 			var viewerUI = new ViewerUI();
-			viewerUI.observertab.setObservationSiteData(site);
-			viewerUI.observertab.setNoiseData(noiseData);
-			viewerUI.observertab.setObserverData(observer);
+			viewerUI.observer_tab.setObservationSiteData(site);
+			viewerUI.observer_tab.setNoiseData(noiseData);
+			viewerUI.observer_tab.setObserverData(observer);
 			
 			// Plan catalogUi = new CatalogUI(handler, ctm);
 			

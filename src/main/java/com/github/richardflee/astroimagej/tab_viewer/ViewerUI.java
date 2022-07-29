@@ -31,12 +31,14 @@ import javax.swing.border.TitledBorder;
 public class ViewerUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	public ObserverTab observertab;
+	public ObserverTab observer_tab;
+	public TargetTab target_tab;
 	
 	public ViewerUI() {
 		initComponents();
 		
-		this.observertab = new ObserverTab(this);
+		this.observer_tab = new ObserverTab(this);
+		this.target_tab = new TargetTab(this);
 		
 	}
 	
