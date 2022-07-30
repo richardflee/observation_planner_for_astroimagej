@@ -31,10 +31,9 @@ public class ObserverTabFileProps {
 	private static final String VERT_ARRAY_SIZE = CLASS_PROPS_ID.concat("vertArraySize");
 
 	public static void writeProperties(Observer observer) {
+
+		Properties prop = AijPropsReadWriter.getPlannerProps();
 		try (OutputStream output = new FileOutputStream(AijPropsReadWriter.getPropertiesFilePath())) {
-
-			Properties prop = new Properties();
-
 			var strVal = observer.getObserverCode();
 			prop.setProperty(OBSERVER_CODE, strVal);
 

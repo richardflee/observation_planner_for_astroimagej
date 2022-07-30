@@ -1,14 +1,13 @@
 package com.github.richardflee.astroimagej.fileio;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import javax.swing.JOptionPane;
+import java.util.Properties;
 
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.Observer;
@@ -16,15 +15,21 @@ import com.github.richardflee.astroimagej.data_objects.Observer;
 public class AijPropsReadWriter {
 
 	private static final String PLANNER_PROPERTIES_FILE = "AIJ_Planner.properties";
+	
+	
+	public static Properties getPlannerProps() {
+		Properties prop = new Properties();
+		try (InputStream input = new FileInputStream(AijPropsReadWriter.getPropertiesFilePath())) {			
+			prop.load(input);			
+		} catch (IOException ex) {
+			System.out.println("error");
+			// error dialog
+		}
+		
+		return prop;
+	}
 
 	public static void writeDefaultPropsFile() {
-
-//		try (OutputStream output = new FileOutputStream(getPropertiesFilePath())) {
-//			
-//		} catch (IOException io) {
-//			var message = String.format("Properties file error: \n%s", getPropertiesFilePath());
-//			JOptionPane.showMessageDialog(null, message);
-//		}
 		
 		Path x = Paths.get(getPropertiesFilePath());
 		try {
