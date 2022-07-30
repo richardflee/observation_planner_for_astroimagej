@@ -201,7 +201,7 @@ public class ObserverTab implements ObserverTabListener {
 		vertArrayText.addActionListener(e -> verifier.verifyVertArraySize());
 
 		// update & save
-		update.addActionListener(e -> verifier.updateAll());
+		update.addActionListener(e -> verifier.updateObserverTabInputs());
 		save.addActionListener(e -> {
 			ObserverTabFileProps.writeProperties(this.getObserverData());
 			JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
@@ -333,7 +333,7 @@ public class ObserverTab implements ObserverTabListener {
 		}	
 		
 		 // update inputs, compute pixel asec and fov params
-		private void updateAll() {
+		private void updateObserverTabInputs() {
 	
 			boolean isValid =  verifyAperture() && verifyFocalLength()
 					&& verfiyHorizPixelSize() && verifyVertPixelSize()

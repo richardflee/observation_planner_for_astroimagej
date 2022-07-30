@@ -47,13 +47,15 @@ public class Main {
 			
 			// creates aij_planner data objects
 			var observer = ObserverTabFileProps.readProerties();
-			CatalogQuery catalogQuery = TargetTabFileProps.readProerties();
+			CatalogQuery query = TargetTabFileProps.readProerties();
 			
 			// User  interface
 			var viewerUI = new ViewerUI();
 			viewerUI.observer_tab.setObservationSiteData(site);
 			viewerUI.observer_tab.setNoiseData(noiseData);
 			viewerUI.observer_tab.setObserverData(observer);
+			
+			viewerUI.target_tab.setQueryData(query);
 			
 			// Plan catalogUi = new CatalogUI(handler, ctm);
 			

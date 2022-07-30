@@ -32,7 +32,7 @@ public class InputsVerifier {
 	 *     RA or DEC flag
 	 * @return true if input conforms to specified format, false otherwise
 	 */
-	public static boolean isValidCoords(String input, QueryEnum radec) {
+	private static boolean isValidCoords(String input, QueryEnum radec) {
 		// delete any whitespace chars
 		input = input.replaceAll("\\s+", "");
 
@@ -56,6 +56,15 @@ public class InputsVerifier {
 			rx = "^[+-]?" + rxDeg + rxMm + rxSs + rx; // dec +/-
 		}
 		return (input.trim().length() > 0) && input.matches(rx);
+	}
+	
+	
+	public static boolean isValidRaCoords(String input) {
+		return isValidCoords(input, QueryEnum.RA_HMS);
+	}
+	
+	public static boolean isValidDecCoords(String input) {
+		return isValidCoords(input, QueryEnum.DEC_DMS);
 	}
 
 	/*
