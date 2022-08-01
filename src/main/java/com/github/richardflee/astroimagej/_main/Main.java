@@ -13,7 +13,7 @@ import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
 import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
-import com.github.richardflee.astroimagej.tab_viewer.ViewerUI;
+import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 
 /**
@@ -50,7 +50,7 @@ public class Main {
 			CatalogQuery query = TargetTabFileProps.readProerties();
 			
 			// User  interface
-			var viewerUI = new ViewerUI();
+			var viewerUI = new ViewerUi();
 			viewerUI.observer_tab.setObservationSiteData(site);
 			viewerUI.observer_tab.setNoiseData(noiseData);
 			viewerUI.observer_tab.setObserverData(observer);

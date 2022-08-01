@@ -2,14 +2,19 @@ package com.github.richardflee.astroimagej.tab_viewer;
 
 import java.awt.Color;
 import java.awt.event.ItemEvent;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.richardflee.astroimagej.catalogs.SimbadCatalog;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
+import com.github.richardflee.astroimagej.data_objects.SimbadResult;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
+import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
@@ -27,14 +32,17 @@ public class TargetTab implements CatalogDataListener {
 	private JComboBox catalogCombo;
 	private JComboBox filterCombo;
 	private String selectedCatalog;
+	
+	private DatePicker datePicker = null; 
 
 	private JButton save;
 	private JButton runQuey;
+	private JButton altitude;
 
-	private ViewerUI viewer;
+	private ViewerUi viewer;
 	private VerifyTextFields verifier;
 
-	public TargetTab(ViewerUI viewer) {
+	public TargetTab(ViewerUi viewer) {
 
 		this.viewer = viewer;
 		this.verifier = new VerifyTextFields();
@@ -53,9 +61,14 @@ public class TargetTab implements CatalogDataListener {
 
 		this.filterCombo = viewer.getFilterCombo();
 		populateFilterCombo(null);
+		
+		this.datePicker = new DatePicker();
+		this.datePicker.setDate(LocalDate.now());
+		viewer.getDatePickerPanel().add(this.datePicker);
 
 		this.save = viewer.getSaveQueryButton();
 		this.runQuey = viewer.getRunSimbadButton();
+		this.altitude = viewer.getAltitudePlotButton();
 
 		setupActionListeners();
 	}
@@ -71,11 +84,49 @@ public class TargetTab implements CatalogDataListener {
 
 		// handles change in selected catalog (VSP, APASS ..)
 		catalogCombo.addItemListener(ie -> selectCatalog(ie));
+		
+		this.datePicker.addDateChangeListener(e -> System.out.println(e.getNewDate().toString()));
+
+		// save query data button
 		save.addActionListener(e -> {
-			TargetTabFileProps.writeProperties(this.getQueryData());
-			JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
-			
+			if (verifier.verifyAllTextInputs()) {
+				TargetTabFileProps.writeProperties(this.getQueryData());
+				JOptionPane.showMessageDialog(null, AijPropsReadWriter.savedFileMessage());
+			}
 		});
+
+		runQuey.addActionListener(e -> {
+			if (verifier.verifyAllTextInputs()) {
+				var message = this.runSimbadQuery();				
+				JOptionPane.showMessageDialog(null, message);
+			}
+		});
+		
+		altitude.addActionListener(e -> System.out.println("altitude"));
+	}
+	
+	private String runSimbadQuery() {
+		var query = this.getQueryData();
+		var message = "";
+
+		// run simbad query, raises SimbadNotFound exception if no match to user input
+		// objectId
+		SimbadResult simbadResult = null;
+		try {
+			simbadResult = new SimbadCatalog().runQuery(query);
+			new SimbadPanel(viewer).setSimbadData(simbadResult);
+			
+			TargetTabFileProps.writeProperties(this.getQueryData());
+			message = String.format("Updated SIMBAD Data fields for ObjecId: %s\n", query.getObjectId());
+			message += AijPropsReadWriter.savedFileMessage();
+			
+		} catch (SimbadNotFoundException se) {
+			simbadResult = null;
+			message = String.format("ObjectId field: %s\n not found in SIMBAD database", query.getObjectId());
+		}				
+		
+		return message;
+		
 	}
 
 	@Override
@@ -239,7 +290,7 @@ public class TargetTab implements CatalogDataListener {
 			return isValid;
 		}
 
-		private boolean verifyTargetTabInputs() {
+		private boolean verifyAllTextInputs() {
 			var isValid = verifyObjectId() && verifyRaHms() && verifyFov() && verifyFov() && verifyMagLimit();
 			if (!isValid) {
 				var message = "At least one data entry is invalid";
@@ -247,7 +298,29 @@ public class TargetTab implements CatalogDataListener {
 			}
 			return isValid;
 		}
+	}
 
+	public static void main(String[] args) {
+
+		var viewer = new ViewerUi();
+		// var dataTab = new TargetDataTab(viewer);
+		var simbadTab = new SimbadPanel(viewer);
+
+		var simbad = new SimbadCatalog();
+		SimbadResult simbadResult = null;
+		var query = new CatalogQuery();
+		// run simbad query, raises EimbadNotFound exception if no match to user input
+		// objectId
+		try {
+			simbadResult = simbad.runQuery(query);
+		} catch (SimbadNotFoundException se) {
+			simbadResult = null;
+		}
+
+		simbadTab.setSimbadData(simbadResult);
+
+		System.out.println("Simbad result for default catalog query:");
+		System.out.println(simbadResult.toString());
 	}
 
 }

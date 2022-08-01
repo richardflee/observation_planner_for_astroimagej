@@ -32,6 +32,13 @@
 			<version>2.4</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker -->
+		<dependency>
+			<groupId>com.github.lgooddatepicker</groupId>
+			<artifactId>LGoodDatePicker</artifactId>
+			<version>11.2.1</version>
+		</dependency>
+
 		<!-- JUnit5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

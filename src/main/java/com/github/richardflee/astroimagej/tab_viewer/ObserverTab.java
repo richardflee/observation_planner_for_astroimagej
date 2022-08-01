@@ -13,9 +13,9 @@ import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
-import com.github.richardflee.astroimagej.listeners.ObserverTabListener;
+import com.github.richardflee.astroimagej.listeners.ObserverDataListener;
 
-public class ObserverTab implements ObserverTabListener {
+public class ObserverTab implements ObserverDataListener {
 
 	private JTextField codeText;
 	private JTextField nameText;
@@ -57,12 +57,12 @@ public class ObserverTab implements ObserverTabListener {
 	private JButton save;
 	private JButton update;
 	
-	private ViewerUI viewer;
+	private ViewerUi viewer;
 	private VerifyTextFields verifier;
 	
 	public ObserverTab() {}
 	
-	public ObserverTab(ViewerUI viewer) {
+	public ObserverTab(ViewerUi viewer) {
 		
 		this.viewer = viewer;
 		this.verifier = new VerifyTextFields();
@@ -201,10 +201,13 @@ public class ObserverTab implements ObserverTabListener {
 		vertArrayText.addActionListener(e -> verifier.verifyVertArraySize());
 
 		// update & save
-		update.addActionListener(e -> verifier.updateObserverTabInputs());
+		update.addActionListener(e -> verifier.verifyAllTextInputs());
+		
 		save.addActionListener(e -> {
-			ObserverTabFileProps.writeProperties(this.getObserverData());
-			JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
+			if (verifier.verifyAllTextInputs() == true) {
+				ObserverTabFileProps.writeProperties(this.getObserverData());
+				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
+			}
 		});
 	}
 	
@@ -333,7 +336,7 @@ public class ObserverTab implements ObserverTabListener {
 		}	
 		
 		 // update inputs, compute pixel asec and fov params
-		private void updateObserverTabInputs() {
+		private boolean verifyAllTextInputs() {
 	
 			boolean isValid =  verifyAperture() && verifyFocalLength()
 					&& verfiyHorizPixelSize() && verifyVertPixelSize()
@@ -345,6 +348,7 @@ public class ObserverTab implements ObserverTabListener {
 				var message = "At least one data entry is invalid";
 				JOptionPane.showMessageDialog(null, message);
 			}
+			return isValid;
 		}
 	}
 	

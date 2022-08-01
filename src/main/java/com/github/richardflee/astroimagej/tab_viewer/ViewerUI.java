@@ -4,13 +4,17 @@
 
 package com.github.richardflee.astroimagej.tab_viewer;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import javax.swing.*;
+import java.time.LocalDate;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,23 +26,36 @@ import javax.swing.LayoutStyle;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import com.github.lgooddatepicker.components.DatePicker;
 
 /**
  * @author Richard Lee
  */
-public class ViewerUI extends JFrame {
+public class ViewerUi extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+//	private DatePicker datePicker = null;
+	
 	
 	public ObserverTab observer_tab;
 	public TargetTab target_tab;
 	
-	public ViewerUI() {
+	public ViewerUi() {
 		initComponents();
 		
 		this.observer_tab = new ObserverTab(this);
 		this.target_tab = new TargetTab(this);
+		
+//		this.datePicker = new DatePicker();
+//		this.datePicker.setDate(LocalDate.now());
+//		this.datePickerPanel.add(this.datePicker);
+		
+		
+		
 		
 	}
 	
@@ -193,6 +210,42 @@ public class ViewerUI extends JFrame {
 		return isSaveDssCheckBox;
 	}
 
+	public JLabel getSimbadRaLabel() {
+		return simbadRaLabel;
+	}
+
+	public JLabel getSimbadDecLabel() {
+		return simbadDecLabel;
+	}
+
+	public JLabel getSimbadMagBLabel() {
+		return simbadMagBLabel;
+	}
+
+	public JLabel getSimbadMagVLabel() {
+		return simbadMagVLabel;
+	}
+
+	public JLabel getSimbadMagRLabel() {
+		return simbadMagRLabel;
+	}
+
+	public JLabel getSimbadMagILabel() {
+		return simbadMagILabel;
+	}
+
+	public JLabel getSimbadIdLabel() {
+		return simbadIdLabel;
+	}
+
+	public JButton getAltitudePlotButton() {
+		return altitudePlotButton;
+	}
+
+	public JPanel getDatePickerPanel() {
+		return datePickerPanel;
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
@@ -238,6 +291,9 @@ public class ViewerUI extends JFrame {
 		panel2 = new JPanel();
 		runSimbadButton = new JButton();
 		saveQueryButton = new JButton();
+		datePickerPanel = new JPanel();
+		label6 = new JLabel();
+		altitudePlotButton = new JButton();
 		TAB2 = new JPanel();
 		panel6 = new JPanel();
 		button3 = new JButton();
@@ -579,7 +635,7 @@ public class ViewerUI extends JFrame {
 										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(idLabel5)
 											.addComponent(simbadMagILabel))
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addContainerGap(12, Short.MAX_VALUE))
 							);
 						}
 
@@ -600,7 +656,7 @@ public class ViewerUI extends JFrame {
 								.addGroup(panel1Layout.createSequentialGroup()
 									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
 						);
 					}
 
@@ -645,10 +701,27 @@ public class ViewerUI extends JFrame {
 				//---- runSimbadButton ----
 				runSimbadButton.setText("Run SIMBAD Query");
 				runSimbadButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				runSimbadButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
 
 				//---- saveQueryButton ----
 				saveQueryButton.setText("Save Query Data");
 				saveQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				saveQueryButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+				//======== datePickerPanel ========
+				{
+					datePickerPanel.setBorder(null);
+					datePickerPanel.setLayout(new FlowLayout());
+				}
+
+				//---- label6 ----
+				label6.setText("Start Night:");
+				label6.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+				//---- altitudePlotButton ----
+				altitudePlotButton.setText("Altitude Plot");
+				altitudePlotButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				altitudePlotButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
 
 				GroupLayout targetTabLayout = new GroupLayout(targetTab);
 				targetTab.setLayout(targetTabLayout);
@@ -660,17 +733,27 @@ public class ViewerUI extends JFrame {
 							.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(613, Short.MAX_VALUE))
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+							.addComponent(altitudePlotButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+							.addComponent(label6)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+							.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
 				);
 				targetTabLayout.setVerticalGroup(
 					targetTabLayout.createParallelGroup()
 						.addGroup(targetTabLayout.createSequentialGroup()
 							.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-								.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-								.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap())
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+							.addGroup(targetTabLayout.createParallelGroup()
+								.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+									.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+									.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+									.addComponent(label6)
+									.addComponent(altitudePlotButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+							.addGap(21, 21, 21))
 				);
 				targetTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {runSimbadButton, saveQueryButton});
 			}
@@ -1143,10 +1226,12 @@ public class ViewerUI extends JFrame {
 				//---- saveObserverButton ----
 				saveObserverButton.setText("Save");
 				saveObserverButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				saveObserverButton.setToolTipText("Saves Observer and Equipment inputs t AIJ_Planner.properties file");
 
 				//---- updateParamsButton ----
 				updateParamsButton.setText("Update Params");
 				updateParamsButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				updateParamsButton.setToolTipText("<html>\nUpdates Observer and Equipment inputs and computes Derived Parameters\n<p>Flags any invalid data entries</p>\n</html>");
 
 				GroupLayout observerTabLayout = new GroupLayout(observerTab);
 				observerTab.setLayout(observerTabLayout);
@@ -1241,6 +1326,9 @@ public class ViewerUI extends JFrame {
 	private JPanel panel2;
 	private JButton runSimbadButton;
 	private JButton saveQueryButton;
+	private JPanel datePickerPanel;
+	private JLabel label6;
+	private JButton altitudePlotButton;
 	private JPanel TAB2;
 	private JPanel panel6;
 	private JButton button3;
