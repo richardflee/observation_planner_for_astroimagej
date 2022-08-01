@@ -39,6 +39,14 @@
 			<version>11.2.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.5.3</version>
+			<!--$NO-MVN-MAN-VER$-->
+		</dependency>
+
 		<!-- JUnit5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
