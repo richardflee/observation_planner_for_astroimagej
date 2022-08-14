@@ -26,12 +26,15 @@ import com.github.richardflee.astroimagej.utils.AstroCoords;
 public class VisibilityPlotter {
 
 	private TimesConverter timesConverter = null;
+	
+	private ObservationSite site = null;
 
 	private JDialog trackDialog = null;
     private JDialog altitudeDialog = null;
     private static String chartTitle = null;
 
 	public VisibilityPlotter(ObservationSite site) {
+		this.site = site;
 		this.timesConverter = new TimesConverter(site);
 	}
 
@@ -44,7 +47,7 @@ public class VisibilityPlotter {
 		VisibilityPlotter.chartTitle = String.format("%s %s", AltAzmObject.getName(), civilDate.toString());
 		
 		// StarAlt plot
-		JFreeChart starAltChart = StarAltPlotter.createChart(altAzmObjects, this.timesConverter.getSite());
+		JFreeChart starAltChart = StarAltPlotter.createChart(altAzmObjects, this.site); //  this.timesConverter.getSite());
 		showAltitudeDialog(starAltChart);
 		
 		// StarTrack plot
@@ -82,9 +85,9 @@ public class VisibilityPlotter {
 
 	private List<AltAzmObject> getAltAzmObjects(BaseFieldObject fo, LocalDate civilDate) {
 
-		List<AltAzmObject> altAzmList = new ArrayList<>();
-		ObservationSite site = timesConverter.getSite();
-		AltAzmGenerator gen = new AltAzmGenerator(fo, site);
+		var altAzmList = new ArrayList<AltAzmObject>();
+		var site = timesConverter.getSite();
+		var gen = new AltAzmGenerator(fo, site);
 
 		// noon on starting night
 		LocalDateTime civilDateTime = LocalDateTime.of(civilDate, TimesConverter.LOCAL_TIME_NOON);

@@ -246,6 +246,10 @@ public class ViewerUi extends JFrame {
 		return datePickerPanel;
 	}
 
+	public JPanel getAltitudePlotPanel() {
+		return altitudePlotPanel;
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
@@ -288,7 +292,7 @@ public class ViewerUi extends JFrame {
 		simbadMagVLabel = new JLabel();
 		simbadMagRLabel = new JLabel();
 		simbadMagILabel = new JLabel();
-		panel2 = new JPanel();
+		altitudePlotPanel = new JPanel();
 		runSimbadButton = new JButton();
 		saveQueryButton = new JButton();
 		datePickerPanel = new JPanel();
@@ -660,20 +664,10 @@ public class ViewerUi extends JFrame {
 						);
 					}
 
-					//======== panel2 ========
+					//======== altitudePlotPanel ========
 					{
-						panel2.setBorder(new EtchedBorder());
-
-						GroupLayout panel2Layout = new GroupLayout(panel2);
-						panel2.setLayout(panel2Layout);
-						panel2Layout.setHorizontalGroup(
-							panel2Layout.createParallelGroup()
-								.addGap(0, 620, Short.MAX_VALUE)
-						);
-						panel2Layout.setVerticalGroup(
-							panel2Layout.createParallelGroup()
-								.addGap(0, 0, Short.MAX_VALUE)
-						);
+						altitudePlotPanel.setBorder(new EtchedBorder());
+						altitudePlotPanel.setLayout(new FlowLayout());
 					}
 
 					GroupLayout targetPanelLayout = new GroupLayout(targetPanel);
@@ -684,7 +678,7 @@ public class ViewerUi extends JFrame {
 								.addContainerGap()
 								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addContainerGap())
 					);
 					targetPanelLayout.setVerticalGroup(
@@ -693,7 +687,7 @@ public class ViewerUi extends JFrame {
 								.addContainerGap()
 								.addGroup(targetPanelLayout.createParallelGroup()
 									.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addContainerGap())
 					);
 				}
@@ -1323,7 +1317,7 @@ public class ViewerUi extends JFrame {
 	private JLabel simbadMagVLabel;
 	private JLabel simbadMagRLabel;
 	private JLabel simbadMagILabel;
-	private JPanel panel2;
+	private JPanel altitudePlotPanel;
 	private JButton runSimbadButton;
 	private JButton saveQueryButton;
 	private JPanel datePickerPanel;

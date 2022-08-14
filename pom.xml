@@ -47,6 +47,14 @@
 			<!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.knowm.xchart/xchart -->
+		<dependency>
+			<groupId>org.knowm.xchart</groupId>
+			<artifactId>xchart</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+
+
 		<!-- JUnit5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

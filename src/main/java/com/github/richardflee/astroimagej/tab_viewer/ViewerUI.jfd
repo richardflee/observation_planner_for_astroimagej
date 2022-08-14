@@ -18,8 +18,8 @@ new FormModel {
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p:263:p, space :::p, comp panel2:::::x, space :::p}}"
-						"$verticalGroup": "par l {seq l {space :::p, par l {comp panel1:::::x, comp panel2:::::x}, space :::p}}"
+						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p:263:p, space :::p, comp altitudePlotPanel:::::x, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :::p, par l {comp panel1:::::x, comp altitudePlotPanel:::::x}, space :::p}}"
 					} ) {
 						name: "targetPanel"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -238,12 +238,12 @@ new FormModel {
 								} )
 							} )
 						} )
-						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {space :0:620:x}"
-							"$verticalGroup": "par l {space :0:0:x}"
-						} ) {
-							name: "panel2"
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+							name: "altitudePlotPanel"
 							"border": new javax.swing.border.EtchedBorder( 1, null, null )
+							auxiliary() {
+								"JavaCodeGenerator.variableGetter": true
+							}
 						} )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {

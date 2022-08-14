@@ -65,6 +65,9 @@ public class TargetTab implements CatalogDataListener {
 		this.datePicker = new DatePicker();
 		this.datePicker.setDate(LocalDate.now());
 		viewer.getDatePickerPanel().add(this.datePicker);
+		
+		// viewer.getAltitudePlotPanel().add(datePicker);
+		
 
 		this.save = viewer.getSaveQueryButton();
 		this.runQuey = viewer.getRunSimbadButton();
