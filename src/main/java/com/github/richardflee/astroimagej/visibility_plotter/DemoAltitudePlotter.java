@@ -5,6 +5,7 @@
 package com.github.richardflee.astroimagej.visibility_plotter;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -18,13 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javax.swing.*;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -48,7 +53,6 @@ public class DemoAltitudePlotter extends JFrame {
 	
 	private final static String ALTITUDE_SERIES = "Altitude";
 	private final static int HINT_Y = 30;
-	public final static int MINS_IN_DAY = 24 * 60;
 	
 	private LocalDateTime startDate = null;
 	private List<Integer> xData = null;
@@ -57,9 +61,29 @@ public class DemoAltitudePlotter extends JFrame {
 	private XYChart xyChart = null;
 	private XChartPanel<XYChart> chartPanel = null;
 	
+	private Solar solar = null;
+	
+	
 	public DemoAltitudePlotter() {
-		
+				
 		initComponents();
+	
+		this.xyChart = new XYChartBuilder().title("pending..")
+				.xAxisTitle("Local Site Time (hr)")
+				.yAxisTitle("Altitude (deg)")
+				.build();
+		
+		var styler = this.xyChart.getStyler();
+		styler.setYAxisMin(0.0);
+		styler.setYAxisMax(90.0);
+		styler.setLegendVisible(false);
+		styler.setYAxisTickMarkSpacingHint(HINT_Y);
+		styler.setCursorEnabled(false);
+		
+		this.chartPanel = new XChartPanel<>(xyChart);
+		
+		demoPlotPanel.add(chartPanel, BorderLayout.CENTER);
+		
 		
 		okButton.addActionListener(e -> {
 			JOptionPane.showMessageDialog(null, "here i am");
@@ -80,24 +104,10 @@ public class DemoAltitudePlotter extends JFrame {
 			this.xyChart.addAnnotation( new AnnotationLine(12*60, true, false));
 			this.chartPanel.revalidate();
 			this.chartPanel.repaint();
-			
 		});
 		
-		this.xyChart = new XYChartBuilder().title("pending..")
-				.xAxisTitle("Local Site Time (hr)")
-				.yAxisTitle("Altitude (deg)")
-				.build();
 		
-		var styler = this.xyChart.getStyler();
-		styler.setYAxisMin(0.0);
-		styler.setYAxisMax(90.0);
-		styler.setLegendVisible(false);
-		styler.setYAxisTickMarkSpacingHint(HINT_Y);
-		styler.setCursorEnabled(false);
 		
-		this.chartPanel = new XChartPanel<>(xyChart);
-		
-		demoPlotPanel.add(chartPanel, BorderLayout.CENTER);
 		
 	}
 	
@@ -129,6 +139,7 @@ public class DemoAltitudePlotter extends JFrame {
 	
 	public static void main(String[] args) {
 		
+		var plotter = new DemoAltitudePlotter();
 		// site
 		var siteLong = -85.5; // W
 		var siteLat = 38.33; // N
@@ -146,6 +157,15 @@ public class DemoAltitudePlotter extends JFrame {
 		var startDateTime = LocalDateTime.of(startDate, TimesConverter.LOCAL_TIME_NOON);
 		System.out.println(startDateTime.toString());
 		
+		// startDate solar times
+		var solar = new Solar(site);
+		var solarTimes = solar.getCivilSunTimes(startDate);
+		plotter.sunSetField.setText(solarTimes.getCivilSunSetValue());
+		plotter.twilightEndField.setText(solarTimes.getCivilTwilightEndsValue());
+		plotter.twilightStartField.setText(solarTimes.getCivilTwilightStartsValue());
+		plotter.sunRiseField.setText(solarTimes.getCivilSunRiseValue());
+		
+		
 		// times converter, CoordsConverter
 		var tc = new TimesConverter(site);
 		var coords = new CoordsConverter(fo, site);
@@ -154,14 +174,13 @@ public class DemoAltitudePlotter extends JFrame {
 		var utc0 = tc.convertCivilDateTimeToUtc(startDateTime);
 		
 		var yData = new ArrayList<Double>();
-		for (int minutes = 0; minutes < MINS_IN_DAY; minutes++) {
+		for (int minutes = 0; minutes < TimesConverter.MINS_IN_DAY; minutes++) {
 			var t = utc0.plusMinutes(minutes);			
 			var altDeg = coords.getAltAzm(t).get(CoordsEnum.ALT_DEG);
 			yData.add(altDeg);
 		}
 		
 		EventQueue.invokeLater(() -> {
-			var plotter = new DemoAltitudePlotter();
 			plotter.updateChart(startDateTime, yData);
 		});
 		
@@ -177,7 +196,15 @@ public class DemoAltitudePlotter extends JFrame {
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		demoPlotPanel = new JPanel();
-		buttonBar = new JPanel();
+		panel11 = new JPanel();
+		label24 = new JLabel();
+		label26 = new JLabel();
+		sunSetField = new JTextField();
+		twilightEndField = new JTextField();
+		label27 = new JLabel();
+		twilightStartField = new JTextField();
+		label25 = new JLabel();
+		sunRiseField = new JTextField();
 		okButton = new JButton();
 		cancelButton = new JButton();
 
@@ -201,39 +228,128 @@ public class DemoAltitudePlotter extends JFrame {
 					demoPlotPanel.setLayout(new BorderLayout());
 				}
 
+				//======== panel11 ========
+				{
+					panel11.setBorder(new TitledBorder("Civil Solar Times "));
+					panel11.setPreferredSize(new Dimension(190, 164));
+
+					//---- label24 ----
+					label24.setText("Sunset:");
+
+					//---- label26 ----
+					label26.setText("Twi End:");
+
+					//---- sunSetField ----
+					sunSetField.setToolTipText("<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>");
+					sunSetField.setEditable(false);
+					sunSetField.setText("00:00");
+
+					//---- twilightEndField ----
+					twilightEndField.setToolTipText("<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>");
+					twilightEndField.setEditable(false);
+					twilightEndField.setText("00:00");
+
+					//---- label27 ----
+					label27.setText("Twi Start:");
+
+					//---- twilightStartField ----
+					twilightStartField.setToolTipText("<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>");
+					twilightStartField.setEditable(false);
+					twilightStartField.setText("00:00");
+
+					//---- label25 ----
+					label25.setText("Sunrise");
+
+					//---- sunRiseField ----
+					sunRiseField.setToolTipText("<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>");
+					sunRiseField.setEditable(false);
+					sunRiseField.setText("00:00");
+
+					GroupLayout panel11Layout = new GroupLayout(panel11);
+					panel11.setLayout(panel11Layout);
+					panel11Layout.setHorizontalGroup(
+						panel11Layout.createParallelGroup()
+							.addGroup(panel11Layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(label24)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label26)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label27)
+								.addGap(5, 5, 5)
+								.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label25)
+								.addGap(5, 5, 5)
+								.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(63, Short.MAX_VALUE))
+					);
+					panel11Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {sunSetField, twilightEndField});
+					panel11Layout.setVerticalGroup(
+						panel11Layout.createParallelGroup()
+							.addGroup(panel11Layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(panel11Layout.createParallelGroup()
+									.addGroup(panel11Layout.createSequentialGroup()
+										.addGap(3, 3, 3)
+										.addComponent(label25))
+									.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+										.addGroup(panel11Layout.createParallelGroup()
+											.addGroup(panel11Layout.createSequentialGroup()
+												.addGap(3, 3, 3)
+												.addComponent(label27))
+											.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label24)
+											.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label26)
+											.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+				}
+
+				//---- okButton ----
+				okButton.setText("OK");
+
+				//---- cancelButton ----
+				cancelButton.setText("Cancel");
+
 				GroupLayout contentPanelLayout = new GroupLayout(contentPanel);
 				contentPanel.setLayout(contentPanelLayout);
 				contentPanelLayout.setHorizontalGroup(
 					contentPanelLayout.createParallelGroup()
-						.addComponent(demoPlotPanel, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+						.addComponent(demoPlotPanel, GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+						.addGroup(contentPanelLayout.createSequentialGroup()
+							.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+							.addGroup(contentPanelLayout.createParallelGroup()
+								.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+								.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+							.addGap(10, 10, 10))
 				);
+				contentPanelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {cancelButton, okButton});
 				contentPanelLayout.setVerticalGroup(
 					contentPanelLayout.createParallelGroup()
-						.addComponent(demoPlotPanel, GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+						.addGroup(contentPanelLayout.createSequentialGroup()
+							.addComponent(demoPlotPanel, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+							.addGroup(contentPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+								.addGroup(contentPanelLayout.createSequentialGroup()
+									.addGap(18, 18, 18)
+									.addComponent(okButton)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(cancelButton))
+								.addGroup(contentPanelLayout.createSequentialGroup()
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(panel11, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
+							.addContainerGap())
 				);
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
-
-			//======== buttonBar ========
-			{
-				buttonBar.setBorder(new EmptyBorder(12, 0, 0, 0));
-				buttonBar.setLayout(new GridBagLayout());
-				((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
-				((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
-
-				//---- okButton ----
-				okButton.setText("OK");
-				buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 0, 5), 0, 0));
-
-				//---- cancelButton ----
-				cancelButton.setText("Cancel");
-				buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 0, 0), 0, 0));
-			}
-			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
 		pack();
@@ -246,7 +362,15 @@ public class DemoAltitudePlotter extends JFrame {
 	private JPanel dialogPane;
 	private JPanel contentPanel;
 	private JPanel demoPlotPanel;
-	private JPanel buttonBar;
+	private JPanel panel11;
+	private JLabel label24;
+	private JLabel label26;
+	protected JTextField sunSetField;
+	protected JTextField twilightEndField;
+	private JLabel label27;
+	protected JTextField twilightStartField;
+	private JLabel label25;
+	protected JTextField sunRiseField;
 	private JButton okButton;
 	private JButton cancelButton;
 	// JFormDesigner - End of variables declaration //GEN-END:variables

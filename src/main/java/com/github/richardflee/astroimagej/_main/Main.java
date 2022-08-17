@@ -50,21 +50,21 @@ public class Main {
 			CatalogQuery query = TargetTabFileProps.readProerties();
 			
 			// User  interface
-			var viewerUI = new ViewerUi();
-			viewerUI.observer_tab.setObservationSiteData(site);
-			viewerUI.observer_tab.setNoiseData(noiseData);
-			viewerUI.observer_tab.setObserverData(observer);
+			var viewer = new ViewerUi(site);
+			viewer.observer_tab.setObservationSiteData();
+			viewer.observer_tab.setNoiseData(noiseData);
+			viewer.observer_tab.setObserverData(observer);
 			
-			viewerUI.target_tab.setQueryData(query);
+			viewer.target_tab.setQueryData(query);
 			
 			// Plan catalogUi = new CatalogUI(handler, ctm);
 			
 //			
 //			// window title text
 			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_VERSION); 
-			viewerUI.setTitle(version);
+			viewer.setTitle(version);
 //			
-			viewerUI.setVisible(true);
+			viewer.setVisible(true);
 		}
 
 	public static void main(String[] args) {

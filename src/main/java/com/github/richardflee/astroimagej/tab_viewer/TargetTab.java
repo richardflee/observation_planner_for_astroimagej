@@ -12,7 +12,9 @@ import javax.swing.JTextField;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.richardflee.astroimagej.catalogs.SimbadCatalog;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
+import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.SimbadResult;
+import com.github.richardflee.astroimagej.data_objects.SolarTimes;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
@@ -20,8 +22,12 @@ import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
+import com.github.richardflee.astroimagej.visibility_plotter.Solar;
 
 public class TargetTab implements CatalogDataListener {
+	
+	private ObservationSite site = null;
+	private Solar solar = null;
 
 	private JTextField objectIdText;
 	private JTextField raText;
@@ -45,6 +51,12 @@ public class TargetTab implements CatalogDataListener {
 	public TargetTab(ViewerUi viewer) {
 
 		this.viewer = viewer;
+		
+		this.site = viewer.getSite();
+		this.solar = new Solar(site);
+		
+		setSolarTimes(solar.getCivilSunTimes(LocalDate.now()));
+		
 		this.verifier = new VerifyTextFields();
 
 		this.objectIdText = viewer.getObjectIdField();
@@ -66,12 +78,9 @@ public class TargetTab implements CatalogDataListener {
 		this.datePicker.setDate(LocalDate.now());
 		viewer.getDatePickerPanel().add(this.datePicker);
 		
-		// viewer.getAltitudePlotPanel().add(datePicker);
-		
 
 		this.save = viewer.getSaveQueryButton();
 		this.runQuey = viewer.getRunSimbadButton();
-		this.altitude = viewer.getAltitudePlotButton();
 
 		setupActionListeners();
 	}
@@ -88,7 +97,15 @@ public class TargetTab implements CatalogDataListener {
 		// handles change in selected catalog (VSP, APASS ..)
 		catalogCombo.addItemListener(ie -> selectCatalog(ie));
 		
-		this.datePicker.addDateChangeListener(e -> System.out.println(e.getNewDate().toString()));
+		this.datePicker.addDateChangeListener(e -> {
+			LocalDate startDate = e.getNewDate();
+			if (startDate != null) {
+				var solarTimes = solar.getCivilSunTimes(startDate);
+				setSolarTimes(solarTimes);
+			} else {
+				JOptionPane.showMessageDialog(null, "ERROR: No date selected");
+			}
+		});
 
 		// save query data button
 		save.addActionListener(e -> {
@@ -105,7 +122,6 @@ public class TargetTab implements CatalogDataListener {
 			}
 		});
 		
-		altitude.addActionListener(e -> System.out.println("altitude"));
 	}
 	
 	private String runSimbadQuery() {
@@ -154,11 +170,6 @@ public class TargetTab implements CatalogDataListener {
 
 	@Override
 	public CatalogQuery getQueryData() {
-		// // return null query if invalid input
-		// if (!verifyAllInputs()) {
-		// return null;
-		// }
-
 		// copy text field data
 		CatalogQuery query = new CatalogQuery();
 
@@ -174,6 +185,14 @@ public class TargetTab implements CatalogDataListener {
 		query.setMagBand(filterCombo.getSelectedItem().toString());
 
 		return query;
+	}
+	
+	@Override
+	public void setSolarTimes(SolarTimes solarTimes) {
+		this.viewer.getSunSetField().setText(solarTimes.getCivilSunSetValue());
+		this.viewer.getTwilightEndField().setText(solarTimes.getCivilTwilightEndsValue());
+		this.viewer.getTwilightStartField().setText(solarTimes.getCivilTwilightStartsValue());
+		this.viewer.getSunRiseField().setText(solarTimes.getCivilSunRiseValue());		
 	}
 
 	/*
@@ -305,7 +324,7 @@ public class TargetTab implements CatalogDataListener {
 
 	public static void main(String[] args) {
 
-		var viewer = new ViewerUi();
+		var viewer = new ViewerUi(null);
 		// var dataTab = new TargetDataTab(viewer);
 		var simbadTab = new SimbadPanel(viewer);
 

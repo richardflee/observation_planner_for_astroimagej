@@ -9,7 +9,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.time.LocalDate;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -27,10 +26,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.github.lgooddatepicker.components.DatePicker;
+import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 
 /**
  * @author Richard Lee
@@ -40,11 +38,15 @@ public class ViewerUi extends JFrame {
 	
 //	private DatePicker datePicker = null;
 	
+	private ObservationSite site = null;
 	
-	public ObserverTab observer_tab;
-	public TargetTab target_tab;
 	
-	public ViewerUi() {
+	public ObserverTab observer_tab = null;
+	public TargetTab target_tab = null;
+	
+	public ViewerUi(ObservationSite site) {
+		this.site = site;
+		
 		initComponents();
 		
 		this.observer_tab = new ObserverTab(this);
@@ -53,17 +55,15 @@ public class ViewerUi extends JFrame {
 //		this.datePicker = new DatePicker();
 //		this.datePicker.setDate(LocalDate.now());
 //		this.datePickerPanel.add(this.datePicker);
-		
-		
-		
-		
 	}
-	
-	
 	
 	
 	private void createUIComponents() {
 		// TODO: add custom component creation code here
+	}
+	
+	public ObservationSite getSite() {
+		return site;
 	}
 
 	public JTextField getHorizPixelSizeAsecField() {
@@ -238,16 +238,28 @@ public class ViewerUi extends JFrame {
 		return simbadIdLabel;
 	}
 
-	public JButton getAltitudePlotButton() {
-		return altitudePlotButton;
-	}
-
 	public JPanel getDatePickerPanel() {
 		return datePickerPanel;
 	}
 
 	public JPanel getAltitudePlotPanel() {
 		return altitudePlotPanel;
+	}
+
+	public JTextField getSunSetField() {
+		return sunSetField;
+	}
+
+	public JTextField getTwilightEndField() {
+		return twilightEndField;
+	}
+
+	public JTextField getTwilightStartField() {
+		return twilightStartField;
+	}
+
+	public JTextField getSunRiseField() {
+		return sunRiseField;
 	}
 
 	private void initComponents() {
@@ -297,7 +309,15 @@ public class ViewerUi extends JFrame {
 		saveQueryButton = new JButton();
 		datePickerPanel = new JPanel();
 		label6 = new JLabel();
-		altitudePlotButton = new JButton();
+		panel11 = new JPanel();
+		label33 = new JLabel();
+		label34 = new JLabel();
+		sunSetField = new JTextField();
+		twilightEndField = new JTextField();
+		label35 = new JLabel();
+		twilightStartField = new JTextField();
+		label36 = new JLabel();
+		sunRiseField = new JTextField();
 		TAB2 = new JPanel();
 		panel6 = new JPanel();
 		button3 = new JButton();
@@ -458,27 +478,24 @@ public class ViewerUi extends JFrame {
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(panel3Layout.createParallelGroup()
 											.addGroup(panel3Layout.createSequentialGroup()
-												.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+												.addGap(18, 18, 18)
 												.addComponent(isSaveDssCheckBox))
+											.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 											.addGroup(panel3Layout.createSequentialGroup()
+												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+													.addComponent(fovField, GroupLayout.Alignment.LEADING)
+													.addComponent(decField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+													.addComponent(raField, GroupLayout.Alignment.LEADING)
+													.addComponent(magLimitField))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 												.addGroup(panel3Layout.createParallelGroup()
-													.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-													.addGroup(panel3Layout.createSequentialGroup()
-														.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-															.addComponent(fovField, GroupLayout.Alignment.LEADING)
-															.addComponent(decField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-															.addComponent(raField, GroupLayout.Alignment.LEADING)
-															.addComponent(magLimitField))
-														.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-														.addGroup(panel3Layout.createParallelGroup()
-															.addComponent(label7)
-															.addComponent(label8)
-															.addComponent(label9)
-															.addComponent(label10)))
-													.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-												.addGap(0, 0, Short.MAX_VALUE)))
-										.addContainerGap())
+													.addComponent(label7)
+													.addComponent(label8)
+													.addComponent(label9)
+													.addComponent(label10)))
+											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
 							panel3Layout.setVerticalGroup(
 								panel3Layout.createParallelGroup()
@@ -529,9 +546,9 @@ public class ViewerUi extends JFrame {
 											.addComponent(label11))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 											.addComponent(label12)
-											.addComponent(isSaveDssCheckBox))
+											.addComponent(isSaveDssCheckBox)
+											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
 						}
@@ -588,7 +605,7 @@ public class ViewerUi extends JFrame {
 							panel4Layout.setHorizontalGroup(
 								panel4Layout.createParallelGroup()
 									.addGroup(panel4Layout.createSequentialGroup()
-										.addContainerGap(12, Short.MAX_VALUE)
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addGroup(panel4Layout.createParallelGroup()
 											.addComponent(idLabel, GroupLayout.Alignment.TRAILING)
 											.addComponent(raLabel, GroupLayout.Alignment.TRAILING)
@@ -606,7 +623,7 @@ public class ViewerUi extends JFrame {
 											.addComponent(simbadMagVLabel)
 											.addComponent(simbadMagRLabel)
 											.addComponent(simbadMagILabel))
-										.addGap(0, 125, Short.MAX_VALUE))
+										.addGap(0, 0, Short.MAX_VALUE))
 							);
 							panel4Layout.setVerticalGroup(
 								panel4Layout.createParallelGroup()
@@ -639,7 +656,7 @@ public class ViewerUi extends JFrame {
 										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(idLabel5)
 											.addComponent(simbadMagILabel))
-										.addContainerGap(12, Short.MAX_VALUE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
 						}
 
@@ -647,20 +664,18 @@ public class ViewerUi extends JFrame {
 						panel1.setLayout(panel1Layout);
 						panel1Layout.setHorizontalGroup(
 							panel1Layout.createParallelGroup()
-								.addGroup(panel1Layout.createSequentialGroup()
-									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGap(0, 0, Short.MAX_VALUE))
-								.addGroup(panel1Layout.createSequentialGroup()
-									.addComponent(panel4, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGroup(GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+									.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+										.addComponent(panel3, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+										.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+									.addContainerGap())
 						);
-						panel1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {panel3, panel4});
 						panel1Layout.setVerticalGroup(
 							panel1Layout.createParallelGroup()
 								.addGroup(panel1Layout.createSequentialGroup()
 									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
 						);
 					}
 
@@ -676,9 +691,9 @@ public class ViewerUi extends JFrame {
 						targetPanelLayout.createParallelGroup()
 							.addGroup(targetPanelLayout.createSequentialGroup()
 								.addContainerGap()
-								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(altitudePlotPanel, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
 					);
 					targetPanelLayout.setVerticalGroup(
@@ -686,14 +701,14 @@ public class ViewerUi extends JFrame {
 							.addGroup(targetPanelLayout.createSequentialGroup()
 								.addContainerGap()
 								.addGroup(targetPanelLayout.createParallelGroup()
-									.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addContainerGap())
 					);
 				}
 
 				//---- runSimbadButton ----
-				runSimbadButton.setText("Run SIMBAD Query");
+				runSimbadButton.setText("SIMBAD Query");
 				runSimbadButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				runSimbadButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
 
@@ -712,10 +727,86 @@ public class ViewerUi extends JFrame {
 				label6.setText("Start Night:");
 				label6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-				//---- altitudePlotButton ----
-				altitudePlotButton.setText("Altitude Plot");
-				altitudePlotButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				altitudePlotButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+				//======== panel11 ========
+				{
+					panel11.setBorder(new TitledBorder("Civil Solar Times "));
+					panel11.setPreferredSize(new Dimension(190, 164));
+
+					//---- label33 ----
+					label33.setText("Sunset:");
+
+					//---- label34 ----
+					label34.setText("Twi End:");
+
+					//---- sunSetField ----
+					sunSetField.setText("00:00");
+					sunSetField.setEditable(false);
+
+					//---- twilightEndField ----
+					twilightEndField.setEditable(false);
+					twilightEndField.setText("00:00");
+
+					//---- label35 ----
+					label35.setText("Twi Start:");
+
+					//---- twilightStartField ----
+					twilightStartField.setEditable(false);
+					twilightStartField.setText("00:00");
+
+					//---- label36 ----
+					label36.setText("Sunrise");
+
+					//---- sunRiseField ----
+					sunRiseField.setEditable(false);
+					sunRiseField.setText("00:00");
+
+					GroupLayout panel11Layout = new GroupLayout(panel11);
+					panel11.setLayout(panel11Layout);
+					panel11Layout.setHorizontalGroup(
+						panel11Layout.createParallelGroup()
+							.addGroup(panel11Layout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(label33)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label34)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label35)
+								.addGap(5, 5, 5)
+								.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(label36)
+								.addGap(5, 5, 5)
+								.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+					panel11Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {sunRiseField, sunSetField, twilightEndField, twilightStartField});
+					panel11Layout.setVerticalGroup(
+						panel11Layout.createParallelGroup()
+							.addGroup(panel11Layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(panel11Layout.createParallelGroup()
+									.addGroup(panel11Layout.createSequentialGroup()
+										.addGap(3, 3, 3)
+										.addComponent(label36))
+									.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+										.addGroup(panel11Layout.createParallelGroup()
+											.addGroup(panel11Layout.createSequentialGroup()
+												.addGap(3, 3, 3)
+												.addComponent(label35))
+											.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label33)
+											.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label34)
+											.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					);
+				}
 
 				GroupLayout targetTabLayout = new GroupLayout(targetTab);
 				targetTab.setLayout(targetTabLayout);
@@ -724,17 +815,18 @@ public class ViewerUi extends JFrame {
 						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(targetTabLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+							.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(altitudePlotButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+							.addComponent(saveQueryButton)
+							.addGap(18, 18, 18)
 							.addComponent(label6)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+							.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+							.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
 							.addContainerGap())
 				);
+				targetTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {runSimbadButton, saveQueryButton});
 				targetTabLayout.setVerticalGroup(
 					targetTabLayout.createParallelGroup()
 						.addGroup(targetTabLayout.createSequentialGroup()
@@ -744,10 +836,10 @@ public class ViewerUi extends JFrame {
 								.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 									.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 									.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-									.addComponent(label6)
-									.addComponent(altitudePlotButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+									.addComponent(label6))
+								.addComponent(panel11, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 								.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-							.addGap(21, 21, 21))
+							.addContainerGap())
 				);
 				targetTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {runSimbadButton, saveQueryButton});
 			}
@@ -763,11 +855,11 @@ public class ViewerUi extends JFrame {
 					panel6.setLayout(panel6Layout);
 					panel6Layout.setHorizontalGroup(
 						panel6Layout.createParallelGroup()
-							.addGap(0, 913, Short.MAX_VALUE)
+							.addGap(0, 928, Short.MAX_VALUE)
 					);
 					panel6Layout.setVerticalGroup(
 						panel6Layout.createParallelGroup()
-							.addGap(0, 446, Short.MAX_VALUE)
+							.addGap(0, 460, Short.MAX_VALUE)
 					);
 				}
 
@@ -783,7 +875,7 @@ public class ViewerUi extends JFrame {
 						.addGroup(TAB2Layout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(button3, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(743, Short.MAX_VALUE))
+							.addContainerGap(758, Short.MAX_VALUE))
 				);
 				TAB2Layout.setVerticalGroup(
 					TAB2Layout.createParallelGroup()
@@ -943,7 +1035,7 @@ public class ViewerUi extends JFrame {
 											.addComponent(horizPixelSizeAsecField, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 											.addComponent(vertPixelSizeAsecField, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)))
-									.addContainerGap(53, Short.MAX_VALUE))
+									.addContainerGap(68, Short.MAX_VALUE))
 						);
 						systemParamsPanelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {horizFovAminField, horizPixelSizeAsecField, vertFovAminField, vertPixelSizeAsecField});
 						systemParamsPanelLayout.setVerticalGroup(
@@ -981,7 +1073,7 @@ public class ViewerUi extends JFrame {
 						);
 						observerNotesPanelLayout.setVerticalGroup(
 							observerNotesPanelLayout.createParallelGroup()
-								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
 						);
 					}
 
@@ -1210,7 +1302,7 @@ public class ViewerUi extends JFrame {
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addGroup(observerPanelLayout.createSequentialGroup()
-								.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+								.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(systemParamsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
@@ -1236,7 +1328,7 @@ public class ViewerUi extends JFrame {
 							.addComponent(updateParamsButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addComponent(saveObserverButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(613, Short.MAX_VALUE))
+							.addContainerGap(628, Short.MAX_VALUE))
 						.addComponent(observerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 				observerTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {saveObserverButton, updateParamsButton});
@@ -1322,7 +1414,15 @@ public class ViewerUi extends JFrame {
 	private JButton saveQueryButton;
 	private JPanel datePickerPanel;
 	private JLabel label6;
-	private JButton altitudePlotButton;
+	private JPanel panel11;
+	private JLabel label33;
+	private JLabel label34;
+	protected JTextField sunSetField;
+	protected JTextField twilightEndField;
+	private JLabel label35;
+	protected JTextField twilightStartField;
+	private JLabel label36;
+	protected JTextField sunRiseField;
 	private JPanel TAB2;
 	private JPanel panel6;
 	private JButton button3;

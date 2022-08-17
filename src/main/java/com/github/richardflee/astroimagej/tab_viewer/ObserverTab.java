@@ -17,6 +17,8 @@ import com.github.richardflee.astroimagej.listeners.ObserverDataListener;
 
 public class ObserverTab implements ObserverDataListener {
 
+	private ObservationSite site = null;
+	
 	private JTextField codeText;
 	private JTextField nameText;
 	private JTextField teleShortText;
@@ -65,6 +67,7 @@ public class ObserverTab implements ObserverDataListener {
 	public ObserverTab(ViewerUi viewer) {
 		
 		this.viewer = viewer;
+		this.site = viewer.getSite();
 		this.verifier = new VerifyTextFields();
 
 		codeText = viewer.getCodeField();
@@ -117,19 +120,15 @@ public class ObserverTab implements ObserverDataListener {
 	
 	
 	@Override
-	public void setObservationSiteData(ObservationSite site) {
-//		if (site == null) {
-//			site= new ObservationSite();
-//		}
+	public void setObservationSiteData() {
+		longitudeText.setText(this.site.getSiteLongDms());
+		eastWestText.setText(this.site.getSiteEastWest());
 		
-		longitudeText.setText(site.getSiteLongDms());
-		eastWestText.setText(site.getSiteEastWest());
+		latitudeText.setText(this.site.getSiteLatDms());
+		northSouthText.setText(this.site.getSiteNorthSouth());
 		
-		latitudeText.setText(site.getSiteLatDms());
-		northSouthText.setText(site.getSiteNorthSouth());
-		
-		altitudeText.setText(String.format("%4.0f", site.getSiteAlt()));		
-		utcOffsetText.setText(String.format("%3.1f", site.getUtcOffsetHr()));			
+		altitudeText.setText(String.format("%4.0f", this.site.getSiteAlt()));		
+		utcOffsetText.setText(String.format("%3.1f", this.site.getUtcOffsetHr()));			
 	}
 	
 	@Override

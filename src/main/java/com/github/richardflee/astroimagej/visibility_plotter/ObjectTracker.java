@@ -49,7 +49,7 @@ public class ObjectTracker {
 		var utc0 = timesConverter.convertCivilDateTimeToUtc(startDateTime);
 		
 		// compiles altitude array
-		for (int minutes = 0; minutes < DemoAltitudePlotter.MINS_IN_DAY; minutes++) {
+		for (int minutes = 0; minutes < TimesConverter.MINS_IN_DAY; minutes++) {
 			var utc = utc0.plusMinutes(minutes);			
 			// var altDeg = coords.getAltAzm(utc).get(CoordsEnum.ALT_DEG);
 			var altDeg = coords.getAltDeg(utc);

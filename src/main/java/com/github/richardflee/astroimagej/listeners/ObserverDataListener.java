@@ -9,7 +9,7 @@ public interface ObserverDataListener {
 	public Observer getObserverData();
 	public void setObserverData(Observer observer);
 	
-	public void setObservationSiteData(ObservationSite site);
+	public void setObservationSiteData();
 	
 	public void setNoiseData(NoiseData data);
 

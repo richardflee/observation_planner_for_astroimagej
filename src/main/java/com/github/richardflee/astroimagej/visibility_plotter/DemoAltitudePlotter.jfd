@@ -10,8 +10,8 @@ new FormModel {
 				name: "dialogPane"
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {comp demoPlotPanel::l::604:x}"
-					"$verticalGroup": "par l {comp demoPlotPanel::l::371:x}"
+					"$horizontalGroup": "par l {comp demoPlotPanel::::609:x, seq {comp panel11::::477:x, space u:::p, par l {comp okButton:4:l:p:110:p, comp cancelButton:4:l:p:112:p}, space :p:10:p}}"
+					"$verticalGroup": "par l {seq l {comp demoPlotPanel::::444:x, par l:::p {seq {space :p:18:p, comp okButton:::p::p, space :::x, comp cancelButton:::p::p}, seq {space u:::p, comp panel11:::p:60:p}}, space :::p}}"
 				} ) {
 					name: "contentPanel"
 					"preferredSize": new java.awt.Dimension( 850, 450 )
@@ -19,40 +19,83 @@ new FormModel {
 						name: "demoPlotPanel"
 						"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
 					} )
-				}, new FormLayoutConstraints( class java.lang.String ) {
-					"value": "Center"
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-					"$columnSpecs": "0:1.0, 80, 80"
-					"$rowSpecs": "0"
-					"$hGap": 5
-					"$vGap": 5
-				} ) {
-					name: "buttonBar"
-					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, comp label24:::p::p, space :::p, comp sunSetField:3::p:47:p, space u:::p, comp label26:::p::p, space :::p, comp twilightEndField:3::p:28:p, space u:::p, comp label27:::p::p, space :5:5:p, comp twilightStartField:::p:47:p, space u:::p, comp label25:::p::p, space :5:5:p, comp sunRiseField:::p:47:p, space ::63:x}}"
+						"$verticalGroup": "par l {seq l {space :::p, par l {seq {space :3:3:p, comp label25:::p::p}, comp sunRiseField:::p::p, par t {par l {seq {space :3:3:p, comp label27:::p::p}, comp twilightStartField:::p::p}, par b {comp label24::b:p::p, comp sunSetField::b:p::p, comp label26::b:p::p, comp twilightEndField::b:p::p}}}, space :::x}}"
+					} ) {
+						name: "panel11"
+						"border": new javax.swing.border.TitledBorder( "Civil Solar Times " )
+						"preferredSize": new java.awt.Dimension( 190, 164 )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label24"
+							"text": "Sunset:"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label26"
+							"text": "Twi End:"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "sunSetField"
+							"toolTipText": "<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>"
+							"editable": false
+							"text": "00:00"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 4
+							}
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "twilightEndField"
+							"toolTipText": "<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>"
+							"editable": false
+							"text": "00:00"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 4
+							}
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label27"
+							"text": "Twi Start:"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "twilightStartField"
+							"toolTipText": "<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>"
+							"editable": false
+							"text": "00:00"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 4
+							}
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label25"
+							"text": "Sunrise"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "sunRiseField"
+							"toolTipText": "<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>"
+							"editable": false
+							"text": "00:00"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 4
+							}
+						} )
+					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "okButton"
 						"text": "OK"
-					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-						"gridx": 1
-						"gridy": 0
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "cancelButton"
 						"text": "Cancel"
-					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-						"gridx": 2
-						"gridy": 0
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
-					"value": "South"
+					"value": "Center"
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 630, 460 )
+			"size": new java.awt.Dimension( 635, 580 )
 		} )
 	}
 }

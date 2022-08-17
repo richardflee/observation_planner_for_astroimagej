@@ -35,6 +35,7 @@ public class TimesConverter {
 
 	// century in days
 	public static final double C_DAYS = 36525.0;
+	public final static int MINS_IN_DAY = 24 * 60;
 
 	// LocalTime constants for preceding midnight and noon
 	public static final LocalTime LOCAL_TIME_0 = LocalTime.of(0, 0, 0);
