@@ -5,15 +5,16 @@
 package com.github.richardflee.astroimagej.visibility_plotter;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -23,30 +24,31 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.knowm.xchart.AnnotationLine;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-import com.formdev.flatlaf.FlatLightLaf;
-import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
+import com.github.richardflee.astroimagej.data_objects.BaseFieldObject;
+import com.github.richardflee.astroimagej.data_objects.ObservationSite;
+import com.github.richardflee.astroimagej.utils.AstroCoords;
+import com.github.richardflee.astroimagej.visibility_plotter.CoordsConverter.CoordsEnum;
 
 /**
  * @author Richard Lee
  */
 public class DemoAltitudePlotter extends JFrame {
 	
-	private final static DateTimeFormatter X_CURSOR_FORMATTER = 
-			DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm");
 	private final static DateTimeFormatter X_TICK_FORMATTER = DateTimeFormatter.ofPattern("HH");
 	
 	private final static String ALTITUDE_SERIES = "Altitude";
 	private final static int HINT_Y = 30;
+	public final static int MINS_IN_DAY = 24 * 60;
 	
 	private LocalDateTime startDate = null;
 	private List<Integer> xData = null;
@@ -64,19 +66,21 @@ public class DemoAltitudePlotter extends JFrame {
 			this.startDate = this.startDate.plusDays(1);
 			setChartTitle();
 			
-			
-			this.yData = getRndData();
 			this.xyChart.updateXYSeries(ALTITUDE_SERIES, xData, yData, null);
-			
 			this.chartPanel.revalidate();
 			this.chartPanel.repaint();
-
-			//this.xyChart.getStyler().setCursorEnabled(true);
-//			this.xyChart.getStyler().setCustomCursorXDataFormattingFunction(
-//		            x -> startDate.plusMinutes(x.longValue()).format(X_CURSOR_FORMATTER));
-
-
-			// this.xyChart.getStyler().setCursorEnabled(true);
+		});
+		
+		cancelButton.addActionListener(e -> {
+			var sunset = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), 21,  12, 0);
+			
+			long numberOfMinutes = ChronoUnit.MINUTES.between(startDate, sunset);
+			System.out.println(numberOfMinutes);
+			
+			this.xyChart.addAnnotation( new AnnotationLine(12*60, true, false));
+			this.chartPanel.revalidate();
+			this.chartPanel.repaint();
+			
 		});
 		
 		this.xyChart = new XYChartBuilder().title("pending..")
@@ -91,12 +95,6 @@ public class DemoAltitudePlotter extends JFrame {
 		styler.setYAxisTickMarkSpacingHint(HINT_Y);
 		styler.setCursorEnabled(false);
 		
-//		styler.setCustomCursorXDataFormattingFunction(
-//	            x -> startDate.plusMinutes(x.longValue()).format(X_CURSOR_FORMATTER));
-		
-		//styler.setCustomCursorYDataFormattingFunction(y -> y).format("%.2f");
-		//  styler.setCustomCursorYDataFormattingFunction(y -> "hello yvalue: " + y);
-		
 		this.chartPanel = new XChartPanel<>(xyChart);
 		
 		demoPlotPanel.add(chartPanel, BorderLayout.CENTER);
@@ -105,8 +103,8 @@ public class DemoAltitudePlotter extends JFrame {
 	
 
 	
-	public void updateChart(LocalDateTime startDate, List<Double> altitudeData) {
-		this.startDate = startDate;
+	public void updateChart(LocalDateTime startDateTime, List<Double> altitudeData) {
+		this.startDate = startDateTime;
 		this.yData = altitudeData;
 		this.xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
 		
@@ -116,7 +114,7 @@ public class DemoAltitudePlotter extends JFrame {
 		// 
 		xyChart.getStyler()
 	     .setxAxisTickLabelsFormattingFunction(
-	    		 x -> startDate.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
+	    		 x -> startDateTime.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
 	
 		this.setVisible(true);
 			
@@ -129,34 +127,42 @@ public class DemoAltitudePlotter extends JFrame {
 	}
 	
 	
-	private static List<Double> getRndData() {
-		var num = Math.random() * 90.0;
-		List<Double> data = IntStream
-				.range(0, 24*60)
-				.mapToDouble(x -> num) // random.nextDouble())
-				.boxed().collect(Collectors.toList());	
-		return data;
-	}
-
-	
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(new FlatLightLaf());
-			UIManager.put("TabbedPane.showTabSeparators", true);
-			UIManager.put("TabbedPane.selectedBackground", Color.white);
-			UIManager.put("OptionPane.minimumSize", new Dimension(500, 80));
-		} catch (Exception ex) {
-			System.err.println("Failed to initialize LaF");
+		
+		// site
+		var siteLong = -85.5; // W
+		var siteLat = 38.33; // N
+		var siteElevation = 0.0;
+		var site = new ObservationSite(siteLong, siteLat, siteElevation, -5.0);
+		
+		// object
+		var objectId = "wasp12";
+		var raHr = AstroCoords.raHmsToRaHr("06:30:32.797");
+		var decDeg = AstroCoords.decDmsToDecDeg("+29:40:20.27");
+		var fo = new BaseFieldObject(objectId, raHr, decDeg);
+		
+		// starting night
+		var startDate = LocalDate.of(2019, 1, 1);	
+		var startDateTime = LocalDateTime.of(startDate, TimesConverter.LOCAL_TIME_NOON);
+		System.out.println(startDateTime.toString());
+		
+		// times converter, CoordsConverter
+		var tc = new TimesConverter(site);
+		var coords = new CoordsConverter(fo, site);
+		
+		// convert start date time to utc
+		var utc0 = tc.convertCivilDateTimeToUtc(startDateTime);
+		
+		var yData = new ArrayList<Double>();
+		for (int minutes = 0; minutes < MINS_IN_DAY; minutes++) {
+			var t = utc0.plusMinutes(minutes);			
+			var altDeg = coords.getAltAzm(t).get(CoordsEnum.ALT_DEG);
+			yData.add(altDeg);
 		}
-		
-		
-		// data
-		var startDate = LocalDateTime.of(2022,  Month.AUGUST, 14, 12, 0, 0);
-		var yData = getRndData();
 		
 		EventQueue.invokeLater(() -> {
 			var plotter = new DemoAltitudePlotter();
-			plotter.updateChart(startDate, yData);
+			plotter.updateChart(startDateTime, yData);
 		});
 		
 		

@@ -118,14 +118,14 @@ public class ObserverTab implements ObserverDataListener {
 	
 	@Override
 	public void setObservationSiteData(ObservationSite site) {
-		if (site == null) {
-			site= new ObservationSite();
-		}
+//		if (site == null) {
+//			site= new ObservationSite();
+//		}
 		
-		longitudeText.setText(site.getSiteLongitudeDms());
+		longitudeText.setText(site.getSiteLongDms());
 		eastWestText.setText(site.getSiteEastWest());
 		
-		latitudeText.setText(site.getSiteLatitudeDms());
+		latitudeText.setText(site.getSiteLatDms());
 		northSouthText.setText(site.getSiteNorthSouth());
 		
 		altitudeText.setText(String.format("%4.0f", site.getSiteAlt()));		
