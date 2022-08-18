@@ -18,7 +18,7 @@ new FormModel {
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p::p, space :::p, comp altitudePlotPanel:::p:635:p, space :::p}}"
+						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p::p, space :::p, comp altitudePlotPanel::::639:x, space :::p}}"
 						"$verticalGroup": "par l {seq l {space :::p, par l {comp altitudePlotPanel:::::x, comp panel1:::::x}, space :::p}}"
 					} ) {
 						name: "targetPanel"
@@ -238,9 +238,9 @@ new FormModel {
 								} )
 							} )
 						} )
-						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 							name: "altitudePlotPanel"
-							"border": new javax.swing.border.EtchedBorder( 1, null, null )
+							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 							auxiliary() {
 								"JavaCodeGenerator.variableGetter": true
 							}

@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import com.github.richardflee.astroimagej.data_objects.BaseFieldObject;
@@ -23,13 +24,46 @@ import com.github.richardflee.astroimagej.visibility_plotter.CoordsConverter.Coo
 
 public class ObjectTracker {
 	
+	private final static String ALTITUDE_SERIES = "Altitude";
+	
 	private ObservationSite site = null;
 	private TimesConverter timesConverter = null;
+	
 	
 	public ObjectTracker(ObservationSite site) {
 		this.site = site;
 		this.timesConverter = new TimesConverter(site);		
 	}
+	
+	public void updateChart(BaseFieldObject fo, LocalDate startDate, XChartPanel<XYChart> chartPanel) {
+		
+		var startDateTime = LocalDateTime.of(startDate,  TimesConverter.LOCAL_TIME_NOON);
+		var yData = computeAltitudeData(fo, startDate);
+		var xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
+		
+		var chart = chartPanel.getChart();
+		
+	//	chartPanel.updateXYSeries(ALTITUDE_SERIES, xData, yData, null);
+		chartPanel.revalidate();
+		chartPanel.repaint();
+		
+		var title = String.format("StarAlt Plot - Starting night: %s",
+				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));
+		chartPanel.getChart().setTitle(title);
+
+//		chart.getStyler()
+//	     .setxAxisTickLabelsFormattingFunction(
+//	    		 x -> startDateTime.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
+	
+		// setChartTitle(startDate);
+	}
+
+//	private void setChartTitle(LocalDate startDate) {
+//		var title = String.format("StarAlt Plot - Starting night: %s",
+//				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));		
+//		this.xyChart.setTitle(title);
+//	}
+	
 	
 	/**
 	 * Generates a list of star altitudes in 1 minute intervals over 24 hr period, 
@@ -39,8 +73,7 @@ public class ObjectTracker {
 	 * @param startDate first observation day
 	 * @return list of star altitudes in deg
 	 */
-	public List<Double> updateStarAltTrack(BaseFieldObject fo, LocalDate startDate) {
-		
+	public List<Double> computeAltitudeData(BaseFieldObject fo, LocalDate startDate) {		
 		var yData = new ArrayList<Double>();
 		var coords = new CoordsConverter(fo, this.site);
 		
@@ -79,9 +112,11 @@ public class ObjectTracker {
 		var tracker = new ObjectTracker(site);
 		var X_TICK_FORMATTER = DateTimeFormatter.ofPattern("HH");
 		
-		var yData = tracker.updateStarAltTrack(fo,  startDate);
+		var yData = tracker.computeAltitudeData(fo,  startDate);
 		var xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
 		
+		
+		// chart ******************************************
 		var chart = QuickChart.getChart("Star Alt", "Civil Time (hr)", "Altitude", "data", xData, yData);
 		chart.getStyler()
 	     .setxAxisTickLabelsFormattingFunction(

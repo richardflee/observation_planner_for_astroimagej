@@ -1,16 +1,28 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.markers.SeriesMarkers;
+
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.richardflee.astroimagej.catalogs.SimbadCatalog;
+import com.github.richardflee.astroimagej.data_objects.BaseFieldObject;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.SimbadResult;
@@ -22,9 +34,17 @@ import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
+import com.github.richardflee.astroimagej.visibility_plotter.ObjectTracker;
 import com.github.richardflee.astroimagej.visibility_plotter.Solar;
+import com.github.richardflee.astroimagej.visibility_plotter.TimesConverter;
 
 public class TargetTab implements CatalogDataListener {
+	
+	private final static String ALTITUDE_SERIES = "Altitude";
+	private final static DateTimeFormatter X_TICK_FORMATTER = DateTimeFormatter.ofPattern("HH");
+	private final static int HINT_Y = 30;
+	private final static int GREY = 225;
+	private final static Color BGND_GREY = new Color(GREY, GREY, GREY);
 	
 	private ObservationSite site = null;
 	private Solar solar = null;
@@ -47,15 +67,25 @@ public class TargetTab implements CatalogDataListener {
 
 	private ViewerUi viewer;
 	private VerifyTextFields verifier;
+	
+	private ObjectTracker tracker = null;
+	
+	
+	private XYChart xyChart = null;
+	private XChartPanel<XYChart> chartPanel = null;
 
 	public TargetTab(ViewerUi viewer) {
 
 		this.viewer = viewer;
 		
 		this.site = viewer.getSite();
-		this.solar = new Solar(site);
-		
+		this.solar = new Solar(site);		
 		setSolarTimes(solar.getCivilSunTimes(LocalDate.now()));
+		
+		this.xyChart = configureXyChart(site);
+		this.chartPanel = new XChartPanel<>(xyChart);
+		viewer.getAltitudePlotPanel().add(chartPanel, BorderLayout.CENTER);
+		this.tracker = new ObjectTracker(site);
 		
 		this.verifier = new VerifyTextFields();
 
@@ -74,16 +104,49 @@ public class TargetTab implements CatalogDataListener {
 		this.filterCombo = viewer.getFilterCombo();
 		populateFilterCombo(null);
 		
-		this.datePicker = new DatePicker();
-		this.datePicker.setDate(LocalDate.now());
-		viewer.getDatePickerPanel().add(this.datePicker);
-		
+		configureDatePicker();		
+		System.out.println(("Date picker date:" + datePicker.getDateStringOrEmptyString()));
 
 		this.save = viewer.getSaveQueryButton();
 		this.runQuey = viewer.getRunSimbadButton();
 
 		setupActionListeners();
 	}
+	
+	private void configureDatePicker() {
+		var dps = new DatePickerSettings();
+		dps.setAllowKeyboardEditing(false);
+		
+		this.datePicker = new DatePicker(dps);
+		this.datePicker.setDate(LocalDate.now());
+		viewer.getDatePickerPanel().add(this.datePicker);
+		
+	}
+	
+	
+	private XYChart configureXyChart(ObservationSite site) {
+		var chart = new XYChartBuilder().title("pending..")
+			.xAxisTitle("Local Site Time (hr)")
+			.yAxisTitle("Altitude (deg)")
+			.build();
+	
+		var styler = chart.getStyler();
+		styler.setYAxisMin(0.0);
+		styler.setYAxisMax(90.0);
+		styler.setLegendVisible(false);
+		styler.setYAxisTickMarkSpacingHint(HINT_Y);
+		styler.setCursorEnabled(false);		
+		styler.setChartBackgroundColor(BGND_GREY);
+		
+		var xData = IntStream.range(0, TimesConverter.MINS_IN_DAY).boxed().collect(Collectors.toList());
+		var startDate = LocalDate.now();
+		var fo = (BaseFieldObject) TargetTabFileProps.readProerties();
+		var yData = new ObjectTracker(site).computeAltitudeData(fo, startDate);		
+		chart.addSeries(ALTITUDE_SERIES, xData, yData).setMarker(SeriesMarkers.NONE);
+		
+		return chart;		
+	}
+	
 
 	private void setupActionListeners() {
 
@@ -99,18 +162,13 @@ public class TargetTab implements CatalogDataListener {
 		
 		this.datePicker.addDateChangeListener(e -> {
 			LocalDate startDate = e.getNewDate();
-			if (startDate != null) {
-				var solarTimes = solar.getCivilSunTimes(startDate);
-				setSolarTimes(solarTimes);
-			} else {
-				JOptionPane.showMessageDialog(null, "ERROR: No date selected");
-			}
+			doDateUpdate(startDate);				
 		});
 
 		// save query data button
 		save.addActionListener(e -> {
 			if (verifier.verifyAllTextInputs()) {
-				TargetTabFileProps.writeProperties(this.getQueryData());
+				TargetTabFileProps.writeProperties(this.compileQuery());
 				JOptionPane.showMessageDialog(null, AijPropsReadWriter.savedFileMessage());
 			}
 		});
@@ -124,8 +182,33 @@ public class TargetTab implements CatalogDataListener {
 		
 	}
 	
+	
+	private void doDateUpdate(LocalDate startDate) {
+		var fo = (BaseFieldObject) compileQuery();
+		updateChart(fo, startDate);				
+		
+		var solarTimes = solar.getCivilSunTimes(startDate);
+		setSolarTimes(solarTimes);			
+	}
+	
+	private void updateChart(BaseFieldObject fo, LocalDate startDate) {
+		
+		var startDateTime = LocalDateTime.of(startDate,  TimesConverter.LOCAL_TIME_NOON);
+		var yData = tracker.computeAltitudeData(fo, startDate);
+		var xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
+		
+		this.xyChart.updateXYSeries(ALTITUDE_SERIES, xData, yData, null);
+		this.chartPanel.revalidate();
+		this.chartPanel.repaint();			
+		
+	
+		var title = String.format("StarAlt Plot - Starting night: %s",
+				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));
+		this.xyChart.setTitle(title);
+	}
+	
 	private String runSimbadQuery() {
-		var query = this.getQueryData();
+		var query = this.compileQuery();
 		var message = "";
 
 		// run simbad query, raises SimbadNotFound exception if no match to user input
@@ -135,7 +218,7 @@ public class TargetTab implements CatalogDataListener {
 			simbadResult = new SimbadCatalog().runQuery(query);
 			new SimbadPanel(viewer).setSimbadData(simbadResult);
 			
-			TargetTabFileProps.writeProperties(this.getQueryData());
+			TargetTabFileProps.writeProperties(this.compileQuery());
 			message = String.format("Updated SIMBAD Data fields for ObjecId: %s\n", query.getObjectId());
 			message += AijPropsReadWriter.savedFileMessage();
 			
@@ -168,8 +251,7 @@ public class TargetTab implements CatalogDataListener {
 
 	}
 
-	@Override
-	public CatalogQuery getQueryData() {
+	public CatalogQuery compileQuery() {
 		// copy text field data
 		CatalogQuery query = new CatalogQuery();
 

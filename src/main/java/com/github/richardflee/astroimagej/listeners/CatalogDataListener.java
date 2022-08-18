@@ -11,7 +11,7 @@ public interface CatalogDataListener {
 
 	// maps CatalogQuery object data & viewer.target_tab controls
 	public void setQueryData(CatalogQuery query);
-	public CatalogQuery getQueryData();
+	public CatalogQuery compileQuery();
 	
 	// Start date sunrise/set and twilight times
 	public void setSolarTimes(SolarTimes solarTimes);

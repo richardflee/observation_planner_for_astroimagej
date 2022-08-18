@@ -5,35 +5,29 @@
 package com.github.richardflee.astroimagej.visibility_plotter;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import javax.swing.*;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
-import org.knowm.xchart.AnnotationLine;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -42,7 +36,6 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 import com.github.richardflee.astroimagej.data_objects.BaseFieldObject;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
-import com.github.richardflee.astroimagej.visibility_plotter.CoordsConverter.CoordsEnum;
 
 /**
  * @author Richard Lee
@@ -53,98 +46,80 @@ public class DemoAltitudePlotter extends JFrame {
 	
 	private final static String ALTITUDE_SERIES = "Altitude";
 	private final static int HINT_Y = 30;
-	
-	private LocalDateTime startDate = null;
-	private List<Integer> xData = null;
-	private List<Double> yData = null;
+	private final static int GREY = 225;
+	private final static Color BGND_GREY = new Color(GREY, GREY, GREY);
 	
 	private XYChart xyChart = null;
 	private XChartPanel<XYChart> chartPanel = null;
 	
-	private Solar solar = null;
+	private ObjectTracker tracker = null;
 	
-	
-	public DemoAltitudePlotter() {
+	public DemoAltitudePlotter(ObservationSite site) {
 				
 		initComponents();
-	
-		this.xyChart = new XYChartBuilder().title("pending..")
-				.xAxisTitle("Local Site Time (hr)")
-				.yAxisTitle("Altitude (deg)")
-				.build();
 		
-		var styler = this.xyChart.getStyler();
+		this.tracker = new ObjectTracker(site);		
+		this.xyChart = configureXyChart();
+		this.chartPanel = new XChartPanel<>(xyChart);
+		demoPlotPanel.add(chartPanel, BorderLayout.CENTER);
+		this.setVisible(true);		
+	}
+	
+	private XYChart configureXyChart() {
+		var chart = new XYChartBuilder().title("pending..")
+			.xAxisTitle("Local Site Time (hr)")
+			.yAxisTitle("Altitude (deg)")
+			.build();
+	
+		var styler = chart.getStyler();
 		styler.setYAxisMin(0.0);
 		styler.setYAxisMax(90.0);
 		styler.setLegendVisible(false);
 		styler.setYAxisTickMarkSpacingHint(HINT_Y);
-		styler.setCursorEnabled(false);
+		styler.setCursorEnabled(false);		
+		styler.setChartBackgroundColor(BGND_GREY);
 		
-		this.chartPanel = new XChartPanel<>(xyChart);
-		
-		demoPlotPanel.add(chartPanel, BorderLayout.CENTER);
-		
-		
-		okButton.addActionListener(e -> {
-			JOptionPane.showMessageDialog(null, "here i am");
-			this.startDate = this.startDate.plusDays(1);
-			setChartTitle();
-			
-			this.xyChart.updateXYSeries(ALTITUDE_SERIES, xData, yData, null);
-			this.chartPanel.revalidate();
-			this.chartPanel.repaint();
-		});
-		
-		cancelButton.addActionListener(e -> {
-			var sunset = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), 21,  12, 0);
-			
-			long numberOfMinutes = ChronoUnit.MINUTES.between(startDate, sunset);
-			System.out.println(numberOfMinutes);
-			
-			this.xyChart.addAnnotation( new AnnotationLine(12*60, true, false));
-			this.chartPanel.revalidate();
-			this.chartPanel.repaint();
-		});
-		
-		
-		
-		
+		var data = IntStream.range(0, TimesConverter.MINS_IN_DAY).boxed().collect(Collectors.toList());
+		chart.addSeries(ALTITUDE_SERIES, data, data).setMarker(SeriesMarkers.NONE);
+		return chart;		
 	}
 	
 
 	
-	public void updateChart(LocalDateTime startDateTime, List<Double> altitudeData) {
-		this.startDate = startDateTime;
-		this.yData = altitudeData;
-		this.xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
+	public void updateChart(BaseFieldObject fo, LocalDate startDate) {
 		
-		setChartTitle();
-		this.xyChart.addSeries(ALTITUDE_SERIES, this.xData, this.yData).setMarker(SeriesMarkers.NONE);
-
-		// 
+		var startDateTime = LocalDateTime.of(startDate,  TimesConverter.LOCAL_TIME_NOON);
+		var yData = tracker.computeAltitudeData(fo, startDate);
+		var xData = IntStream.range(0, yData.size()).boxed().collect(Collectors.toList());
+		
+		this.xyChart.updateXYSeries(ALTITUDE_SERIES, xData, yData, null);
+		this.chartPanel.revalidate();
+		this.chartPanel.repaint();			
+		
 		xyChart.getStyler()
 	     .setxAxisTickLabelsFormattingFunction(
 	    		 x -> startDateTime.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
 	
-		this.setVisible(true);
-			
-	}
-
-	private void setChartTitle() {
 		var title = String.format("StarAlt Plot - Starting night: %s",
-				DateTimeFormatter.ISO_LOCAL_DATE.format(this.startDate));		
+				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));
 		this.xyChart.setTitle(title);
 	}
+
+//	private void setChartTitle(LocalDate startDate) {
+//		var title = String.format("StarAlt Plot - Starting night: %s",
+//				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));		
+//		this.xyChart.setTitle(title);
+//	}
 	
 	
 	public static void main(String[] args) {
 		
-		var plotter = new DemoAltitudePlotter();
 		// site
 		var siteLong = -85.5; // W
 		var siteLat = 38.33; // N
 		var siteElevation = 0.0;
 		var site = new ObservationSite(siteLong, siteLat, siteElevation, -5.0);
+		var plotter = new DemoAltitudePlotter(site);
 		
 		// object
 		var objectId = "wasp12";
@@ -154,38 +129,18 @@ public class DemoAltitudePlotter extends JFrame {
 		
 		// starting night
 		var startDate = LocalDate.of(2019, 1, 1);	
-		var startDateTime = LocalDateTime.of(startDate, TimesConverter.LOCAL_TIME_NOON);
-		System.out.println(startDateTime.toString());
 		
 		// startDate solar times
 		var solar = new Solar(site);
 		var solarTimes = solar.getCivilSunTimes(startDate);
-		plotter.sunSetField.setText(solarTimes.getCivilSunSetValue());
-		plotter.twilightEndField.setText(solarTimes.getCivilTwilightEndsValue());
-		plotter.twilightStartField.setText(solarTimes.getCivilTwilightStartsValue());
-		plotter.sunRiseField.setText(solarTimes.getCivilSunRiseValue());
-		
-		
-		// times converter, CoordsConverter
-		var tc = new TimesConverter(site);
-		var coords = new CoordsConverter(fo, site);
-		
-		// convert start date time to utc
-		var utc0 = tc.convertCivilDateTimeToUtc(startDateTime);
-		
-		var yData = new ArrayList<Double>();
-		for (int minutes = 0; minutes < TimesConverter.MINS_IN_DAY; minutes++) {
-			var t = utc0.plusMinutes(minutes);			
-			var altDeg = coords.getAltAzm(t).get(CoordsEnum.ALT_DEG);
-			yData.add(altDeg);
-		}
 		
 		EventQueue.invokeLater(() -> {
-			plotter.updateChart(startDateTime, yData);
+			plotter.sunSetField.setText(solarTimes.getCivilSunSetValue());
+			plotter.twilightEndField.setText(solarTimes.getCivilTwilightEndsValue());
+			plotter.twilightStartField.setText(solarTimes.getCivilTwilightStartsValue());
+			plotter.sunRiseField.setText(solarTimes.getCivilSunRiseValue());
+			plotter.updateChart(fo, startDate);
 		});
-		
-		
-
 	}
 
 

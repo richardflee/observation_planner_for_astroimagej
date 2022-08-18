@@ -4,6 +4,7 @@
 
 package com.github.richardflee.astroimagej.tab_viewer;
 
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -681,8 +682,8 @@ public class ViewerUi extends JFrame {
 
 					//======== altitudePlotPanel ========
 					{
-						altitudePlotPanel.setBorder(new EtchedBorder());
-						altitudePlotPanel.setLayout(new FlowLayout());
+						altitudePlotPanel.setBorder(null);
+						altitudePlotPanel.setLayout(new BorderLayout());
 					}
 
 					GroupLayout targetPanelLayout = new GroupLayout(targetPanel);
@@ -693,7 +694,7 @@ public class ViewerUi extends JFrame {
 								.addContainerGap()
 								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(altitudePlotPanel, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
+								.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
 								.addContainerGap())
 					);
 					targetPanelLayout.setVerticalGroup(
