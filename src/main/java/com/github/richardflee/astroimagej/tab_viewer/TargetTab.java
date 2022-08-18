@@ -29,6 +29,7 @@ import com.github.richardflee.astroimagej.data_objects.SolarTimes;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
+import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
@@ -83,29 +84,43 @@ public class TargetTab implements CatalogDataListener {
 		
 		this.verifier = new VerifyTextFields();
 
-		this.objectIdText = viewer.getObjectIdField();
-		this.raText = viewer.getRaField();
-		this.decText = viewer.getDecField();
-		this.fovText = viewer.getFovField();
-		this.magLimitText = viewer.getMagLimitField();
-
-		this.catalogCombo = viewer.getCatalogCombo();
-		this.catalogCombo.addItem(CatalogsEnum.APASS.toString());
-		this.catalogCombo.addItem(CatalogsEnum.VSP.toString());
-		this.selectedCatalog = CatalogsEnum.APASS.toString();
-		this.catalogCombo.setSelectedItem(this.selectedCatalog);
-
+		// textbox and combo refs
+		initialiseTextRefs(viewer);
+		initialiseCatalogComboRefs(viewer);
 		this.filterCombo = viewer.getFilterCombo();
 		populateFilterCombo(null);
 		
+		// restricts text date entry to day/month/year pickers
 		configureDatePicker();		
-		System.out.println(("Date picker date:" + datePicker.getDateStringOrEmptyString()));
 
+		// buttons
 		this.save = viewer.getSaveQueryButton();
 		this.runQuey = viewer.getRunSimbadButton();
 
 		setupActionListeners();
 	}
+
+
+
+	private void initialiseCatalogComboRefs(ViewerUi viewer) {
+		this.catalogCombo = viewer.getCatalogCombo();
+		this.catalogCombo.addItem(CatalogsEnum.APASS.toString());
+		this.catalogCombo.addItem(CatalogsEnum.VSP.toString());
+		this.selectedCatalog = CatalogsEnum.APASS.toString();
+		this.catalogCombo.setSelectedItem(this.selectedCatalog);
+	}
+
+
+
+	private void initialiseTextRefs(ViewerUi viewer) {
+		this.objectIdText = viewer.getObjectIdField();
+		this.raText = viewer.getRaField();
+		this.decText = viewer.getDecField();
+		this.fovText = viewer.getFovField();
+		this.magLimitText = viewer.getMagLimitField();
+	}
+	
+	
 	
 	private void configureDatePicker() {
 		var dps = new DatePickerSettings();
@@ -113,6 +128,7 @@ public class TargetTab implements CatalogDataListener {
 		
 		this.datePicker = new DatePicker(dps);
 		this.datePicker.setDate(LocalDate.now());
+		
 		viewer.getDatePickerPanel().add(this.datePicker);		
 	}
 	
@@ -160,6 +176,10 @@ public class TargetTab implements CatalogDataListener {
 		// user selects new date
 		this.datePicker.addDateChangeListener(e -> {
 			LocalDate startDate = e.getNewDate();
+			if (startDate == null) {
+				startDate = LocalDate.now();
+				this.datePicker.setDate(startDate);
+			}
 			doChartUpdate(startDate);				
 		});
 
@@ -177,7 +197,15 @@ public class TargetTab implements CatalogDataListener {
 			if (verifier.verifyAllTextInputs()) {
 				var message = this.runSimbadQuery();				
 				doSaveQueryData();
-				//doChartUpdate(datePicker.getDate());
+				JOptionPane.showMessageDialog(null, message);
+			}
+		});
+		
+		// !! temp dss button
+		this.viewer.getDssButton().addActionListener(e -> {
+			if (this.viewer.getSaveDssCheckBox().isSelected() == true) {
+				var query = compileQuery();
+				var message = DssFitsWriter.downloadDssFits(query);
 				JOptionPane.showMessageDialog(null, message);
 			}
 		});

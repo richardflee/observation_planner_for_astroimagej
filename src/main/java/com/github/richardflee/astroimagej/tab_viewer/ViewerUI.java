@@ -198,8 +198,8 @@ public class ViewerUi extends JFrame {
 		return filterCombo;
 	}
 
-	public JCheckBox getIsSaveDssCheckBox() {
-		return isSaveDssCheckBox;
+	public JCheckBox getSaveDssCheckBox() {
+		return saveDssCheckBox;
 	}
 
 	public JLabel getSimbadRaLabel() {
@@ -254,6 +254,10 @@ public class ViewerUi extends JFrame {
 		return sunRiseField;
 	}
 
+	public JButton getDssButton() {
+		return dssButton;
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
@@ -280,7 +284,7 @@ public class ViewerUi extends JFrame {
 		label11 = new JLabel();
 		filterCombo = new JComboBox<>();
 		label12 = new JLabel();
-		isSaveDssCheckBox = new JCheckBox();
+		saveDssCheckBox = new JCheckBox();
 		panel4 = new JPanel();
 		idLabel = new JLabel();
 		raLabel = new JLabel();
@@ -310,6 +314,7 @@ public class ViewerUi extends JFrame {
 		twilightStartField = new JTextField();
 		label36 = new JLabel();
 		sunRiseField = new JTextField();
+		dssButton = new JButton();
 		TAB2 = new JPanel();
 		panel6 = new JPanel();
 		button3 = new JButton();
@@ -449,10 +454,9 @@ public class ViewerUi extends JFrame {
 							//---- label12 ----
 							label12.setText("Filter:");
 
-							//---- isSaveDssCheckBox ----
-							isSaveDssCheckBox.setText("Save DSS Fits File");
-							isSaveDssCheckBox.setSelected(true);
-							isSaveDssCheckBox.setEnabled(false);
+							//---- saveDssCheckBox ----
+							saveDssCheckBox.setText("Save DSS Fits File");
+							saveDssCheckBox.setSelected(true);
 
 							GroupLayout panel3Layout = new GroupLayout(panel3);
 							panel3.setLayout(panel3Layout);
@@ -473,7 +477,7 @@ public class ViewerUi extends JFrame {
 											.addGroup(panel3Layout.createSequentialGroup()
 												.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
 												.addGap(18, 18, 18)
-												.addComponent(isSaveDssCheckBox))
+												.addComponent(saveDssCheckBox))
 											.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 											.addGroup(panel3Layout.createSequentialGroup()
 												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
@@ -540,7 +544,7 @@ public class ViewerUi extends JFrame {
 										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label12)
-											.addComponent(isSaveDssCheckBox)
+											.addComponent(saveDssCheckBox)
 											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
@@ -713,6 +717,7 @@ public class ViewerUi extends JFrame {
 				//======== datePickerPanel ========
 				{
 					datePickerPanel.setBorder(null);
+					datePickerPanel.setToolTipText("<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n");
 					datePickerPanel.setLayout(new FlowLayout());
 				}
 
@@ -801,6 +806,9 @@ public class ViewerUi extends JFrame {
 					);
 				}
 
+				//---- dssButton ----
+				dssButton.setText("DSS");
+
 				GroupLayout targetTabLayout = new GroupLayout(targetTab);
 				targetTab.setLayout(targetTabLayout);
 				targetTabLayout.setHorizontalGroup(
@@ -808,7 +816,9 @@ public class ViewerUi extends JFrame {
 						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(targetTabLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+								.addComponent(runSimbadButton, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+								.addComponent(dssButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 							.addComponent(saveQueryButton)
 							.addGap(18, 18, 18)
@@ -826,12 +836,15 @@ public class ViewerUi extends JFrame {
 							.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 							.addGroup(targetTabLayout.createParallelGroup()
-								.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-									.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-									.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-									.addComponent(label6))
 								.addComponent(panel11, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-								.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+								.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+								.addGroup(targetTabLayout.createSequentialGroup()
+									.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+										.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(label6))
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(dssButton)))
 							.addContainerGap())
 				);
 				targetTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {runSimbadButton, saveQueryButton});
@@ -1353,7 +1366,7 @@ public class ViewerUi extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1)
+					.addComponent(tabbedPane1, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		pack();
@@ -1386,7 +1399,7 @@ public class ViewerUi extends JFrame {
 	private JLabel label11;
 	protected JComboBox<String> filterCombo;
 	private JLabel label12;
-	protected JCheckBox isSaveDssCheckBox;
+	protected JCheckBox saveDssCheckBox;
 	private JPanel panel4;
 	private JLabel idLabel;
 	private JLabel raLabel;
@@ -1416,6 +1429,7 @@ public class ViewerUi extends JFrame {
 	protected JTextField twilightStartField;
 	private JLabel label36;
 	protected JTextField sunRiseField;
+	private JButton dssButton;
 	private JPanel TAB2;
 	private JPanel panel6;
 	private JButton button3;

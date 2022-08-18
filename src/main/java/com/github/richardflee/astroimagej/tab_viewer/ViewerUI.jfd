@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1::::547:x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "DEMO!!"
@@ -13,8 +13,8 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {comp targetPanel::l:::x, seq l {space :::p, comp runSimbadButton:6::p:116:p, space u:::p, comp saveQueryButton:6::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space :::p, comp panel11::::416:x, space :::p}}"
-					"$verticalGroup": "par l {seq {comp targetPanel:::::x, space :::p, par l {par c {comp saveQueryButton:5:c:p:30:p, comp runSimbadButton:5:c:p:30:p, comp label6::c:p::p}, comp panel11:::p:60:p, comp datePickerPanel::l:p:33:p}, space :::p}}"
+					"$horizontalGroup": "par l {comp targetPanel::l:::x, seq l {space :::p, par l:::p {comp runSimbadButton:6:::116:x, comp dssButton:::::x}, space u:::p, comp saveQueryButton:6::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space :::p, comp panel11::::416:x, space :::p}}"
+					"$verticalGroup": "par l {seq {comp targetPanel:::::x, space :::p, par l {comp panel11:::p:60:p, comp datePickerPanel::l:p:33:p, seq l {par c {comp saveQueryButton:5:c:p:30:p, comp runSimbadButton:5:c:p:30:p, comp label6::c:p::p}, space u:::p, comp dssButton:::p::p}}, space :::p}}"
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -28,8 +28,8 @@ new FormModel {
 						} ) {
 							name: "panel1"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {seq {comp filterCombo:::p:42:p, space s:::p, comp isSaveDssCheckBox:::p::p}, comp catalogCombo::l:p:96:p, seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:187:p}, space :::x}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp label1::b:p::p, comp objectIdField::b:p::p}, par l {seq {space :p:16:p, comp label2:::p::p}, seq {space u:::p, par b {comp raField::b:p::p, comp label7::b:p::p}}}, par l {seq {space :p:16:p, comp label3:::p::p}, seq {space u:::p, par b {comp decField::b:p::p, comp label8::b:p::p}}}, par l {seq {space :p:16:p, comp label4:::p::p}, seq {space u:::p, par b {comp fovField::b:p::p, comp label9::b:p::p}}}, par l {seq {space :p:16:p, comp label5:::p::p}, seq {space u:::p, par b {comp magLimitField::b:p::p, comp label10::b:p::p}}}, space u:::p, par b {comp catalogCombo::b:p::p, comp label11::b:p::p}, space u:::p, par b {comp label12::b:p::p, comp isSaveDssCheckBox::b:p::p, comp filterCombo::b:p::p}, space :::x}}"
+								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {seq {comp filterCombo:::p:42:p, space s:::p, comp saveDssCheckBox:::p::p}, comp catalogCombo::l:p:96:p, seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:187:p}, space :::x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label1::b:p::p, comp objectIdField::b:p::p}, par l {seq {space :p:16:p, comp label2:::p::p}, seq {space u:::p, par b {comp raField::b:p::p, comp label7::b:p::p}}}, par l {seq {space :p:16:p, comp label3:::p::p}, seq {space u:::p, par b {comp decField::b:p::p, comp label8::b:p::p}}}, par l {seq {space :p:16:p, comp label4:::p::p}, seq {space u:::p, par b {comp fovField::b:p::p, comp label9::b:p::p}}}, par l {seq {space :p:16:p, comp label5:::p::p}, seq {space u:::p, par b {comp magLimitField::b:p::p, comp label10::b:p::p}}}, space u:::p, par b {comp catalogCombo::b:p::p, comp label11::b:p::p}, space u:::p, par b {comp label12::b:p::p, comp saveDssCheckBox::b:p::p, comp filterCombo::b:p::p}, space :::x}}"
 							} ) {
 								name: "panel3"
 								"border": new javax.swing.border.TitledBorder( "Catalog Query settings" )
@@ -143,10 +143,9 @@ new FormModel {
 									"text": "Filter:"
 								} )
 								add( new FormComponent( "javax.swing.JCheckBox" ) {
-									name: "isSaveDssCheckBox"
+									name: "saveDssCheckBox"
 									"text": "Save DSS Fits File"
 									"selected": true
-									"enabled": false
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -268,6 +267,7 @@ new FormModel {
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 						name: "datePickerPanel"
 						"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+						"toolTipText": "<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n"
 						auxiliary() {
 							"JavaCodeGenerator.variableGetter": true
 						}
@@ -336,6 +336,13 @@ new FormModel {
 								"JavaCodeGenerator.variableGetter": true
 							}
 						} )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "dssButton"
+						"text": "DSS"
+						auxiliary() {
+							"JavaCodeGenerator.variableGetter": true
+						}
 					} )
 				}, new FormLayoutConstraints( null ) {
 					"title": "Target"
