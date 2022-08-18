@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import com.github.richardflee.astroimagej.data_objects.SimbadResult;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 
-public class SimbadPanel {
+public class SimbadPanelData {
 	
 	private JTextField raText;
 	private JTextField decText;
@@ -22,7 +22,7 @@ public class SimbadPanel {
 	private JLabel magILabel;
 	
 	
-	public SimbadPanel(ViewerUi viewer) {		
+	public SimbadPanelData(ViewerUi viewer) {		
 		raText = viewer.getRaField();
 		decText = viewer.getDecField();
 		

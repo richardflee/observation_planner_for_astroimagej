@@ -96,9 +96,13 @@ public class DemoAltitudePlotter extends JFrame {
 		this.chartPanel.revalidate();
 		this.chartPanel.repaint();			
 		
+//		xyChart.getStyler()
+//	     .setxAxisTickLabelsFormattingFunction(
+//	    		 x -> startDateTime.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
+		
 		xyChart.getStyler()
-	     .setxAxisTickLabelsFormattingFunction(
-	    		 x -> startDateTime.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
+			.setxAxisTickLabelsFormattingFunction(
+				x -> TimesConverter.LOCAL_TIME_NOON.plusMinutes(x.longValue()).format(X_TICK_FORMATTER));
 	
 		var title = String.format("StarAlt Plot - Starting night: %s",
 				DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));

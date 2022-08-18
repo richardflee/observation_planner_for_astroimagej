@@ -146,6 +146,7 @@ new FormModel {
 									name: "isSaveDssCheckBox"
 									"text": "Save DSS Fits File"
 									"selected": true
+									"enabled": false
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true

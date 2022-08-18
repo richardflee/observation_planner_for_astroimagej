@@ -461,6 +461,7 @@ public class ViewerUi extends JFrame {
 							//---- isSaveDssCheckBox ----
 							isSaveDssCheckBox.setText("Save DSS Fits File");
 							isSaveDssCheckBox.setSelected(true);
+							isSaveDssCheckBox.setEnabled(false);
 
 							GroupLayout panel3Layout = new GroupLayout(panel3);
 							panel3.setLayout(panel3Layout);
