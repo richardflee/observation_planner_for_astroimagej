@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,8 +54,8 @@ public class TargetTab implements CatalogDataListener {
 	private JTextField fovText;
 	private JTextField magLimitText;
 
-	private JComboBox catalogCombo;
-	private JComboBox filterCombo;
+	private JComboBox<String> catalogCombo;
+	private JComboBox<String> filterCombo;
 	private String selectedCatalog;
 	
 	private DatePicker datePicker = null; 

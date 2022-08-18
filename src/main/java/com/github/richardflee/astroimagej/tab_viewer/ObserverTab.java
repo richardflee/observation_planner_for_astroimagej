@@ -1,19 +1,18 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
 import java.awt.Color;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import com.github.richardflee.astroimagej.utils.InputsVerifier;
 import com.github.richardflee.astroimagej.data_objects.NoiseData;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
 import com.github.richardflee.astroimagej.listeners.ObserverDataListener;
+import com.github.richardflee.astroimagej.utils.InputsVerifier;
 
 public class ObserverTab implements ObserverDataListener {
 
@@ -59,14 +58,14 @@ public class ObserverTab implements ObserverDataListener {
 	private JButton save;
 	private JButton update;
 	
-	private ViewerUi viewer;
+	// private ViewerUi viewer;
 	private VerifyTextFields verifier;
 	
 	public ObserverTab() {}
 	
 	public ObserverTab(ViewerUi viewer) {
 		
-		this.viewer = viewer;
+		// this.viewer = viewer;
 		this.site = viewer.getSite();
 		this.verifier = new VerifyTextFields();
 

@@ -10,7 +10,6 @@ import com.github.richardflee.astroimagej.data_objects.BaseFieldObject;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.MathUtils;
-import com.github.richardflee.astroimagej.visibility_plotter.CoordsConverter.CoordsEnum;
 
 public class CoordsConverter {
 

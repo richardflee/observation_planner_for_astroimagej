@@ -19,7 +19,7 @@ public class AijPrefsFileIO {
 
 	public AijPrefsFileIO() {
 		// AIJ_Prefs.txt
-		var homePath = Paths.get(System.getProperty("user.home")).toAbsolutePath().toString();
+//		var homePath = Paths.get(System.getProperty("user.home")).toAbsolutePath().toString();
 //		this.aijPrefsFilePath = Paths.get(homePath, ".astroimagej", AIJ_PREFS_FILE).toString();
 	}
 	

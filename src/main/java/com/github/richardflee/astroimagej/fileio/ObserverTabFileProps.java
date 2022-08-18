@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
-import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
 public class ObserverTabFileProps {

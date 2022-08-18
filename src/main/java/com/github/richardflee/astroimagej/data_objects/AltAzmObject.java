@@ -2,10 +2,7 @@ package com.github.richardflee.astroimagej.data_objects;
 
 import java.time.LocalDateTime;
 
-import org.jfree.data.time.Minute;
-
 import com.github.richardflee.astroimagej.utils.MathUtils;
-import com.github.richardflee.astroimagej.visibility_plotter.TimesConverter;
 
 /**
  * Encapsulates a single object visibility values plus star track polar plot
@@ -34,9 +31,9 @@ public class AltAzmObject {
 		this.polarY = zenDeg * MathUtils.cosd(azmDeg);
 	}
 	
-	public Minute getCurrentMinute() {
-		return TimesConverter.convertCivilDateTimeToMinute(this.civilDateTime);
-	}
+//	public Minute getCurrentMinute() {
+//		return TimesConverter.convertCivilDateTimeToMinute(this.civilDateTime);
+//	}
 
 	public LocalDateTime getCivilDateTime() {
 		return civilDateTime;

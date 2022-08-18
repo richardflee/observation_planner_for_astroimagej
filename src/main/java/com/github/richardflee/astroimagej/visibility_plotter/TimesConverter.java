@@ -1,16 +1,9 @@
 package com.github.richardflee.astroimagej.visibility_plotter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Date;
-
-import org.jfree.data.general.SeriesException;
-import org.jfree.data.time.Minute;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
-import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.MathUtils;
 
 /**
@@ -125,30 +118,6 @@ public class TimesConverter {
 		return TimesConverter.convertUtcToJD(dt0);
 	}
 
-	/**
-	 * Converts JFreeChart Minute quantity to LocalDateTime
-	 */
-	public static LocalDateTime convertMinuteToCivilDateTime(Minute current) {
-		Date date = current.getStart();
-		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-	}
-
-	/**
-	 * Converts LocalDateTime to JFreeChart Minute quantity
-	 */
-	public static Minute convertCivilDateTimeToMinute(LocalDateTime civilDateTime) {
-		int minute = civilDateTime.getMinute();
-		int hour = civilDateTime.getHour();
-		int day = civilDateTime.getDayOfMonth();
-		int month = civilDateTime.getMonthValue();
-		int year = civilDateTime.getYear();
-		return new Minute(minute, hour, day, month, year);
-	}
-
-	public static Long convertCivilDateTimeToMillis(LocalDateTime civilDateTime) {
-		Minute minute = TimesConverter.convertCivilDateTimeToMinute(civilDateTime);
-		return minute.getFirstMillisecond();
-	}
 	
 	/**
 	 * Converts the local site time including utc offset to GMT / UTC <p> Ref: PA
@@ -289,51 +258,51 @@ public class TimesConverter {
 	}
 
 	public static void main(String[] args) {
-		// moore 45N 85W
-		double siteLong = AstroCoords.dmsToDeg("-85:31:42.51");
-		double siteLat = AstroCoords.dmsToDeg("+38:20:41.25");
-		double siteElevation = 100.0;
-		ObservationSite mooreSite = new ObservationSite(siteLong, siteLat, siteElevation, 0.0);
-		TimesConverter mooreTimesConverter = new TimesConverter(mooreSite);
-
-		// utc -> lst
-		LocalDateTime utcDateTime = LocalDateTime.of(2020, 2, 24, 2, 0, 0);
-
-		LocalDateTime lstDateTime = mooreTimesConverter.convertUtcToLst(utcDateTime);
-
-		System.out.println(utcDateTime.toString());
-		System.out.println(lstDateTime.toString());
-
-		LocalDateTime x = mooreTimesConverter.convertLstToUtc(lstDateTime);
-		System.out.println(x.toString());
-		System.out.println();
-
-		// double conversion JFree Minute <-> LocalDateTime
-		Minute current = TimesConverter.convertCivilDateTimeToMinute(utcDateTime);
-		LocalDateTime minToLDT = TimesConverter.convertMinuteToCivilDateTime(current);
-
-		System.out.println(String.format("Start date-time:                  %s", utcDateTime.toString()));
-		System.out.println(String.format("Minute date conversion:           %s", current.toString()));
-		System.out.println(String.format("End date after double conversion: %s", minToLDT.toString()));
-		System.out.println();
-		
-		// noon on starting night
-		LocalDate civilDate = LocalDate.of(2019,  1,  1);
-		LocalDateTime civilDateTime = LocalDateTime.of(civilDate, TimesConverter.LOCAL_TIME_NOON);
-		current = TimesConverter.convertCivilDateTimeToMinute(civilDateTime);
-		for (int i = 0; i < 24*60; i++) {
-			try {
-				LocalDateTime ldt = TimesConverter.convertMinuteToCivilDateTime(current);
-				// Date date = current.getStart();
-				// LocalDateTime ldt2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-				current = (Minute) current.next();
-				System.out.println(ldt.toString() + "  " + current.getStart().toString());
-				
-				
-			} catch (SeriesException e) {
-				System.out.println("error");
-			}
+//		// moore 45N 85W
+//		double siteLong = AstroCoords.dmsToDeg("-85:31:42.51");
+//		double siteLat = AstroCoords.dmsToDeg("+38:20:41.25");
+//		double siteElevation = 100.0;
+//		ObservationSite mooreSite = new ObservationSite(siteLong, siteLat, siteElevation, 0.0);
+//		TimesConverter mooreTimesConverter = new TimesConverter(mooreSite);
+//
+//		// utc -> lst
+//		LocalDateTime utcDateTime = LocalDateTime.of(2020, 2, 24, 2, 0, 0);
+//
+//		LocalDateTime lstDateTime = mooreTimesConverter.convertUtcToLst(utcDateTime);
+//
+//		System.out.println(utcDateTime.toString());
+//		System.out.println(lstDateTime.toString());
+//
+//		LocalDateTime x = mooreTimesConverter.convertLstToUtc(lstDateTime);
+//		System.out.println(x.toString());
+//		System.out.println();
+//
+//		// double conversion JFree Minute <-> LocalDateTime
+//		Minute current = TimesConverter.convertCivilDateTimeToMinute(utcDateTime);
+//		LocalDateTime minToLDT = TimesConverter.convertMinuteToCivilDateTime(current);
+//
+//		System.out.println(String.format("Start date-time:                  %s", utcDateTime.toString()));
+//		System.out.println(String.format("Minute date conversion:           %s", current.toString()));
+//		System.out.println(String.format("End date after double conversion: %s", minToLDT.toString()));
+//		System.out.println();
+//		
+//		// noon on starting night
+//		LocalDate civilDate = LocalDate.of(2019,  1,  1);
+//		LocalDateTime civilDateTime = LocalDateTime.of(civilDate, TimesConverter.LOCAL_TIME_NOON);
+//		current = TimesConverter.convertCivilDateTimeToMinute(civilDateTime);
+//		for (int i = 0; i < 24*60; i++) {
+//			try {
+//				LocalDateTime ldt = TimesConverter.convertMinuteToCivilDateTime(current);
+//				// Date date = current.getStart();
+//				// LocalDateTime ldt2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+//				current = (Minute) current.next();
+//				System.out.println(ldt.toString() + "  " + current.getStart().toString());
+//				
+//				
+//			} catch (SeriesException e) {
+//				System.out.println("error");
+//			}
 			
-		}
+//		}
 	}
 }

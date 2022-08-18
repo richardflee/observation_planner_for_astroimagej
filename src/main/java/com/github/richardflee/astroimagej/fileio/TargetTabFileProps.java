@@ -113,7 +113,6 @@ public class TargetTabFileProps {
 	
 	public static void main(String[] args) {	
 		
-		var query = new CatalogQuery();		
 		Properties prop = AijPropsReadWriter.getPlannerProps();
 				
 		prop.setProperty(OBJECT_ID, "NOT_WASP");

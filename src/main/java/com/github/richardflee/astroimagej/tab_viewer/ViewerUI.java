@@ -4,7 +4,7 @@
 
 package com.github.richardflee.astroimagej.tab_viewer;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -26,7 +26,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
@@ -52,16 +51,8 @@ public class ViewerUi extends JFrame {
 		
 		this.observer_tab = new ObserverTab(this);
 		this.target_tab = new TargetTab(this);
-		
-//		this.datePicker = new DatePicker();
-//		this.datePicker.setDate(LocalDate.now());
-//		this.datePickerPanel.add(this.datePicker);
 	}
 	
-	
-	private void createUIComponents() {
-		// TODO: add custom component creation code here
-	}
 	
 	public ObservationSite getSite() {
 		return site;
