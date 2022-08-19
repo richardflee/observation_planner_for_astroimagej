@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1::::547:x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "DEMO!!"
@@ -13,23 +13,23 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {comp targetPanel::l:::x, seq l {space :::p, par l:::p {comp runSimbadButton:6:::116:x, comp dssButton:::::x}, space u:::p, comp saveQueryButton:6::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space :::p, comp panel11::::416:x, space :::p}}"
-					"$verticalGroup": "par l {seq {comp targetPanel:::::x, space :::p, par l {comp panel11:::p:60:p, comp datePickerPanel::l:p:33:p, seq l {par c {comp saveQueryButton:5:c:p:30:p, comp runSimbadButton:5:c:p:30:p, comp label6::c:p::p}, space u:::p, comp dssButton:::p::p}}, space :::p}}"
+					"$horizontalGroup": "par l {comp targetPanel::l:::x}"
+					"$verticalGroup": "par l {comp targetPanel::l:::x}"
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp panel1:::p::p, space :::p, comp altitudePlotPanel::::639:x, space :::p}}"
-						"$verticalGroup": "par l {seq l {space :::p, par l {comp altitudePlotPanel:::::x, comp panel1:::::x}, space :::p}}"
+						"$horizontalGroup": "par l {seq l {space :::p, comp targetTabPanel:::p::p, space u:::p, comp altitudePlotPanel:::p:635:p, space :::p}, comp solarPanel::t:::x}"
+						"$verticalGroup": "par l {seq l {space :::p, par l {comp targetTabPanel:::::x, comp altitudePlotPanel::::490:x}, space u:::p, comp solarPanel:::p:76:p, space :::p}}"
 					} ) {
 						name: "targetPanel"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {seq t {par t {comp panel3::l::253:x, comp panel4::::253:x}, space :::p}}"
-							"$verticalGroup": "par l {seq l {comp panel3:::p::p, space :::p, comp panel4::::184:x}}"
+							"$horizontalGroup": "par l {seq t {par l {comp panel3:::::x, comp panel4::::253:x}, space :::p}}"
+							"$verticalGroup": "par l {seq l {comp panel3:::p::p, space :::p, comp panel4::::240:x, space :::p}}"
 						} ) {
-							name: "panel1"
+							name: "targetTabPanel"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {seq {comp filterCombo:::p:42:p, space s:::p, comp saveDssCheckBox:::p::p}, comp catalogCombo::l:p:96:p, seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:187:p}, space :::x}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp label1::b:p::p, comp objectIdField::b:p::p}, par l {seq {space :p:16:p, comp label2:::p::p}, seq {space u:::p, par b {comp raField::b:p::p, comp label7::b:p::p}}}, par l {seq {space :p:16:p, comp label3:::p::p}, seq {space u:::p, par b {comp decField::b:p::p, comp label8::b:p::p}}}, par l {seq {space :p:16:p, comp label4:::p::p}, seq {space u:::p, par b {comp fovField::b:p::p, comp label9::b:p::p}}}, par l {seq {space :p:16:p, comp label5:::p::p}, seq {space u:::p, par b {comp magLimitField::b:p::p, comp label10::b:p::p}}}, space u:::p, par b {comp catalogCombo::b:p::p, comp label11::b:p::p}, space u:::p, par b {comp label12::b:p::p, comp saveDssCheckBox::b:p::p, comp filterCombo::b:p::p}, space :::x}}"
+								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {comp filterCombo:::p:42:p, comp catalogCombo::l:p:96:p, seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:169:p}, space ::11:x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label1::b:p::p, comp objectIdField::b:p::p}, par l {seq {space :p:16:p, comp label2:::p::p}, seq {space u:::p, par b {comp raField::b:p::p, comp label7::b:p::p}}}, par l {seq {space :p:16:p, comp label3:::p::p}, seq {space u:::p, par b {comp decField::b:p::p, comp label8::b:p::p}}}, par l {seq {space :p:16:p, comp label4:::p::p}, seq {space u:::p, par b {comp fovField::b:p::p, comp label9::b:p::p}}}, par l {seq {space :p:16:p, comp label5:::p::p}, seq {space u:::p, par b {comp magLimitField::b:p::p, comp label10::b:p::p}}}, space u:::p, par b {comp catalogCombo::b:p::p, comp label11::b:p::p}, space u:::p, par b {comp label12::b:p::p, comp filterCombo::b:p::p}, space :::x}}"
 							} ) {
 								name: "panel3"
 								"border": new javax.swing.border.TitledBorder( "Catalog Query settings" )
@@ -142,38 +142,33 @@ new FormModel {
 									name: "label12"
 									"text": "Filter:"
 								} )
-								add( new FormComponent( "javax.swing.JCheckBox" ) {
-									name: "saveDssCheckBox"
-									"text": "Save DSS Fits File"
-									"selected": true
-									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
-										"JavaCodeGenerator.variableGetter": true
-									}
-								} )
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq {space :::x, par l {comp idLabel::t:p::p, comp raLabel::t:p::p, comp decLabel::t:p::p, comp idLabel2::t:p::p, comp idLabel3::t:p::p, comp idLabel4::t:p::p, comp idLabel5::t:p::p}, space :::p, par l {comp simbadIdLabel::l:p::p, comp simbadRaLabel::l:p::p, comp simbadDecLabel::l:p::p, comp simbadMagBLabel::l:p::p, comp simbadMagVLabel::l:p::p, comp simbadMagRLabel::l:p::p, comp simbadMagILabel::l:p::p}, space :0:0:x}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp simbadIdLabel::b:p::p, comp idLabel::b:p::p}, space :::p, par b {comp raLabel::b:p::p, comp simbadRaLabel::b:p::p}, space :::p, par b {comp decLabel::b:p::p, comp simbadDecLabel::b:p::p}, space u:::p, par b {comp idLabel2::b:p::p, comp simbadMagBLabel::b:p::p}, space u:::p, par b {comp idLabel3::b:p::p, comp simbadMagVLabel::b:p::p}, space u:::p, par b {comp idLabel4::b:p::p, comp simbadMagRLabel::b:p::p}, space u:::p, par b {comp idLabel5::b:p::p, comp simbadMagILabel::b:p::p}, space :::x}}"
+								"$horizontalGroup": "par l {seq l {space :::p, par l {comp idLabel::t:p::p, comp raLabel::t:p::p, comp decLabel::t:p::p, comp idLabel2::t:p::p, comp idLabel3::t:p::p, comp idLabel4::t:p::p, comp idLabel5::t:p::p}, space :::p, par l {comp simbadIdLabel::l:p::p, comp simbadRaLabel::l:p::p, comp simbadDecLabel::l:p::p, comp simbadMagBLabel::l:p::p, comp simbadMagVLabel::l:p::p, comp simbadMagRLabel::l:p::p, comp simbadMagILabel::l:p::p}, space ::102:x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp simbadIdLabel::b:p::p, comp idLabel::b:p::p}, space :::p, par b {comp raLabel::b:p::p, comp simbadRaLabel::b:p::p}, space :::p, par b {comp decLabel::b:p::p, comp simbadDecLabel::b:p::p}, space u:::p, par b {comp idLabel2::b:p::p, comp simbadMagBLabel::b:p::p}, space u:::p, par b {comp idLabel3::b:p::p, comp simbadMagVLabel::b:p::p}, space u:::p, par b {comp idLabel4::b:p::p, comp simbadMagRLabel::b:p::p}, space u:::p, par b {comp idLabel5::b:p::p, comp simbadMagILabel::b:p::p}, space ::52:x}}"
 							} ) {
 								name: "panel4"
 								"border": new javax.swing.border.TitledBorder( "SIMBAD Data" )
-								"preferredSize": new java.awt.Dimension( 190, 164 )
+								"preferredSize": &Dimension0 new java.awt.Dimension( 190, 164 )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "idLabel"
 									"text": "ObjectId:"
+									"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "raLabel"
 									"text": "RA:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "decLabel"
 									"text": "DEC:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadIdLabel"
 									"text": "."
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -181,6 +176,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadRaLabel"
 									"text": "HH:MM:SS.SS"
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -188,6 +184,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadDecLabel"
 									"text": "DD:MM:SS.SS"
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -195,22 +192,27 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "idLabel2"
 									"text": "MagB:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "idLabel3"
 									"text": "MagV:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "idLabel4"
 									"text": "MagR:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "idLabel5"
 									"text": "MagI:"
+									"font": #Font0
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadMagBLabel"
 									"text": "."
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -218,6 +220,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadMagVLabel"
 									"text": "."
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -225,6 +228,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadMagRLabel"
 									"text": "."
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -232,6 +236,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "simbadMagILabel"
 									"text": "."
+									"font": #Font0
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -245,126 +250,361 @@ new FormModel {
 								"JavaCodeGenerator.variableGetter": true
 							}
 						} )
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "runSimbadButton"
-						"text": "SIMBAD Query"
-						"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
-						"toolTipText": "<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>"
-						auxiliary() {
-							"JavaCodeGenerator.variableGetter": true
-						}
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "saveQueryButton"
-						"text": "Save Query Data"
-						"font": #Font0
-						"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
-						auxiliary() {
-							"JavaCodeGenerator.variableGetter": true
-						}
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
-						name: "datePickerPanel"
-						"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
-						"toolTipText": "<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n"
-						auxiliary() {
-							"JavaCodeGenerator.variableGetter": true
-						}
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label6"
-						"text": "Start Night:"
-						"font": new java.awt.Font( "Tahoma", 0, 12 )
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {space :::p, comp label33:::p::p, space :::p, comp sunSetField:7::p:47:p, space u:::p, comp label34:::p::p, space :::p, comp twilightEndField:7::p:28:p, space u:::p, comp label35:::p::p, space :5:5:p, comp twilightStartField:7::p:47:p, space u:::p, comp label36:::p::p, space :5:5:p, comp sunRiseField:7::p:47:p, space :::x}}"
-						"$verticalGroup": "par l {seq l {space :::p, par l {seq {space :3:3:p, comp label36:::p::p}, comp sunRiseField:::p::p, par t {par l {seq {space :3:3:p, comp label35:::p::p}, comp twilightStartField:::p::p}, par b {comp label33::b:p::p, comp sunSetField::b:p::p, comp label34::b:p::p, comp twilightEndField::b:p::p}}}, space :::x}}"
-					} ) {
-						name: "panel11"
-						"border": new javax.swing.border.TitledBorder( "Civil Solar Times " )
-						"preferredSize": new java.awt.Dimension( 190, 164 )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label33"
-							"text": "Sunset:"
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq l {space :::p, comp runSimbadButton:::::x, space u:::p, comp saveQueryButton:::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space s:::p, comp panel11::::425:x}}"
+							"$verticalGroup": "par l {seq l {space :::p, par l {comp datePickerPanel::l:p:33:p, par c:l {comp saveQueryButton::c:p:30:p, comp runSimbadButton::c:p:30:p, comp label6::c:p::p}, comp panel11::l:p:60:p}, space :::x}}"
+						} ) {
+							name: "solarPanel"
+							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "runSimbadButton"
+								"text": "SIMBAD Query"
+								"font": &Font1 new java.awt.Font( "Tahoma", 0, 12 )
+								"toolTipText": "<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "saveQueryButton"
+								"text": "Save Query Data"
+								"font": #Font1
+								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+								name: "datePickerPanel"
+								"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+								"toolTipText": "<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label6"
+								"text": "Start Night:"
+								"font": new java.awt.Font( "Tahoma", 0, 12 )
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq {space :::p, comp label33:::p::p, space :::p, comp sunSetField:::p:47:p, space u:::p, comp label34:::p::p, space :::p, comp twilightEndField:::p:28:p, space u:::p, comp label35:::p::p, space :5:5:p, comp twilightStartField:::p:47:p, space u:::p, comp label36:::p::p, space :5:5:p, comp sunRiseField:::p:47:p, space :::x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par l {seq {space :3:3:p, comp label36:::p::p}, comp sunRiseField:::p::p, par t {par l {seq {space :3:3:p, comp label35:::p::p}, comp twilightStartField:::p::p}, par b {comp label33::b:p::p, comp sunSetField::b:p::p, comp label34::b:p::p, comp twilightEndField::b:p::p}}}, space :::x}}"
+							} ) {
+								name: "panel11"
+								"border": new javax.swing.border.TitledBorder( "Civil Solar Times " )
+								"preferredSize": new java.awt.Dimension( 190, 164 )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label33"
+									"text": "Sunset:"
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label34"
+									"text": "Twi End:"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "sunSetField"
+									"text": "00:00"
+									"editable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "twilightEndField"
+									"editable": false
+									"text": "00:00"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label35"
+									"text": "Twi Start:"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "twilightStartField"
+									"editable": false
+									"text": "00:00"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label36"
+									"text": "Sunrise"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "sunRiseField"
+									"editable": false
+									"text": "00:00"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+							} )
 						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label34"
-							"text": "Twi End:"
-						} )
-						add( new FormComponent( "javax.swing.JTextField" ) {
-							name: "sunSetField"
-							"text": "00:00"
-							"editable": false
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-								"JavaCodeGenerator.variableGetter": true
-							}
-						} )
-						add( new FormComponent( "javax.swing.JTextField" ) {
-							name: "twilightEndField"
-							"editable": false
-							"text": "00:00"
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-								"JavaCodeGenerator.variableGetter": true
-							}
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label35"
-							"text": "Twi Start:"
-						} )
-						add( new FormComponent( "javax.swing.JTextField" ) {
-							name: "twilightStartField"
-							"editable": false
-							"text": "00:00"
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-								"JavaCodeGenerator.variableGetter": true
-							}
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label36"
-							"text": "Sunrise"
-						} )
-						add( new FormComponent( "javax.swing.JTextField" ) {
-							name: "sunRiseField"
-							"editable": false
-							"text": "00:00"
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-								"JavaCodeGenerator.variableGetter": true
-							}
-						} )
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "dssButton"
-						"text": "DSS"
-						auxiliary() {
-							"JavaCodeGenerator.variableGetter": true
-						}
 					} )
 				}, new FormLayoutConstraints( null ) {
 					"title": "Target"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {comp panel6::l:::x, seq l {space :::p, comp button3:::p:160:p, space ::758:x}}"
-					"$verticalGroup": "par l {seq l {comp panel6:::::x, space u:::p, comp button3:::p:40:p, space :::p}}"
+					"$horizontalGroup": "par l {comp catalogsPanel::l:::x}"
+					"$verticalGroup": "par l {comp catalogsPanel::l:::x}"
 				} ) {
-					name: "TAB2"
+					name: "catalogsTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {space :0:928:x}"
-						"$verticalGroup": "par l {space :0:460:x}"
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq l {comp catalogSettingsPanel:::p::p, space :::p, comp catalogTablePanel:::::x, space :::p}, comp solarPanel2::t:::x}}}"
+						"$verticalGroup": "par l {seq l {space :::p, par l {comp catalogSettingsPanel:::::x, comp catalogTablePanel:::::x}, space :::p, comp solarPanel2:::::p, space :::p}}"
 					} ) {
-						name: "panel6"
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button3"
-						"text": "text"
-						"font": #Font0
+						name: "catalogsPanel"
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq l {space :::p, par t:::p {comp sortByPanel::::239:x, comp slectionFiltersPanel::l::239:x, comp panel1::l:::x, comp querySummaryPAnel:::p:239:p}, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::p, comp sortByPanel:::p:48:p, space u:::p, comp slectionFiltersPanel:::p:204:p, space u:::p, comp panel1:::p::p, space u:::p, comp querySummaryPAnel::::118:x}}"
+						} ) {
+							name: "catalogSettingsPanel"
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq l {space :::p, par l:::p {comp label48:::::x, comp label13::l:::x, comp label47::l:::x, comp label49::l:p:209:p}, space :::x}}"
+								"$verticalGroup": "par l {seq t {space :::x, comp label13:::p::p, space :::p, comp label47:::p::p, space :::p, comp label48:::p::p, space :::p, comp label49:::p::p, space :::p}}"
+							} ) {
+								name: "querySummaryPAnel"
+								"border": new javax.swing.border.TitledBorder( "Query Data" )
+								"preferredSize": #Dimension0
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label13"
+									"text": "ID: WASP12 | FOV: 60"
+									"font": &Font2 new java.awt.Font( "Tahoma", 0, 12 )
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label47"
+									"text": "RA: 06:30:32.80 | Dec:+20:40:20.27"
+									"font": #Font2
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label48"
+									"text": "Catalog: VSP | Filter B | Mag <17.0"
+									"font": #Font2
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label49"
+									"text": "Start Date: 2022-08-18"
+									"font": #Font2
+								} )
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq l {space :::p, comp distanceRadioButton:::p::p, space s:::p, comp deltaMagRadioButton:::p::p, space :::x}}"
+								"$verticalGroup": "par l {seq {par b {comp distanceRadioButton::b:p::p, comp deltaMagRadioButton::b:p::p}, space :0:6:x}}"
+							} ) {
+								name: "sortByPanel"
+								"border": new javax.swing.border.TitledBorder( "Sort By" )
+								"preferredSize": new java.awt.Dimension( 190, 164 )
+								add( new FormComponent( "javax.swing.JRadioButton" ) {
+									name: "distanceRadioButton"
+									"text": "Distance"
+									"$buttonGroup": new FormReference( "buttonGroup1" )
+									"selected": true
+								} )
+								add( new FormComponent( "javax.swing.JRadioButton" ) {
+									name: "deltaMagRadioButton"
+									"text": "|Delta Mag|"
+									"$buttonGroup": new FormReference( "buttonGroup1" )
+								} )
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:9:p, par l {comp isMagLimitsCheckBox:::p::p, comp saveDssCheckBox:::p:109:p}}, seq l {par t:::p {seq l {comp label37:::p::p, space u:::p, comp nObsSpinner:::::x}, seq l {par l {seq {space :p:9:p, par l {comp label39::t:p::p, comp label38::t:p::p}}, comp label40::l:p::p}, space :::p, par t {comp upperLimitSpinner::t:p:60:p, comp lowerLimitSpinner::t:p:60:p, comp targetMagSpinner:::p:60:p}}}, space u:::p, par l {comp upperLabel::l:p::p, comp label41::l:p::p, comp lowerLabel::l:p::p}}}, space :::x}}"
+								"$verticalGroup": "par l {seq t {space :::p, comp saveDssCheckBox:::p::p, space u:::p, comp isMagLimitsCheckBox:::p::p, space ::6:x, par l {comp label39::t:p::p, seq t {par b {comp upperLimitSpinner::b:p::p, comp upperLabel::b:p::p, comp label38::b:p::p}, space :::p, par b {comp targetMagSpinner::b:p::p, comp label41::b:p::p, comp label40::b:p::p}, space :::p, par b {comp lowerLimitSpinner::b:p::p, comp lowerLabel::b:p::p}}}, space :p:25:p, par b {comp label37::b:p::p, comp nObsSpinner::b:p::p}, space :::p}}"
+							} ) {
+								name: "slectionFiltersPanel"
+								"border": new javax.swing.border.TitledBorder( "Selection Filters + DSS FITS" )
+								"preferredSize": new java.awt.Dimension( 190, 164 )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label38"
+									"text": "Upper Mag:"
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label39"
+									"text": "Lower Mag:"
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label40"
+									"text": "Nominal Mag:"
+								} )
+								add( new FormComponent( "javax.swing.JSpinner" ) {
+									name: "upperLimitSpinner"
+									"model": new javax.swing.SpinnerNumberModel( 0.0, -0.1, 5.0, 0.10000000149011612 )
+									"toolTipText": "<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JSpinner" ) {
+									name: "lowerLimitSpinner"
+									"model": new javax.swing.SpinnerNumberModel( 0.0, -5.0, 0.1, 0.10000000149011612 )
+									"toolTipText": "<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JSpinner" ) {
+									name: "targetMagSpinner"
+									"model": new javax.swing.SpinnerNumberModel( 10.0, 5.5, 25.0, 0.10000000149011612 )
+									"toolTipText": "<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JCheckBox" ) {
+									name: "isMagLimitsCheckBox"
+									"text": "Apply mag limits"
+									"selected": true
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "upperLabel"
+									"text": "N/A"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label41"
+									"text": "."
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lowerLabel"
+									"text": "N/A"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label37"
+									"text": "Nobs (APASS)"
+								} )
+								add( new FormComponent( "javax.swing.JSpinner" ) {
+									name: "nObsSpinner"
+									"model": new javax.swing.SpinnerNumberModel( 1, 1, 10, 1 )
+									"toolTipText": "<html>\nSet minimum number of observations APASS catalog\n<p>Range: 1 to 10 (defaults to Nobs =1)</p>\n</html>\n"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								} )
+								add( new FormComponent( "javax.swing.JCheckBox" ) {
+									name: "saveDssCheckBox"
+									"text": "Save DSS Fits File"
+									"selected": true
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+								"$horizontalGroup": "par l {seq l {space :::p, par l {comp label42::t:p::p, comp label43::t:p::p, comp label44::t:p::p}, space :::p, par l {comp totalRecordsField:7::p:29:p, comp filteredRecordsField:7::p::p, comp selectedRecordsField:7::p::p}, space :::x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label42::b:p::p, comp totalRecordsField::b:p::p}, space :::p, par b {comp label43::b:p::p, comp filteredRecordsField::b:p::p}, space :::p, par b {comp label44::b:p::p, comp selectedRecordsField::b:p::p}, space :::x}}"
+							} ) {
+								name: "panel1"
+								"border": new javax.swing.border.TitledBorder( "Catalog Record Counts" )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label42"
+									"text": "Total records:"
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label43"
+									"text": "Filtered records:"
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label44"
+									"text": "Selected records:"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "totalRecordsField"
+									"text": "1000"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "filteredRecordsField"
+									"text": "0"
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "selectedRecordsField"
+									"text": "0"
+								} )
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {comp tableScrollPane::l::643:x}"
+							"$verticalGroup": "par l {comp tableScrollPane::l::520:x}"
+						} ) {
+							name: "catalogTablePanel"
+							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							auxiliary() {
+								"JavaCodeGenerator.variableGetter": true
+							}
+							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+								name: "tableScrollPane"
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq l {space :::p, comp catalogQueryButton:6:::116:x, space u:::p, comp importRaDecButton:6::p::p, space u:::p, comp saveRaDecButton:6::p::p, space u:::p, comp updateButton:6::p::p, space ::233:x, comp clearButton:6::p::p, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::p, par l {par b {comp clearButton:5:b:p:30:p, comp updateButton:5:b:p:30:p}, par c {comp catalogQueryButton:5:c:p:30:p, comp importRaDecButton:5:c:p:30:p, comp saveRaDecButton:5:c:p:30:p}}, space :::x}}"
+						} ) {
+							name: "solarPanel2"
+							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "catalogQueryButton"
+								"text": "Run Query"
+								"font": #Font1
+								"toolTipText": "<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "importRaDecButton"
+								"text": "Import RaDec Fille"
+								"font": #Font1
+								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "saveRaDecButton"
+								"text": "Save RaDec File"
+								"font": #Font1
+								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "updateButton"
+								"text": "Update Table"
+								"font": #Font1
+								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "clearButton"
+								"text": "Clear"
+								"font": #Font1
+								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
+							} )
+						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "TAB2"
+					"title": "CATALOGS WIP"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 					"$horizontalGroup": "par l {seq l {space :::p, comp updateParamsButton:1::p:140:p, space u:::p, comp saveObserverButton:1::p:120:p, space ::628:x}, comp observerPanel::l:::x}"
@@ -373,7 +613,7 @@ new FormModel {
 					name: "observerTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 						"$horizontalGroup": "par l {seq l {space :::p, par l {comp scrollPane2::::0:x, comp systemParamsPanel:::::x}, space :::p, par l {comp locationPanel:::p::p, comp observerNotesPanel:::::p}}}"
-						"$verticalGroup": "par l {seq l {space :::p, comp locationPanel:::p::p, space :::p, comp observerNotesPanel:::::x}, seq l {comp scrollPane2::::363:x, space :::p, comp systemParamsPanel:::p::p, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp locationPanel:::p::p, space :::p, comp observerNotesPanel:::::x}, seq l {comp scrollPane2::::439:x, space :::p, comp systemParamsPanel:::p::p, space :::p}}"
 					} ) {
 						name: "observerPanel"
 						auxiliary() {
@@ -388,7 +628,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label14"
 								"text": "Latitude:"
-								"font": &Font1 new java.awt.Font( "Tahoma", 1, 12 )
+								"font": &Font3 new java.awt.Font( "Tahoma", 1, 12 )
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
 								name: "latitudeField"
@@ -408,7 +648,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label15"
 								"text": "Longitude:"
-								"font": #Font1
+								"font": #Font3
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
 								name: "longitudeText"
@@ -428,7 +668,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label16"
 								"text": "Altitude (m):"
-								"font": #Font1
+								"font": #Font3
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
 								name: "altitudeField"
@@ -505,7 +745,7 @@ new FormModel {
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 							"$horizontalGroup": "par l {comp scrollPane1::l::408:x}"
-							"$verticalGroup": "par l {comp scrollPane1::l::294:x}"
+							"$verticalGroup": "par l {comp scrollPane1::l::370:x}"
 						} ) {
 							name: "observerNotesPanel"
 							"border": new javax.swing.border.TitledBorder( null, "NOTES:", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
@@ -532,7 +772,7 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "codeField"
-									"font": &Font2 new java.awt.Font( "Tahoma", 0, 12 )
+									"font": &Font4 new java.awt.Font( "Tahoma", 0, 12 )
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -540,11 +780,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label21"
 									"text": "Observer Name:"
-									"font": &Font3 new java.awt.Font( "Tahoma", 0, 12 )
+									"font": &Font5 new java.awt.Font( "Tahoma", 0, 12 )
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "nameField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -556,7 +796,7 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "teleShortField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -564,11 +804,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label23"
 									"text": "Telescope Full Description:"
-									"font": #Font3
+									"font": #Font5
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "teleFullField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -576,11 +816,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label24"
 									"text": "Aperture (mm):"
-									"font": #Font3
+									"font": #Font5
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "apertureField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -588,11 +828,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label25"
 									"text": "Focal Length (mm):"
-									"font": #Font3
+									"font": #Font5
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "focalLengthField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -604,7 +844,7 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "cameraField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -612,11 +852,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label27"
 									"text": "Pixel Size (H) (um)"
-									"font": &Font4 new java.awt.Font( "Tahoma", 1, 12 )
+									"font": &Font6 new java.awt.Font( "Tahoma", 1, 12 )
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "horizPixelSizeUmField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -624,11 +864,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label28"
 									"text": "Pixel Size (V) (um):"
-									"font": #Font4
+									"font": #Font6
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "vertPixelSizeUmField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -636,11 +876,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label29"
 									"text": "Array Size(H) (pixels):"
-									"font": #Font4
+									"font": #Font6
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "horizArraySizeField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -648,11 +888,11 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label30"
 									"text": "Array Size(V) (pixels):"
-									"font": #Font4
+									"font": #Font6
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "vertArraySizeField"
-									"font": #Font2
+									"font": #Font4
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -664,7 +904,7 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "darkCurrentField"
-									"font": #Font2
+									"font": #Font4
 									"editable": false
 									"focusable": false
 									auxiliary() {
@@ -678,7 +918,7 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "readoutNoiseField"
-									"font": #Font2
+									"font": #Font4
 									"editable": false
 									"focusable": false
 									auxiliary() {
@@ -691,7 +931,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "saveObserverButton"
 						"text": "Save"
-						"font": #Font0
+						"font": #Font1
 						"toolTipText": "Saves Observer and Equipment inputs t AIJ_Planner.properties file"
 						auxiliary() {
 							"JavaCodeGenerator.variableGetter": true
@@ -700,7 +940,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "updateParamsButton"
 						"text": "Update Params"
-						"font": #Font0
+						"font": #Font1
 						"toolTipText": "<html>\nUpdates Observer and Equipment inputs and computes Derived Parameters\n<p>Flags any invalid data entries</p>\n</html>"
 						auxiliary() {
 							"JavaCodeGenerator.variableGetter": true
@@ -712,7 +952,12 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 20, 5 )
-			"size": new java.awt.Dimension( 955, 585 )
+			"size": new java.awt.Dimension( 955, 675 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "buttonGroup1"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 690 )
 		} )
 	}
 }

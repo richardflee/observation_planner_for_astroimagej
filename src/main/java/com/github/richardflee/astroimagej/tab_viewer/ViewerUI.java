@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import javax.swing.*;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.*;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
@@ -198,10 +200,6 @@ public class ViewerUi extends JFrame {
 		return filterCombo;
 	}
 
-	public JCheckBox getSaveDssCheckBox() {
-		return saveDssCheckBox;
-	}
-
 	public JLabel getSimbadRaLabel() {
 		return simbadRaLabel;
 	}
@@ -254,8 +252,32 @@ public class ViewerUi extends JFrame {
 		return sunRiseField;
 	}
 
-	public JButton getDssButton() {
-		return dssButton;
+	public JPanel getCatalogTablePanel() {
+		return catalogTablePanel;
+	}
+
+	public JButton getCatalogQueryButton() {
+		return catalogQueryButton;
+	}
+
+	public JButton getImportRaDecButton() {
+		return importRaDecButton;
+	}
+
+	public JButton getSaveRaDecButton() {
+		return saveRaDecButton;
+	}
+
+	public JButton getUpdateButton() {
+		return updateButton;
+	}
+
+	public JButton getClearButton() {
+		return clearButton;
+	}
+
+	public JCheckBox getSaveDssCheckBox() {
+		return saveDssCheckBox;
 	}
 
 	private void initComponents() {
@@ -264,7 +286,7 @@ public class ViewerUi extends JFrame {
 		tabbedPane1 = new JTabbedPane();
 		targetTab = new JPanel();
 		targetPanel = new JPanel();
-		panel1 = new JPanel();
+		targetTabPanel = new JPanel();
 		panel3 = new JPanel();
 		label1 = new JLabel();
 		objectIdField = new JTextField();
@@ -284,7 +306,6 @@ public class ViewerUi extends JFrame {
 		label11 = new JLabel();
 		filterCombo = new JComboBox<>();
 		label12 = new JLabel();
-		saveDssCheckBox = new JCheckBox();
 		panel4 = new JPanel();
 		idLabel = new JLabel();
 		raLabel = new JLabel();
@@ -301,6 +322,7 @@ public class ViewerUi extends JFrame {
 		simbadMagRLabel = new JLabel();
 		simbadMagILabel = new JLabel();
 		altitudePlotPanel = new JPanel();
+		solarPanel = new JPanel();
 		runSimbadButton = new JButton();
 		saveQueryButton = new JButton();
 		datePickerPanel = new JPanel();
@@ -314,10 +336,46 @@ public class ViewerUi extends JFrame {
 		twilightStartField = new JTextField();
 		label36 = new JLabel();
 		sunRiseField = new JTextField();
-		dssButton = new JButton();
-		TAB2 = new JPanel();
-		panel6 = new JPanel();
-		button3 = new JButton();
+		catalogsTab = new JPanel();
+		catalogsPanel = new JPanel();
+		catalogSettingsPanel = new JPanel();
+		querySummaryPAnel = new JPanel();
+		label13 = new JLabel();
+		label47 = new JLabel();
+		label48 = new JLabel();
+		label49 = new JLabel();
+		sortByPanel = new JPanel();
+		distanceRadioButton = new JRadioButton();
+		deltaMagRadioButton = new JRadioButton();
+		slectionFiltersPanel = new JPanel();
+		label38 = new JLabel();
+		label39 = new JLabel();
+		label40 = new JLabel();
+		upperLimitSpinner = new JSpinner();
+		lowerLimitSpinner = new JSpinner();
+		targetMagSpinner = new JSpinner();
+		isMagLimitsCheckBox = new JCheckBox();
+		upperLabel = new JLabel();
+		label41 = new JLabel();
+		lowerLabel = new JLabel();
+		label37 = new JLabel();
+		nObsSpinner = new JSpinner();
+		saveDssCheckBox = new JCheckBox();
+		panel1 = new JPanel();
+		label42 = new JLabel();
+		label43 = new JLabel();
+		label44 = new JLabel();
+		totalRecordsField = new JTextField();
+		filteredRecordsField = new JTextField();
+		selectedRecordsField = new JTextField();
+		catalogTablePanel = new JPanel();
+		tableScrollPane = new JScrollPane();
+		solarPanel2 = new JPanel();
+		catalogQueryButton = new JButton();
+		importRaDecButton = new JButton();
+		saveRaDecButton = new JButton();
+		updateButton = new JButton();
+		clearButton = new JButton();
 		observerTab = new JPanel();
 		observerPanel = new JPanel();
 		locationPanel = new JPanel();
@@ -386,7 +444,7 @@ public class ViewerUi extends JFrame {
 				//======== targetPanel ========
 				{
 
-					//======== panel1 ========
+					//======== targetTabPanel ========
 					{
 
 						//======== panel3 ========
@@ -454,10 +512,6 @@ public class ViewerUi extends JFrame {
 							//---- label12 ----
 							label12.setText("Filter:");
 
-							//---- saveDssCheckBox ----
-							saveDssCheckBox.setText("Save DSS Fits File");
-							saveDssCheckBox.setSelected(true);
-
 							GroupLayout panel3Layout = new GroupLayout(panel3);
 							panel3.setLayout(panel3Layout);
 							panel3Layout.setHorizontalGroup(
@@ -474,10 +528,7 @@ public class ViewerUi extends JFrame {
 											.addComponent(label12, GroupLayout.Alignment.TRAILING))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(panel3Layout.createParallelGroup()
-											.addGroup(panel3Layout.createSequentialGroup()
-												.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-												.addGap(18, 18, 18)
-												.addComponent(saveDssCheckBox))
+											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
 											.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 											.addGroup(panel3Layout.createSequentialGroup()
 												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
@@ -491,8 +542,8 @@ public class ViewerUi extends JFrame {
 													.addComponent(label8)
 													.addComponent(label9)
 													.addComponent(label10)))
-											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(11, Short.MAX_VALUE))
 							);
 							panel3Layout.setVerticalGroup(
 								panel3Layout.createParallelGroup()
@@ -544,7 +595,6 @@ public class ViewerUi extends JFrame {
 										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label12)
-											.addComponent(saveDssCheckBox)
 											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
@@ -557,52 +607,66 @@ public class ViewerUi extends JFrame {
 
 							//---- idLabel ----
 							idLabel.setText("ObjectId:");
+							idLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- raLabel ----
 							raLabel.setText("RA:");
+							raLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- decLabel ----
 							decLabel.setText("DEC:");
+							decLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadIdLabel ----
 							simbadIdLabel.setText(".");
+							simbadIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadRaLabel ----
 							simbadRaLabel.setText("HH:MM:SS.SS");
+							simbadRaLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadDecLabel ----
 							simbadDecLabel.setText("DD:MM:SS.SS");
+							simbadDecLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- idLabel2 ----
 							idLabel2.setText("MagB:");
+							idLabel2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- idLabel3 ----
 							idLabel3.setText("MagV:");
+							idLabel3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- idLabel4 ----
 							idLabel4.setText("MagR:");
+							idLabel4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- idLabel5 ----
 							idLabel5.setText("MagI:");
+							idLabel5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadMagBLabel ----
 							simbadMagBLabel.setText(".");
+							simbadMagBLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadMagVLabel ----
 							simbadMagVLabel.setText(".");
+							simbadMagVLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadMagRLabel ----
 							simbadMagRLabel.setText(".");
+							simbadMagRLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- simbadMagILabel ----
 							simbadMagILabel.setText(".");
+							simbadMagILabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							GroupLayout panel4Layout = new GroupLayout(panel4);
 							panel4.setLayout(panel4Layout);
 							panel4Layout.setHorizontalGroup(
 								panel4Layout.createParallelGroup()
 									.addGroup(panel4Layout.createSequentialGroup()
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addContainerGap()
 										.addGroup(panel4Layout.createParallelGroup()
 											.addComponent(idLabel, GroupLayout.Alignment.TRAILING)
 											.addComponent(raLabel, GroupLayout.Alignment.TRAILING)
@@ -620,7 +684,7 @@ public class ViewerUi extends JFrame {
 											.addComponent(simbadMagVLabel)
 											.addComponent(simbadMagRLabel)
 											.addComponent(simbadMagILabel))
-										.addGap(0, 0, Short.MAX_VALUE))
+										.addContainerGap(102, Short.MAX_VALUE))
 							);
 							panel4Layout.setVerticalGroup(
 								panel4Layout.createParallelGroup()
@@ -653,26 +717,27 @@ public class ViewerUi extends JFrame {
 										.addGroup(panel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(idLabel5)
 											.addComponent(simbadMagILabel))
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addContainerGap(52, Short.MAX_VALUE))
 							);
 						}
 
-						GroupLayout panel1Layout = new GroupLayout(panel1);
-						panel1.setLayout(panel1Layout);
-						panel1Layout.setHorizontalGroup(
-							panel1Layout.createParallelGroup()
-								.addGroup(GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-									.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-										.addComponent(panel3, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+						GroupLayout targetTabPanelLayout = new GroupLayout(targetTabPanel);
+						targetTabPanel.setLayout(targetTabPanelLayout);
+						targetTabPanelLayout.setHorizontalGroup(
+							targetTabPanelLayout.createParallelGroup()
+								.addGroup(GroupLayout.Alignment.TRAILING, targetTabPanelLayout.createSequentialGroup()
+									.addGroup(targetTabPanelLayout.createParallelGroup()
+										.addComponent(panel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
 									.addContainerGap())
 						);
-						panel1Layout.setVerticalGroup(
-							panel1Layout.createParallelGroup()
-								.addGroup(panel1Layout.createSequentialGroup()
+						targetTabPanelLayout.setVerticalGroup(
+							targetTabPanelLayout.createParallelGroup()
+								.addGroup(targetTabPanelLayout.createSequentialGroup()
 									.addComponent(panel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+									.addComponent(panel4, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+									.addContainerGap())
 						);
 					}
 
@@ -682,217 +747,596 @@ public class ViewerUi extends JFrame {
 						altitudePlotPanel.setLayout(new BorderLayout());
 					}
 
+					//======== solarPanel ========
+					{
+						solarPanel.setBorder(null);
+
+						//---- runSimbadButton ----
+						runSimbadButton.setText("SIMBAD Query");
+						runSimbadButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						runSimbadButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
+
+						//---- saveQueryButton ----
+						saveQueryButton.setText("Save Query Data");
+						saveQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						saveQueryButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+						//======== datePickerPanel ========
+						{
+							datePickerPanel.setBorder(null);
+							datePickerPanel.setToolTipText("<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n");
+							datePickerPanel.setLayout(new FlowLayout());
+						}
+
+						//---- label6 ----
+						label6.setText("Start Night:");
+						label6.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+						//======== panel11 ========
+						{
+							panel11.setBorder(new TitledBorder("Civil Solar Times "));
+							panel11.setPreferredSize(new Dimension(190, 164));
+
+							//---- label33 ----
+							label33.setText("Sunset:");
+
+							//---- label34 ----
+							label34.setText("Twi End:");
+
+							//---- sunSetField ----
+							sunSetField.setText("00:00");
+							sunSetField.setEditable(false);
+
+							//---- twilightEndField ----
+							twilightEndField.setEditable(false);
+							twilightEndField.setText("00:00");
+
+							//---- label35 ----
+							label35.setText("Twi Start:");
+
+							//---- twilightStartField ----
+							twilightStartField.setEditable(false);
+							twilightStartField.setText("00:00");
+
+							//---- label36 ----
+							label36.setText("Sunrise");
+
+							//---- sunRiseField ----
+							sunRiseField.setEditable(false);
+							sunRiseField.setText("00:00");
+
+							GroupLayout panel11Layout = new GroupLayout(panel11);
+							panel11.setLayout(panel11Layout);
+							panel11Layout.setHorizontalGroup(
+								panel11Layout.createParallelGroup()
+									.addGroup(panel11Layout.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(label33)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(label34)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(label35)
+										.addGap(5, 5, 5)
+										.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(label36)
+										.addGap(5, 5, 5)
+										.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+							panel11Layout.setVerticalGroup(
+								panel11Layout.createParallelGroup()
+									.addGroup(panel11Layout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(panel11Layout.createParallelGroup()
+											.addGroup(panel11Layout.createSequentialGroup()
+												.addGap(3, 3, 3)
+												.addComponent(label36))
+											.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+												.addGroup(panel11Layout.createParallelGroup()
+													.addGroup(panel11Layout.createSequentialGroup()
+														.addGap(3, 3, 3)
+														.addComponent(label35))
+													.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(label33)
+													.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label34)
+													.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+						}
+
+						GroupLayout solarPanelLayout = new GroupLayout(solarPanel);
+						solarPanel.setLayout(solarPanelLayout);
+						solarPanelLayout.setHorizontalGroup(
+							solarPanelLayout.createParallelGroup()
+								.addGroup(solarPanelLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(runSimbadButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(saveQueryButton)
+									.addGap(18, 18, 18)
+									.addComponent(label6)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+									.addGap(18, 18, 18)
+									.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
+						);
+						solarPanelLayout.setVerticalGroup(
+							solarPanelLayout.createParallelGroup()
+								.addGroup(solarPanelLayout.createSequentialGroup()
+									.addContainerGap()
+									.addGroup(solarPanelLayout.createParallelGroup()
+										.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+										.addGroup(solarPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+											.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+											.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label6))
+										.addComponent(panel11, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						);
+					}
+
 					GroupLayout targetPanelLayout = new GroupLayout(targetPanel);
 					targetPanel.setLayout(targetPanelLayout);
 					targetPanelLayout.setHorizontalGroup(
 						targetPanelLayout.createParallelGroup()
 							.addGroup(targetPanelLayout.createSequentialGroup()
 								.addContainerGap()
-								.addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+								.addComponent(targetTabPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(altitudePlotPanel, GroupLayout.PREFERRED_SIZE, 635, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
+							.addComponent(solarPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					);
 					targetPanelLayout.setVerticalGroup(
 						targetPanelLayout.createParallelGroup()
 							.addGroup(targetPanelLayout.createSequentialGroup()
 								.addContainerGap()
 								.addGroup(targetPanelLayout.createParallelGroup()
-									.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addComponent(targetTabPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(altitudePlotPanel, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(solarPanel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
 					);
 				}
-
-				//---- runSimbadButton ----
-				runSimbadButton.setText("SIMBAD Query");
-				runSimbadButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				runSimbadButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
-
-				//---- saveQueryButton ----
-				saveQueryButton.setText("Save Query Data");
-				saveQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				saveQueryButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
-
-				//======== datePickerPanel ========
-				{
-					datePickerPanel.setBorder(null);
-					datePickerPanel.setToolTipText("<html>\nUse calender Day, Month and Year controls to set observation start date\n<p>Click <b>Clear</b> to reset calender to today's date</p>\n</html>\n");
-					datePickerPanel.setLayout(new FlowLayout());
-				}
-
-				//---- label6 ----
-				label6.setText("Start Night:");
-				label6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-				//======== panel11 ========
-				{
-					panel11.setBorder(new TitledBorder("Civil Solar Times "));
-					panel11.setPreferredSize(new Dimension(190, 164));
-
-					//---- label33 ----
-					label33.setText("Sunset:");
-
-					//---- label34 ----
-					label34.setText("Twi End:");
-
-					//---- sunSetField ----
-					sunSetField.setText("00:00");
-					sunSetField.setEditable(false);
-
-					//---- twilightEndField ----
-					twilightEndField.setEditable(false);
-					twilightEndField.setText("00:00");
-
-					//---- label35 ----
-					label35.setText("Twi Start:");
-
-					//---- twilightStartField ----
-					twilightStartField.setEditable(false);
-					twilightStartField.setText("00:00");
-
-					//---- label36 ----
-					label36.setText("Sunrise");
-
-					//---- sunRiseField ----
-					sunRiseField.setEditable(false);
-					sunRiseField.setText("00:00");
-
-					GroupLayout panel11Layout = new GroupLayout(panel11);
-					panel11.setLayout(panel11Layout);
-					panel11Layout.setHorizontalGroup(
-						panel11Layout.createParallelGroup()
-							.addGroup(panel11Layout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(label33)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(label34)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(label35)
-								.addGap(5, 5, 5)
-								.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(label36)
-								.addGap(5, 5, 5)
-								.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					);
-					panel11Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {sunRiseField, sunSetField, twilightEndField, twilightStartField});
-					panel11Layout.setVerticalGroup(
-						panel11Layout.createParallelGroup()
-							.addGroup(panel11Layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(panel11Layout.createParallelGroup()
-									.addGroup(panel11Layout.createSequentialGroup()
-										.addGap(3, 3, 3)
-										.addComponent(label36))
-									.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-										.addGroup(panel11Layout.createParallelGroup()
-											.addGroup(panel11Layout.createSequentialGroup()
-												.addGap(3, 3, 3)
-												.addComponent(label35))
-											.addComponent(twilightStartField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(panel11Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-											.addComponent(label33)
-											.addComponent(sunSetField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addComponent(label34)
-											.addComponent(twilightEndField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					);
-				}
-
-				//---- dssButton ----
-				dssButton.setText("DSS");
 
 				GroupLayout targetTabLayout = new GroupLayout(targetTab);
 				targetTab.setLayout(targetTabLayout);
 				targetTabLayout.setHorizontalGroup(
 					targetTabLayout.createParallelGroup()
 						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(targetTabLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-								.addComponent(runSimbadButton, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-								.addComponent(dssButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(saveQueryButton)
-							.addGap(18, 18, 18)
-							.addComponent(label6)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-							.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-							.addContainerGap())
 				);
-				targetTabLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {runSimbadButton, saveQueryButton});
 				targetTabLayout.setVerticalGroup(
 					targetTabLayout.createParallelGroup()
-						.addGroup(targetTabLayout.createSequentialGroup()
-							.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-							.addGroup(targetTabLayout.createParallelGroup()
-								.addComponent(panel11, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-								.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-								.addGroup(targetTabLayout.createSequentialGroup()
-									.addGroup(targetTabLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-										.addComponent(saveQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-										.addComponent(runSimbadButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-										.addComponent(label6))
-									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									.addComponent(dssButton)))
-							.addContainerGap())
+						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
-				targetTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {runSimbadButton, saveQueryButton});
 			}
 			tabbedPane1.addTab("Target", targetTab);
 
-			//======== TAB2 ========
+			//======== catalogsTab ========
 			{
 
-				//======== panel6 ========
+				//======== catalogsPanel ========
 				{
 
-					GroupLayout panel6Layout = new GroupLayout(panel6);
-					panel6.setLayout(panel6Layout);
-					panel6Layout.setHorizontalGroup(
-						panel6Layout.createParallelGroup()
-							.addGap(0, 928, Short.MAX_VALUE)
+					//======== catalogSettingsPanel ========
+					{
+
+						//======== querySummaryPAnel ========
+						{
+							querySummaryPAnel.setBorder(new TitledBorder("Query Data"));
+							querySummaryPAnel.setPreferredSize(new Dimension(190, 164));
+
+							//---- label13 ----
+							label13.setText("ID: WASP12 | FOV: 60");
+							label13.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							//---- label47 ----
+							label47.setText("RA: 06:30:32.80 | Dec:+20:40:20.27");
+							label47.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							//---- label48 ----
+							label48.setText("Catalog: VSP | Filter B | Mag <17.0");
+							label48.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							//---- label49 ----
+							label49.setText("Start Date: 2022-08-18");
+							label49.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							GroupLayout querySummaryPAnelLayout = new GroupLayout(querySummaryPAnel);
+							querySummaryPAnel.setLayout(querySummaryPAnelLayout);
+							querySummaryPAnelLayout.setHorizontalGroup(
+								querySummaryPAnelLayout.createParallelGroup()
+									.addGroup(querySummaryPAnelLayout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(querySummaryPAnelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+											.addComponent(label48, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(label13, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(label47, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(label49, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+							querySummaryPAnelLayout.setVerticalGroup(
+								querySummaryPAnelLayout.createParallelGroup()
+									.addGroup(GroupLayout.Alignment.TRAILING, querySummaryPAnelLayout.createSequentialGroup()
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(label13)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(label47)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(label48)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(label49)
+										.addContainerGap())
+							);
+						}
+
+						//======== sortByPanel ========
+						{
+							sortByPanel.setBorder(new TitledBorder("Sort By"));
+							sortByPanel.setPreferredSize(new Dimension(190, 164));
+
+							//---- distanceRadioButton ----
+							distanceRadioButton.setText("Distance");
+							distanceRadioButton.setSelected(true);
+
+							//---- deltaMagRadioButton ----
+							deltaMagRadioButton.setText("|Delta Mag|");
+
+							GroupLayout sortByPanelLayout = new GroupLayout(sortByPanel);
+							sortByPanel.setLayout(sortByPanelLayout);
+							sortByPanelLayout.setHorizontalGroup(
+								sortByPanelLayout.createParallelGroup()
+									.addGroup(sortByPanelLayout.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(distanceRadioButton)
+										.addGap(18, 18, 18)
+										.addComponent(deltaMagRadioButton)
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+							sortByPanelLayout.setVerticalGroup(
+								sortByPanelLayout.createParallelGroup()
+									.addGroup(sortByPanelLayout.createSequentialGroup()
+										.addGroup(sortByPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(distanceRadioButton)
+											.addComponent(deltaMagRadioButton))
+										.addGap(0, 6, Short.MAX_VALUE))
+							);
+						}
+
+						//======== slectionFiltersPanel ========
+						{
+							slectionFiltersPanel.setBorder(new TitledBorder("Selection Filters + DSS FITS"));
+							slectionFiltersPanel.setPreferredSize(new Dimension(190, 164));
+
+							//---- label38 ----
+							label38.setText("Upper Mag:");
+
+							//---- label39 ----
+							label39.setText("Lower Mag:");
+
+							//---- label40 ----
+							label40.setText("Nominal Mag:");
+
+							//---- upperLimitSpinner ----
+							upperLimitSpinner.setModel(new SpinnerNumberModel(0.0, -0.1, 5.0, 0.10000000149011612));
+							upperLimitSpinner.setToolTipText("<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>");
+
+							//---- lowerLimitSpinner ----
+							lowerLimitSpinner.setModel(new SpinnerNumberModel(0.0, -5.0, 0.1, 0.10000000149011612));
+							lowerLimitSpinner.setToolTipText("<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n");
+
+							//---- targetMagSpinner ----
+							targetMagSpinner.setModel(new SpinnerNumberModel(10.0, 5.5, 25.0, 0.10000000149011612));
+							targetMagSpinner.setToolTipText("<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>");
+
+							//---- isMagLimitsCheckBox ----
+							isMagLimitsCheckBox.setText("Apply mag limits");
+							isMagLimitsCheckBox.setSelected(true);
+
+							//---- upperLabel ----
+							upperLabel.setText("N/A");
+
+							//---- label41 ----
+							label41.setText(".");
+
+							//---- lowerLabel ----
+							lowerLabel.setText("N/A");
+
+							//---- label37 ----
+							label37.setText("Nobs (APASS)");
+
+							//---- nObsSpinner ----
+							nObsSpinner.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+							nObsSpinner.setToolTipText("<html>\nSet minimum number of observations APASS catalog\n<p>Range: 1 to 10 (defaults to Nobs =1)</p>\n</html>\n");
+
+							//---- saveDssCheckBox ----
+							saveDssCheckBox.setText("Save DSS Fits File");
+							saveDssCheckBox.setSelected(true);
+
+							GroupLayout slectionFiltersPanelLayout = new GroupLayout(slectionFiltersPanel);
+							slectionFiltersPanel.setLayout(slectionFiltersPanelLayout);
+							slectionFiltersPanelLayout.setHorizontalGroup(
+								slectionFiltersPanelLayout.createParallelGroup()
+									.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+											.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
+												.addGap(9, 9, 9)
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+													.addComponent(isMagLimitsCheckBox)
+													.addComponent(saveDssCheckBox, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
+											.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+													.addGroup(GroupLayout.Alignment.LEADING, slectionFiltersPanelLayout.createSequentialGroup()
+														.addComponent(label37)
+														.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+														.addComponent(nObsSpinner))
+													.addGroup(GroupLayout.Alignment.LEADING, slectionFiltersPanelLayout.createSequentialGroup()
+														.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+															.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
+																.addGap(9, 9, 9)
+																.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+																	.addComponent(label39, GroupLayout.Alignment.TRAILING)
+																	.addComponent(label38, GroupLayout.Alignment.TRAILING)))
+															.addComponent(label40))
+														.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+														.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+															.addComponent(upperLimitSpinner, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+															.addComponent(lowerLimitSpinner, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+															.addComponent(targetMagSpinner, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+													.addComponent(upperLabel)
+													.addComponent(label41)
+													.addComponent(lowerLabel))))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+							slectionFiltersPanelLayout.setVerticalGroup(
+								slectionFiltersPanelLayout.createParallelGroup()
+									.addGroup(GroupLayout.Alignment.TRAILING, slectionFiltersPanelLayout.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(saveDssCheckBox)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(isMagLimitsCheckBox)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+										.addGroup(slectionFiltersPanelLayout.createParallelGroup()
+											.addComponent(label39, GroupLayout.Alignment.TRAILING)
+											.addGroup(GroupLayout.Alignment.TRAILING, slectionFiltersPanelLayout.createSequentialGroup()
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(upperLimitSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(upperLabel)
+													.addComponent(label38))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(targetMagSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(label41)
+													.addComponent(label40))
+												.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+													.addComponent(lowerLimitSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(lowerLabel))))
+										.addGap(25, 25, 25)
+										.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label37)
+											.addComponent(nObsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap())
+							);
+						}
+
+						//======== panel1 ========
+						{
+							panel1.setBorder(new TitledBorder("Catalog Record Counts"));
+
+							//---- label42 ----
+							label42.setText("Total records:");
+
+							//---- label43 ----
+							label43.setText("Filtered records:");
+
+							//---- label44 ----
+							label44.setText("Selected records:");
+
+							//---- totalRecordsField ----
+							totalRecordsField.setText("1000");
+
+							//---- filteredRecordsField ----
+							filteredRecordsField.setText("0");
+
+							//---- selectedRecordsField ----
+							selectedRecordsField.setText("0");
+
+							GroupLayout panel1Layout = new GroupLayout(panel1);
+							panel1.setLayout(panel1Layout);
+							panel1Layout.setHorizontalGroup(
+								panel1Layout.createParallelGroup()
+									.addGroup(panel1Layout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(panel1Layout.createParallelGroup()
+											.addComponent(label42, GroupLayout.Alignment.TRAILING)
+											.addComponent(label43, GroupLayout.Alignment.TRAILING)
+											.addComponent(label44, GroupLayout.Alignment.TRAILING))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel1Layout.createParallelGroup()
+											.addComponent(totalRecordsField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+											.addComponent(filteredRecordsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(selectedRecordsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+							panel1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {filteredRecordsField, selectedRecordsField, totalRecordsField});
+							panel1Layout.setVerticalGroup(
+								panel1Layout.createParallelGroup()
+									.addGroup(panel1Layout.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label42)
+											.addComponent(totalRecordsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label43)
+											.addComponent(filteredRecordsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label44)
+											.addComponent(selectedRecordsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							);
+						}
+
+						GroupLayout catalogSettingsPanelLayout = new GroupLayout(catalogSettingsPanel);
+						catalogSettingsPanel.setLayout(catalogSettingsPanelLayout);
+						catalogSettingsPanelLayout.setHorizontalGroup(
+							catalogSettingsPanelLayout.createParallelGroup()
+								.addGroup(catalogSettingsPanelLayout.createSequentialGroup()
+									.addContainerGap()
+									.addGroup(catalogSettingsPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+										.addComponent(sortByPanel, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+										.addComponent(slectionFiltersPanel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+										.addComponent(panel1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(querySummaryPAnel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
+									.addContainerGap())
+						);
+						catalogSettingsPanelLayout.setVerticalGroup(
+							catalogSettingsPanelLayout.createParallelGroup()
+								.addGroup(catalogSettingsPanelLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(sortByPanel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(slectionFiltersPanel, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(querySummaryPAnel, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+						);
+					}
+
+					//======== catalogTablePanel ========
+					{
+						catalogTablePanel.setBorder(null);
+
+						GroupLayout catalogTablePanelLayout = new GroupLayout(catalogTablePanel);
+						catalogTablePanel.setLayout(catalogTablePanelLayout);
+						catalogTablePanelLayout.setHorizontalGroup(
+							catalogTablePanelLayout.createParallelGroup()
+								.addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+						);
+						catalogTablePanelLayout.setVerticalGroup(
+							catalogTablePanelLayout.createParallelGroup()
+								.addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+						);
+					}
+
+					//======== solarPanel2 ========
+					{
+						solarPanel2.setBorder(null);
+
+						//---- catalogQueryButton ----
+						catalogQueryButton.setText("Run Query");
+						catalogQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						catalogQueryButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
+
+						//---- importRaDecButton ----
+						importRaDecButton.setText("Import RaDec Fille");
+						importRaDecButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						importRaDecButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+						//---- saveRaDecButton ----
+						saveRaDecButton.setText("Save RaDec File");
+						saveRaDecButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						saveRaDecButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+						//---- updateButton ----
+						updateButton.setText("Update Table");
+						updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						updateButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+						//---- clearButton ----
+						clearButton.setText("Clear");
+						clearButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						clearButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+
+						GroupLayout solarPanel2Layout = new GroupLayout(solarPanel2);
+						solarPanel2.setLayout(solarPanel2Layout);
+						solarPanel2Layout.setHorizontalGroup(
+							solarPanel2Layout.createParallelGroup()
+								.addGroup(solarPanel2Layout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(catalogQueryButton, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(importRaDecButton)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(saveRaDecButton)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+									.addComponent(updateButton)
+									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+									.addComponent(clearButton)
+									.addContainerGap())
+						);
+						solarPanel2Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateButton});
+						solarPanel2Layout.setVerticalGroup(
+							solarPanel2Layout.createParallelGroup()
+								.addGroup(solarPanel2Layout.createSequentialGroup()
+									.addContainerGap()
+									.addGroup(solarPanel2Layout.createParallelGroup()
+										.addGroup(solarPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(clearButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+											.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+										.addGroup(solarPanel2Layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+											.addComponent(catalogQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+											.addComponent(importRaDecButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+											.addComponent(saveRaDecButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						);
+						solarPanel2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateButton});
+					}
+
+					GroupLayout catalogsPanelLayout = new GroupLayout(catalogsPanel);
+					catalogsPanel.setLayout(catalogsPanelLayout);
+					catalogsPanelLayout.setHorizontalGroup(
+						catalogsPanelLayout.createParallelGroup()
+							.addGroup(catalogsPanelLayout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(catalogsPanelLayout.createParallelGroup()
+									.addGroup(catalogsPanelLayout.createSequentialGroup()
+										.addComponent(catalogSettingsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(catalogTablePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addContainerGap())
+									.addComponent(solarPanel2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 					);
-					panel6Layout.setVerticalGroup(
-						panel6Layout.createParallelGroup()
-							.addGap(0, 460, Short.MAX_VALUE)
+					catalogsPanelLayout.setVerticalGroup(
+						catalogsPanelLayout.createParallelGroup()
+							.addGroup(catalogsPanelLayout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(catalogsPanelLayout.createParallelGroup()
+									.addComponent(catalogSettingsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(catalogTablePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(solarPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
 					);
 				}
 
-				//---- button3 ----
-				button3.setText("text");
-				button3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-				GroupLayout TAB2Layout = new GroupLayout(TAB2);
-				TAB2.setLayout(TAB2Layout);
-				TAB2Layout.setHorizontalGroup(
-					TAB2Layout.createParallelGroup()
-						.addComponent(panel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(TAB2Layout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(button3, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(758, Short.MAX_VALUE))
+				GroupLayout catalogsTabLayout = new GroupLayout(catalogsTab);
+				catalogsTab.setLayout(catalogsTabLayout);
+				catalogsTabLayout.setHorizontalGroup(
+					catalogsTabLayout.createParallelGroup()
+						.addComponent(catalogsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
-				TAB2Layout.setVerticalGroup(
-					TAB2Layout.createParallelGroup()
-						.addGroup(TAB2Layout.createSequentialGroup()
-							.addComponent(panel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-							.addComponent(button3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
+				catalogsTabLayout.setVerticalGroup(
+					catalogsTabLayout.createParallelGroup()
+						.addComponent(catalogsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 			}
-			tabbedPane1.addTab("TAB2", TAB2);
+			tabbedPane1.addTab("CATALOGS WIP", catalogsTab);
 
 			//======== observerTab ========
 			{
@@ -1079,7 +1523,7 @@ public class ViewerUi extends JFrame {
 						);
 						observerNotesPanelLayout.setVerticalGroup(
 							observerNotesPanelLayout.createParallelGroup()
-								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
 						);
 					}
 
@@ -1308,7 +1752,7 @@ public class ViewerUi extends JFrame {
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addGroup(observerPanelLayout.createSequentialGroup()
-								.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+								.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(systemParamsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap())
@@ -1366,11 +1810,16 @@ public class ViewerUi extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1, GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+					.addComponent(tabbedPane1)
 					.addContainerGap())
 		);
 		pack();
 		setLocationRelativeTo(getOwner());
+
+		//---- buttonGroup1 ----
+		var buttonGroup1 = new ButtonGroup();
+		buttonGroup1.add(distanceRadioButton);
+		buttonGroup1.add(deltaMagRadioButton);
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
@@ -1379,7 +1828,7 @@ public class ViewerUi extends JFrame {
 	private JTabbedPane tabbedPane1;
 	private JPanel targetTab;
 	private JPanel targetPanel;
-	private JPanel panel1;
+	private JPanel targetTabPanel;
 	private JPanel panel3;
 	private JLabel label1;
 	protected JTextField objectIdField;
@@ -1399,7 +1848,6 @@ public class ViewerUi extends JFrame {
 	private JLabel label11;
 	protected JComboBox<String> filterCombo;
 	private JLabel label12;
-	protected JCheckBox saveDssCheckBox;
 	private JPanel panel4;
 	private JLabel idLabel;
 	private JLabel raLabel;
@@ -1416,6 +1864,7 @@ public class ViewerUi extends JFrame {
 	private JLabel simbadMagRLabel;
 	private JLabel simbadMagILabel;
 	private JPanel altitudePlotPanel;
+	private JPanel solarPanel;
 	private JButton runSimbadButton;
 	private JButton saveQueryButton;
 	private JPanel datePickerPanel;
@@ -1429,10 +1878,46 @@ public class ViewerUi extends JFrame {
 	protected JTextField twilightStartField;
 	private JLabel label36;
 	protected JTextField sunRiseField;
-	private JButton dssButton;
-	private JPanel TAB2;
-	private JPanel panel6;
-	private JButton button3;
+	private JPanel catalogsTab;
+	private JPanel catalogsPanel;
+	private JPanel catalogSettingsPanel;
+	private JPanel querySummaryPAnel;
+	private JLabel label13;
+	private JLabel label47;
+	private JLabel label48;
+	private JLabel label49;
+	private JPanel sortByPanel;
+	private JRadioButton distanceRadioButton;
+	private JRadioButton deltaMagRadioButton;
+	private JPanel slectionFiltersPanel;
+	private JLabel label38;
+	private JLabel label39;
+	private JLabel label40;
+	protected JSpinner upperLimitSpinner;
+	protected JSpinner lowerLimitSpinner;
+	protected JSpinner targetMagSpinner;
+	protected JCheckBox isMagLimitsCheckBox;
+	protected JLabel upperLabel;
+	private JLabel label41;
+	protected JLabel lowerLabel;
+	private JLabel label37;
+	protected JSpinner nObsSpinner;
+	protected JCheckBox saveDssCheckBox;
+	private JPanel panel1;
+	private JLabel label42;
+	private JLabel label43;
+	private JLabel label44;
+	private JTextField totalRecordsField;
+	private JTextField filteredRecordsField;
+	private JTextField selectedRecordsField;
+	private JPanel catalogTablePanel;
+	private JScrollPane tableScrollPane;
+	private JPanel solarPanel2;
+	private JButton catalogQueryButton;
+	private JButton importRaDecButton;
+	private JButton saveRaDecButton;
+	private JButton updateButton;
+	private JButton clearButton;
 	private JPanel observerTab;
 	private JPanel observerPanel;
 	private JPanel locationPanel;

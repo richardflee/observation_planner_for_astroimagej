@@ -29,7 +29,6 @@ import com.github.richardflee.astroimagej.data_objects.SolarTimes;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
@@ -201,14 +200,14 @@ public class TargetTab implements CatalogDataListener {
 			}
 		});
 		
-		// !! temp dss button
-		this.viewer.getDssButton().addActionListener(e -> {
-			if (this.viewer.getSaveDssCheckBox().isSelected() == true) {
-				var query = compileQuery();
-				var message = DssFitsWriter.downloadDssFits(query);
-				JOptionPane.showMessageDialog(null, message);
-			}
-		});
+//		// !! temp dss button
+//		this.viewer.getDssButton().addActionListener(e -> {
+//			if (this.viewer.getSaveDssCheckBox().isSelected() == true) {
+//				var query = compileQuery();
+//				var message = DssFitsWriter.downloadDssFits(query);
+//				JOptionPane.showMessageDialog(null, message);
+//			}
+//		});
 		
 	}
 	
