@@ -438,7 +438,7 @@ public class TargetTab implements CatalogDataListener {
 
 	public static void main(String[] args) {
 
-		var viewer = new ViewerUi(null);
+		var viewer = new ViewerUi(null, null);
 		// var dataTab = new TargetDataTab(viewer);
 		var simbadTab = new SimbadPanelData(viewer);
 

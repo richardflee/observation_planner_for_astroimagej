@@ -18,7 +18,7 @@ new FormModel {
 				} ) {
 					name: "targetTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp targetTabPanel:::p::p, space u:::p, comp altitudePlotPanel:::p:635:p, space :::p}, comp solarPanel::t:::x}"
+						"$horizontalGroup": "par l {seq l {space :::p, comp targetTabPanel:::p::p, space u:::p, comp altitudePlotPanel::::635:x, space :::p}, comp solarPanel::t:::x}"
 						"$verticalGroup": "par l {seq l {space :::p, par l {comp targetTabPanel:::::x, comp altitudePlotPanel::::490:x}, space u:::p, comp solarPanel:::p:76:p, space :::p}}"
 					} ) {
 						name: "targetPanel"
@@ -368,8 +368,8 @@ new FormModel {
 						} ) {
 							name: "catalogSettingsPanel"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq l {space :::p, par l:::p {comp label48:::::x, comp label13::l:::x, comp label47::l:::x, comp label49::l:p:209:p}, space :::x}}"
-								"$verticalGroup": "par l {seq t {space :::x, comp label13:::p::p, space :::p, comp label47:::p::p, space :::p, comp label48:::p::p, space :::p, comp label49:::p::p, space :::p}}"
+								"$horizontalGroup": "par l {seq {space :::p, par l {par l:l::p {comp label48:::::x, comp label47::l:::x, comp label49::l:p:209:p}, comp label13::l:p:209:p}, space :::p}}"
+								"$verticalGroup": "par l {seq t {space :::p, comp label13:::p::p, space :::p, comp label47:::p::p, space :::p, comp label48:::p::p, space :::p, comp label49:::p::p, space :::x}}"
 							} ) {
 								name: "querySummaryPAnel"
 								"border": new javax.swing.border.TitledBorder( "Query Data" )
