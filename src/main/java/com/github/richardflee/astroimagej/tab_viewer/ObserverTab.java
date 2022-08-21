@@ -58,15 +58,14 @@ public class ObserverTab implements ObserverDataListener {
 	private JButton save;
 	private JButton update;
 	
-	// private ViewerUi viewer;
 	private VerifyTextFields verifier;
 	
 	public ObserverTab() {}
 	
-	public ObserverTab(ViewerUi viewer) {
+	public ObserverTab(ViewerUi viewer, ObservationSite site) {
 		
 		// this.viewer = viewer;
-		this.site = viewer.getSite();
+		this.site = site;
 		this.verifier = new VerifyTextFields();
 
 		codeText = viewer.getCodeField();

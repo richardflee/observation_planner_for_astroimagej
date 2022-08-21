@@ -45,7 +45,6 @@ public class TargetTab implements CatalogDataListener {
 	private final static int GREY = 225;
 	private final static Color BGND_GREY = new Color(GREY, GREY, GREY);
 	
-	private ObservationSite site = null;
 	private Solar solar = null;
 
 	private JTextField objectIdText;
@@ -68,11 +67,10 @@ public class TargetTab implements CatalogDataListener {
 	private ObjectTracker tracker = null;
 	private XChartPanel<XYChart> chartPanel = null;
 
-	public TargetTab(ViewerUi viewer) {
+	public TargetTab(ViewerUi viewer, ObservationSite site) {
 
 		this.viewer = viewer;
 		
-		this.site = viewer.getSite();
 		this.tracker = new ObjectTracker(site);
 		this.solar = new Solar(site);		
 		setSolarTimes(solar.getCivilSunTimes(LocalDate.now()));

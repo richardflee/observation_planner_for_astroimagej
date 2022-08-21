@@ -407,16 +407,22 @@ new FormModel {
 									"text": "Distance"
 									"$buttonGroup": new FormReference( "buttonGroup1" )
 									"selected": true
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 								add( new FormComponent( "javax.swing.JRadioButton" ) {
 									name: "deltaMagRadioButton"
 									"text": "|Delta Mag|"
 									"$buttonGroup": new FormReference( "buttonGroup1" )
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:9:p, par l {comp isMagLimitsCheckBox:::p::p, comp saveDssCheckBox:::p:109:p}}, seq l {par t:::p {seq l {comp label37:::p::p, space u:::p, comp nObsSpinner:::::x}, seq l {par l {seq {space :p:9:p, par l {comp label39::t:p::p, comp label38::t:p::p}}, comp label40::l:p::p}, space :::p, par t {comp upperLimitSpinner::t:p:60:p, comp lowerLimitSpinner::t:p:60:p, comp targetMagSpinner:::p:60:p}}}, space u:::p, par l {comp upperLabel::l:p::p, comp label41::l:p::p, comp lowerLabel::l:p::p}}}, space :::x}}"
-								"$verticalGroup": "par l {seq t {space :::p, comp saveDssCheckBox:::p::p, space u:::p, comp isMagLimitsCheckBox:::p::p, space ::6:x, par l {comp label39::t:p::p, seq t {par b {comp upperLimitSpinner::b:p::p, comp upperLabel::b:p::p, comp label38::b:p::p}, space :::p, par b {comp targetMagSpinner::b:p::p, comp label41::b:p::p, comp label40::b:p::p}, space :::p, par b {comp lowerLimitSpinner::b:p::p, comp lowerLabel::b:p::p}}}, space :p:25:p, par b {comp label37::b:p::p, comp nObsSpinner::b:p::p}, space :::p}}"
+								"$horizontalGroup": "par l {seq {space :::p, par l {comp saveDssCheckBox:::p:131:p, seq l {par t:::p {seq l {comp label37:::p::p, space u:::p, comp nObsSpinner:::::x}, seq l {par l {seq {space :p:9:p, par l {comp label39::t:p::p, comp label38::t:p::p}}, comp label40::l:p::p}, space :::p, par t {comp upperLimitSpinner::t:p:60:p, comp lowerLimitSpinner::t:p:60:p, comp targetMagSpinner:::p:60:p}}}, space u:p::p, par l {comp upperLabel::l:p::p, comp label41::l:p::p, comp lowerLabel::l:p::p}}, comp isMagLimitsCheckBox::l:p::p}, space :::p}}"
+								"$verticalGroup": "par l {seq t {space :::p, comp saveDssCheckBox:::p::p, space :::p, comp isMagLimitsCheckBox:::p::p, space u:::p, par l {comp label39::t:p::p, seq t {par b {comp upperLimitSpinner::b:p::p, comp upperLabel::b:p::p, comp label38::b:p::p}, space :::p, par b {comp targetMagSpinner::b:p::p, comp label41::b:p::p, comp label40::b:p::p}, space :::p, par b {comp lowerLimitSpinner::b:p::p, comp lowerLabel::b:p::p}}}, space s:::p, par b {comp label37::b:p::p, comp nObsSpinner::b:p::p}, space :::p}}"
 							} ) {
 								name: "slectionFiltersPanel"
 								"border": new javax.swing.border.TitledBorder( "Selection Filters + DSS FITS" )
@@ -438,7 +444,7 @@ new FormModel {
 									"model": new javax.swing.SpinnerNumberModel( 0.0, -0.1, 5.0, 0.10000000149011612 )
 									"toolTipText": "<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>"
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JSpinner" ) {
@@ -446,7 +452,7 @@ new FormModel {
 									"model": new javax.swing.SpinnerNumberModel( 0.0, -5.0, 0.1, 0.10000000149011612 )
 									"toolTipText": "<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n"
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JSpinner" ) {
@@ -454,7 +460,7 @@ new FormModel {
 									"model": new javax.swing.SpinnerNumberModel( 10.0, 5.5, 25.0, 0.10000000149011612 )
 									"toolTipText": "<html>\nSet the nominal target mag for the selected filter band\n<p>Use the scroll control  or type value in text box</p>\n<p>Range: 5.5 - 25 mag in 0.1 mag increment</p>\n</html>"
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JCheckBox" ) {
@@ -462,7 +468,7 @@ new FormModel {
 									"text": "Apply mag limits"
 									"selected": true
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -470,6 +476,7 @@ new FormModel {
 									"text": "N/A"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -481,6 +488,7 @@ new FormModel {
 									"text": "N/A"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
@@ -492,7 +500,7 @@ new FormModel {
 									"model": new javax.swing.SpinnerNumberModel( 1, 1, 10, 1 )
 									"toolTipText": "<html>\nSet minimum number of observations APASS catalog\n<p>Range: 1 to 10 (defaults to Nobs =1)</p>\n</html>\n"
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
+										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JCheckBox" ) {
@@ -500,7 +508,6 @@ new FormModel {
 									"text": "Save DSS Fits File"
 									"selected": true
 									auxiliary() {
-										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
@@ -525,15 +532,27 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "totalRecordsField"
-									"text": "1000"
+									"text": "0"
+									"editable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "filteredRecordsField"
 									"text": "0"
+									"editable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "selectedRecordsField"
 									"text": "0"
+									"editable": false
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 							} )
 						} )
@@ -548,11 +567,14 @@ new FormModel {
 							}
 							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 								name: "tableScrollPane"
+								auxiliary() {
+									"JavaCodeGenerator.variableGetter": true
+								}
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {seq l {space :::p, comp catalogQueryButton:6:::116:x, space u:::p, comp importRaDecButton:6::p::p, space u:::p, comp saveRaDecButton:6::p::p, space u:::p, comp updateButton:6::p::p, space ::233:x, comp clearButton:6::p::p, space :::p}}"
-							"$verticalGroup": "par l {seq l {space :::p, par l {par b {comp clearButton:5:b:p:30:p, comp updateButton:5:b:p:30:p}, par c {comp catalogQueryButton:5:c:p:30:p, comp importRaDecButton:5:c:p:30:p, comp saveRaDecButton:5:c:p:30:p}}, space :::x}}"
+							"$horizontalGroup": "par l {seq l {space :::p, comp catalogQueryButton:6:::116:x, space u:::p, comp importRaDecButton:6::p::p, space u:::p, comp saveRaDecButton:6::p::p, space u:::p, comp updateTableButton:6::p::p, space ::233:x, comp clearButton:6::p::p, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::p, par l {par b {comp clearButton:5:b:p:30:p, comp updateTableButton:5:b:p:30:p}, par c {comp catalogQueryButton:5:c:p:30:p, comp importRaDecButton:5:c:p:30:p, comp saveRaDecButton:5:c:p:30:p}}, space :::x}}"
 						} ) {
 							name: "solarPanel2"
 							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
@@ -584,7 +606,7 @@ new FormModel {
 								}
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
-								name: "updateButton"
+								name: "updateTableButton"
 								"text": "Update Table"
 								"font": #Font1
 								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"

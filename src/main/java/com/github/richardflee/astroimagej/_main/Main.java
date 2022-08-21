@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
@@ -48,27 +47,26 @@ public class Main {
 			
 			// creates aij_planner data objects
 			var observer = ObserverTabFileProps.readProerties();
-			CatalogQuery query = TargetTabFileProps.readProerties();
 			
 			// catalog table
 			var tableModel= new CatalogTableModel();
-						
 			
 			// User  interface
 			var viewer = new ViewerUi(site, tableModel);
-			viewer.observer_tab.setObservationSiteData();
-			viewer.observer_tab.setNoiseData(noiseData);
-			viewer.observer_tab.setObserverData(observer);
+			viewer.getObserver_tab().setObservationSiteData();
+			viewer.getObserver_tab().setNoiseData(noiseData);
+			viewer.getObserver_tab().setObserverData(observer);
 			
-			viewer.target_tab.setQueryData(query);
+			// TODO remove query from main
+			var query = TargetTabFileProps.readProerties();
+			viewer.getTarget_tab().setQueryData(query);
 			
-			// Plan catalogUi = new CatalogUI(handler, ctm);
+			// sets query data listener
+			viewer.getCatalogs_tab().setCatalogDataListener(viewer.getTarget_tab());
 			
-//			
 //			// window title text
 			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_VERSION); 
 			viewer.setTitle(version);
-//			
 			viewer.setVisible(true);
 		}
 

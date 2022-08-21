@@ -23,7 +23,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
@@ -44,34 +43,25 @@ public class ViewerUi extends JFrame {
 	
 //	private DatePicker datePicker = null;
 	
-	private ObservationSite site = null;
-	// private CatalogTableModel tableModel = null;
-	private JTable catalogTable = null;
+	// private ObservationSite site = null;
 	
-	
-	public ObserverTab observer_tab = null;
-	public TargetTab target_tab = null;
+	private ObserverTab observer_tab = null;
+	private TargetTab target_tab = null;
+	private CatalogsTab catalogs_tab = null;
 	
 	public ViewerUi(ObservationSite site, CatalogTableModel tableModel) {
-		this.site = site;
-		// this.tableModel = tableModel;
+		// this.site = site;
 		
 		initComponents();
-		
-		this.catalogTable = new JTable(tableModel);		
-		this.tableScrollPane.setViewportView(catalogTable);
-		this.catalogTable.setFillsViewportHeight(true);
-		// column renderer
-		
-		
-		this.observer_tab = new ObserverTab(this);
-		this.target_tab = new TargetTab(this);
+		this.observer_tab = new ObserverTab(this, site);
+		this.target_tab = new TargetTab(this, site);
+		this.catalogs_tab = new CatalogsTab(this, tableModel);
 	}
 	
 	
-	public ObservationSite getSite() {
-		return site;
-	}
+//	public ObservationSite getSite() {
+//		return site;
+//	}
 
 	public JTextField getHorizPixelSizeAsecField() {
 		return horizPixelSizeAsecField;
@@ -269,6 +259,70 @@ public class ViewerUi extends JFrame {
 		return catalogTablePanel;
 	}
 
+	
+
+	public ObserverTab getObserver_tab() {
+		return observer_tab;
+	}
+
+
+	public TargetTab getTarget_tab() {
+		return target_tab;
+	}
+
+
+	public CatalogsTab getCatalogs_tab() {
+		return catalogs_tab;
+	}
+
+	public JScrollPane getTableScrollPane() {
+		return tableScrollPane;
+	}
+
+	public JRadioButton getDistanceRadioButton() {
+		return distanceRadioButton;
+	}
+
+	public JRadioButton getDeltaMagRadioButton() {
+		return deltaMagRadioButton;
+	}
+
+	public JSpinner getUpperLimitSpinner() {
+		return upperLimitSpinner;
+	}
+
+	public JSpinner getLowerLimitSpinner() {
+		return lowerLimitSpinner;
+	}
+
+	public JSpinner getTargetMagSpinner() {
+		return targetMagSpinner;
+	}
+
+	public JCheckBox getIsMagLimitsCheckBox() {
+		return isMagLimitsCheckBox;
+	}
+
+	public JSpinner getNObsSpinner() {
+		return nObsSpinner;
+	}
+
+	public JCheckBox getSaveDssCheckBox() {
+		return saveDssCheckBox;
+	}
+
+	public JTextField getTotalRecordsField() {
+		return totalRecordsField;
+	}
+
+	public JTextField getFilteredRecordsField() {
+		return filteredRecordsField;
+	}
+
+	public JTextField getSelectedRecordsField() {
+		return selectedRecordsField;
+	}
+
 	public JButton getCatalogQueryButton() {
 		return catalogQueryButton;
 	}
@@ -281,17 +335,22 @@ public class ViewerUi extends JFrame {
 		return saveRaDecButton;
 	}
 
-	public JButton getUpdateButton() {
-		return updateButton;
+	public JButton getUpdateTableButton() {
+		return updateTableButton;
 	}
 
 	public JButton getClearButton() {
 		return clearButton;
 	}
 
-	public JCheckBox getSaveDssCheckBox() {
-		return saveDssCheckBox;
+	public JLabel getUpperLabel() {
+		return upperLabel;
 	}
+
+	public JLabel getLowerLabel() {
+		return lowerLabel;
+	}
+
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -387,7 +446,7 @@ public class ViewerUi extends JFrame {
 		catalogQueryButton = new JButton();
 		importRaDecButton = new JButton();
 		saveRaDecButton = new JButton();
-		updateButton = new JButton();
+		updateTableButton = new JButton();
 		clearButton = new JButton();
 		observerTab = new JPanel();
 		observerPanel = new JPanel();
@@ -1083,11 +1142,7 @@ public class ViewerUi extends JFrame {
 									.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
 										.addContainerGap()
 										.addGroup(slectionFiltersPanelLayout.createParallelGroup()
-											.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
-												.addGap(9, 9, 9)
-												.addGroup(slectionFiltersPanelLayout.createParallelGroup()
-													.addComponent(isMagLimitsCheckBox)
-													.addComponent(saveDssCheckBox, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
+											.addComponent(saveDssCheckBox, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
 											.addGroup(slectionFiltersPanelLayout.createSequentialGroup()
 												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
 													.addGroup(GroupLayout.Alignment.LEADING, slectionFiltersPanelLayout.createSequentialGroup()
@@ -1111,17 +1166,18 @@ public class ViewerUi extends JFrame {
 												.addGroup(slectionFiltersPanelLayout.createParallelGroup()
 													.addComponent(upperLabel)
 													.addComponent(label41)
-													.addComponent(lowerLabel))))
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+													.addComponent(lowerLabel)))
+											.addComponent(isMagLimitsCheckBox))
+										.addContainerGap())
 							);
 							slectionFiltersPanelLayout.setVerticalGroup(
 								slectionFiltersPanelLayout.createParallelGroup()
 									.addGroup(GroupLayout.Alignment.TRAILING, slectionFiltersPanelLayout.createSequentialGroup()
 										.addContainerGap()
 										.addComponent(saveDssCheckBox)
-										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(isMagLimitsCheckBox)
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(slectionFiltersPanelLayout.createParallelGroup()
 											.addComponent(label39, GroupLayout.Alignment.TRAILING)
 											.addGroup(GroupLayout.Alignment.TRAILING, slectionFiltersPanelLayout.createSequentialGroup()
@@ -1138,7 +1194,7 @@ public class ViewerUi extends JFrame {
 												.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 													.addComponent(lowerLimitSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 													.addComponent(lowerLabel))))
-										.addGap(25, 25, 25)
+										.addGap(18, 18, 18)
 										.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label37)
 											.addComponent(nObsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -1160,13 +1216,16 @@ public class ViewerUi extends JFrame {
 							label44.setText("Selected records:");
 
 							//---- totalRecordsField ----
-							totalRecordsField.setText("1000");
+							totalRecordsField.setText("0");
+							totalRecordsField.setEditable(false);
 
 							//---- filteredRecordsField ----
 							filteredRecordsField.setText("0");
+							filteredRecordsField.setEditable(false);
 
 							//---- selectedRecordsField ----
 							selectedRecordsField.setText("0");
+							selectedRecordsField.setEditable(false);
 
 							GroupLayout panel1Layout = new GroupLayout(panel1);
 							panel1.setLayout(panel1Layout);
@@ -1267,10 +1326,10 @@ public class ViewerUi extends JFrame {
 						saveRaDecButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 						saveRaDecButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
 
-						//---- updateButton ----
-						updateButton.setText("Update Table");
-						updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						updateButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+						//---- updateTableButton ----
+						updateTableButton.setText("Update Table");
+						updateTableButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						updateTableButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
 
 						//---- clearButton ----
 						clearButton.setText("Clear");
@@ -1289,12 +1348,12 @@ public class ViewerUi extends JFrame {
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 									.addComponent(saveRaDecButton)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									.addComponent(updateButton)
+									.addComponent(updateTableButton)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
 									.addComponent(clearButton)
 									.addContainerGap())
 						);
-						solarPanel2Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateButton});
+						solarPanel2Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateTableButton});
 						solarPanel2Layout.setVerticalGroup(
 							solarPanel2Layout.createParallelGroup()
 								.addGroup(solarPanel2Layout.createSequentialGroup()
@@ -1302,14 +1361,14 @@ public class ViewerUi extends JFrame {
 									.addGroup(solarPanel2Layout.createParallelGroup()
 										.addGroup(solarPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(clearButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-											.addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+											.addComponent(updateTableButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 										.addGroup(solarPanel2Layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 											.addComponent(catalogQueryButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 											.addComponent(importRaDecButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 											.addComponent(saveRaDecButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
 									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						);
-						solarPanel2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateButton});
+						solarPanel2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {catalogQueryButton, clearButton, importRaDecButton, saveRaDecButton, updateTableButton});
 					}
 
 					GroupLayout catalogsPanelLayout = new GroupLayout(catalogsPanel);
@@ -1907,16 +1966,16 @@ public class ViewerUi extends JFrame {
 	private JLabel label38;
 	private JLabel label39;
 	private JLabel label40;
-	protected JSpinner upperLimitSpinner;
-	protected JSpinner lowerLimitSpinner;
-	protected JSpinner targetMagSpinner;
-	protected JCheckBox isMagLimitsCheckBox;
+	private JSpinner upperLimitSpinner;
+	private JSpinner lowerLimitSpinner;
+	private JSpinner targetMagSpinner;
+	private JCheckBox isMagLimitsCheckBox;
 	protected JLabel upperLabel;
 	private JLabel label41;
 	protected JLabel lowerLabel;
 	private JLabel label37;
-	protected JSpinner nObsSpinner;
-	protected JCheckBox saveDssCheckBox;
+	private JSpinner nObsSpinner;
+	private JCheckBox saveDssCheckBox;
 	private JPanel panel1;
 	private JLabel label42;
 	private JLabel label43;
@@ -1930,7 +1989,7 @@ public class ViewerUi extends JFrame {
 	private JButton catalogQueryButton;
 	private JButton importRaDecButton;
 	private JButton saveRaDecButton;
-	private JButton updateButton;
+	private JButton updateTableButton;
 	private JButton clearButton;
 	private JPanel observerTab;
 	private JPanel observerPanel;

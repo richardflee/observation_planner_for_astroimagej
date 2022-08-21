@@ -131,11 +131,11 @@ public class CatalogTableModel extends AbstractTableModel implements CatalogTabl
 		} else if (en == ColumnsEnum.MAG_ERR_COL) {
 			data = (String) String.format("%.3f", objectRow.getMagErr());
 
-		} else if (en == ColumnsEnum.MAG_DIFF_COL) {
-			data = (String) String.format("%.3f", objectRow.getDeltaMag());
+//		} else if (en == ColumnsEnum.MAG_DIFF_COL) {
+//			data = (String) String.format("%.3f", objectRow.getDeltaMag());
 
-		} else if (en == ColumnsEnum.DIST_AMIN_COL) {
-			data = (String) String.format("%.2f", objectRow.getRadSepAmin());
+//		} else if (en == ColumnsEnum.DIST_AMIN_COL) {
+//			data = (String) String.format("%.2f", objectRow.getRadSepAmin());
 
 		} else if (en == ColumnsEnum.NOBS_COL) {
 			data = (String) String.format("%2d", objectRow.getnObs());
