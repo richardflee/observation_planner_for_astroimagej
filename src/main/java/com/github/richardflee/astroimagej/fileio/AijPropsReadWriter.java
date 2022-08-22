@@ -40,9 +40,9 @@ public class AijPropsReadWriter {
 		}
 		
 		
-		ObserverTabFileProps.writeProperties(new Observer());
+		ObserverPropertiesFile.writeProperties(new Observer());
 		
-		TargetTabFileProps.writeProperties(new CatalogQuery());
+		TargetPropertiesFile.writeProperties(new CatalogQuery());
 	}
 
 	public static boolean fileExists() {

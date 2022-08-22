@@ -27,20 +27,6 @@ public class CatalogSettings {
 	// default target magnitude value
 	public static final double DEFAULT_TGT_MAG = 10.0;
 	
-	// flag enable / disable catalog ui buttons
-	// private boolean isTableData;
-
-
-//	/**
-//	 * Default constructor resets filter and sort controls to default values;
-//	 * current target spinner value is unchanged
-//	 */
-//	public CatalogSettings() {
-//		resetSettingsToDefaults(null);
-//		this.sortDistanceValue = true;
-//		this.sortDeltaMagValue = false;
-//	}
-
 	/**
 	 * One parameter constructor specifies new target spinner value; resets filter
 	 * and sort controls to default values;
@@ -50,7 +36,7 @@ public class CatalogSettings {
 	public CatalogSettings(Double targetMag) {
 		resetSettingsToDefaults(targetMag);
 	}
-
+	
 	// resets sort & filter defaults; optional update target mag data
 	// target mag, dss and sort order controls excluded
 	private void resetSettingsToDefaults(Double targetMag) {
@@ -129,10 +115,11 @@ public class CatalogSettings {
 		this.nObsValue = nObsValue;
 	}
 
-	public String getTotalRecordsValue() {
-		return Integer.toString(totalRecordsValue);
+	public int getTotalRecordsValue() {
+		return totalRecordsValue;
 	}
 
+	// custom setter
 	public void setTotalRecordsValue(int nTotalRecords) {
 		this.totalRecordsValue = Math.max(nTotalRecords, 0);
 	}
@@ -141,6 +128,7 @@ public class CatalogSettings {
 		return filteredRecordsValue;
 	}
 
+	// custom setter
 	public void setFilteredRecordsValue(int nFilteredRecords) {
 		this.filteredRecordsValue = Math.max(nFilteredRecords, 0);
 	}
@@ -149,8 +137,9 @@ public class CatalogSettings {
 		return selectedRecordsValue;
 	}
 
+	// custom setter
 	public void setSelectedRecordsValue(int selectedRecordsValue) {
-		this.selectedRecordsValue = selectedRecordsValue;
+		this.selectedRecordsValue = Math.max(selectedRecordsValue, 0);
 	}
 
 	
@@ -223,4 +212,13 @@ public class CatalogSettings {
 //	// DSS flag
 //	// this.isSaveDssValue = settings.isSaveDssCheckBoxValue();
 //
+//}
+///**
+//* Default constructor resets filter and sort controls to default values;
+//* current target spinner value is unchanged
+//*/
+//public CatalogSettings() {
+//	resetSettingsToDefaults(null);
+//	this.sortDistanceValue = true;
+//	this.sortDeltaMagValue = false;
 //}

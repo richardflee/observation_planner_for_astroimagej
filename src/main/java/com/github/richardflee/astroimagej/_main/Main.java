@@ -10,9 +10,10 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
-import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
+import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.models.CatalogTableModel;
+import com.github.richardflee.astroimagej.tab_viewer.CatalogHandler;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 
@@ -46,23 +47,25 @@ public class Main {
 			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();			
 			
 			// creates aij_planner data objects
-			var observer = ObserverTabFileProps.readProerties();
+			var observer = ObserverPropertiesFile.readProerties();
 			
 			// catalog table
 			var tableModel= new CatalogTableModel();
 			
 			// User  interface
 			var viewer = new ViewerUi(site, tableModel);
-			viewer.getObserver_tab().setObservationSiteData();
-			viewer.getObserver_tab().setNoiseData(noiseData);
-			viewer.getObserver_tab().setObserverData(observer);
+			var observer_tab = viewer.getObserver_tab();
+			observer_tab.setObservationSiteData();
+			observer_tab.setNoiseData(noiseData);
+			observer_tab.setObserverData(observer);
 			
-			// TODO remove query from main
-			var query = TargetTabFileProps.readProerties();
-			viewer.getTarget_tab().setQueryData(query);
+			// sets catalog data listener
+			var target_tab = viewer.getTarget_tab();
+			viewer.getCatalogs_tab().setCatalogDataListener(target_tab);
 			
-			// sets query data listener
-			viewer.getCatalogs_tab().setCatalogDataListener(viewer.getTarget_tab());
+//			// sets catalog table listener
+//			var handler = new CatalogHandler();
+//			handler.setCatalogTableListener(tableModel);
 			
 //			// window title text
 			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_VERSION); 

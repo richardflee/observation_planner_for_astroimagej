@@ -29,7 +29,7 @@ import com.github.richardflee.astroimagej.data_objects.SolarTimes;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.TargetTabFileProps;
+import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
@@ -71,6 +71,7 @@ public class TargetTab implements CatalogDataListener {
 
 		this.viewer = viewer;
 		
+		
 		this.tracker = new ObjectTracker(site);
 		this.solar = new Solar(site);		
 		setSolarTimes(solar.getCivilSunTimes(LocalDate.now()));
@@ -81,10 +82,13 @@ public class TargetTab implements CatalogDataListener {
 		
 		this.verifier = new VerifyTextFields();
 
-		// textbox and combo refs
+		// setup ref to query controls
 		initialiseTextRefs(viewer);
 		initialiseCatalogComboRefs(viewer);
 		this.filterCombo = viewer.getFilterCombo();
+		
+		// populate target tab textbox and drop down controls
+		setQueryData(TargetPropertiesFile.readProerties());
 		populateFilterCombo(null);
 		
 		// restricts text date entry to day/month/year pickers
@@ -146,7 +150,7 @@ public class TargetTab implements CatalogDataListener {
 		
 		var xData = IntStream.range(0, TimesConverter.MINS_IN_DAY).boxed().collect(Collectors.toList());
 		var startDate = LocalDate.now();
-		var fo = (BaseFieldObject) TargetTabFileProps.readProerties();
+		var fo = (BaseFieldObject) TargetPropertiesFile.readProerties();
 		var yData = new ObjectTracker(site).computeAltitudeData(fo, startDate);	
 		chart.addSeries(ALTITUDE_SERIES, xData, yData).setMarker(SeriesMarkers.NONE);
 		chart.setTitle(getChartTitle(startDate));
@@ -210,7 +214,7 @@ public class TargetTab implements CatalogDataListener {
 	}
 	
 	private void doSaveQueryData() {
-		TargetTabFileProps.writeProperties(this.compileQuery());
+		TargetPropertiesFile.writeProperties(this.compileQuery());
 		doChartUpdate(datePicker.getDate());
 	}
 	
@@ -272,12 +276,11 @@ public class TargetTab implements CatalogDataListener {
 
 		// selected catalog
 		CatalogsEnum en = query.getCatalogType();
-		String selectedCatalog = en.toString().toUpperCase();
+		this.selectedCatalog = en.toString().toUpperCase();
 		catalogCombo.setSelectedItem(selectedCatalog);
 
 		// populate filterCombo
-		String selectedFilter = query.getMagBand();
-		populateFilterCombo(selectedFilter);
+		populateFilterCombo(query.getMagBand());
 
 	}
 

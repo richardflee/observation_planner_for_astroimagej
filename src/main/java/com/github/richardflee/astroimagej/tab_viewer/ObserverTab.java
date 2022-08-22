@@ -10,7 +10,7 @@ import com.github.richardflee.astroimagej.data_objects.NoiseData;
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.ObserverTabFileProps;
+import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.ObserverDataListener;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
 
@@ -202,7 +202,7 @@ public class ObserverTab implements ObserverDataListener {
 		
 		save.addActionListener(e -> {
 			if (verifier.verifyAllTextInputs() == true) {
-				ObserverTabFileProps.writeProperties(this.getObserverData());
+				ObserverPropertiesFile.writeProperties(this.getObserverData());
 				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.savedFileMessage());
 			}
 		});

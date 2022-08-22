@@ -25,6 +25,7 @@ import com.github.richardflee.astroimagej.models.CatalogTableModel;
 public class CatalogsTab implements CatalogTableListener {
 	
 	private CatalogDataListener catalogDataListener;
+	private CatalogHandler handler = null;
 	
 	/*
 	 * result field: object compiled from database query parameters and query response data
@@ -62,6 +63,9 @@ public class CatalogsTab implements CatalogTableListener {
 	private static int x = 100;
 	
 	public CatalogsTab(ViewerUi viewer, CatalogTableModel tableModel) {
+		
+		this.handler = new CatalogHandler();
+		handler.setCatalogTableListener(tableModel);
 		
 		this.catalogTable = new JTable(tableModel);	
 		this.spane = viewer.getTableScrollPane();		
@@ -125,7 +129,7 @@ public class CatalogsTab implements CatalogTableListener {
 		
 		query.addActionListener(e -> doCatalogQuery());
 		importRaDec.addActionListener(e -> doSaveRaDecFile());
-		saveRaDec.addActionListener(e -> doImportRaDecfile());
+		saveRaDec.addActionListener(e -> handler.doImportRaDecfile());
 		update.addActionListener(e -> doUpdateTable());
 		clear.addActionListener(e -> doClearTable());
 		
