@@ -16,10 +16,11 @@ public class FieldObject extends BaseFieldObject {
 	private Integer nObs = 1;
 //	private double radSepAmin = 0.0;
 
+	private FieldObject target = null;
 	private String apertureId = "Cnn"; 
 	private boolean selected = true;
 	private boolean accepted = true;
-	private boolean isTarget = false;
+	// private boolean isTarget = false;
 	
 //	private double deltaMag = 0.0;
 
@@ -50,16 +51,14 @@ public class FieldObject extends BaseFieldObject {
 		this.magErr = magErr;
 	}
 	
-	// copy constructor
-	public FieldObject (FieldObject fo) {
-		super(fo.getObjectId(), fo.getRaHr(), fo.getDecDeg());
-		
-		this.mag = fo.getMag();
-		this.magErr = fo.getMagErr();
-		this.nObs = fo.getnObs();
-		this.apertureId = fo.getApertureId();
-		this.selected = fo.isSelected();
-		this.isTarget = fo.isTarget();
+
+	
+	public void setTarget(FieldObject target) {
+		this.target = target;
+	}
+	
+	public boolean isTarget() {
+		return (this.target == null);
 	}
 	
 	
@@ -71,15 +70,26 @@ public class FieldObject extends BaseFieldObject {
 	 * 
 	 * @param target target FieldObject 
 	 */
-	public void computeRadSepAmin(FieldObject target) {
+	public double getRadSepAmin() {		
+		if (this.isTarget()) {
+			return 0.0;
+		}
+		
 		double ra = Math.toRadians(raHr * 15.0);
-		double ra0 = Math.toRadians(target.getRaHr() * 15.0);
+		double ra0 = Math.toRadians(this.target.getRaHr() * 15.0);
 
 		double dec = Math.toRadians(decDeg);
-		double dec0 = Math.toRadians(target.getDecDeg());
+		double dec0 = Math.toRadians(this.target.getDecDeg());
 
 		double cosA = Math.sin(dec) * Math.sin(dec0) + Math.cos(dec) * Math.cos(dec0) * Math.cos(ra - ra0);
-		// this.radSepAmin = Math.toDegrees(Math.acos(cosA)) * 60.0;
+		return Math.toDegrees(Math.acos(cosA)) * 60.0;
+	}
+	
+	public double getDeltaMag() {
+		if (this.isTarget()) {
+			return 0.0;
+		}
+		return this.mag - this.target.getMag();		
 	}
 	
 	
@@ -105,7 +115,6 @@ public class FieldObject extends BaseFieldObject {
 		return objectId;
 	}
 
-
 	public double getRaHr() {
 		return raHr;
 	}
@@ -126,15 +135,6 @@ public class FieldObject extends BaseFieldObject {
 		return mag;
 	}
 
-	public boolean isTarget() {
-		return isTarget;
-	}
-
-
-	public void setTarget(boolean isTarget) {
-		this.isTarget = isTarget;
-	}
-
 
 	public void setMag(double mag) {
 		this.mag = mag;
@@ -147,9 +147,6 @@ public class FieldObject extends BaseFieldObject {
 	public void setMagErr(double magErr) {
 		this.magErr = magErr;
 	}
-	
-	
-
 	
 	public boolean isSelected() {
 		return selected;
@@ -169,28 +166,53 @@ public class FieldObject extends BaseFieldObject {
 		this.accepted = accepted;
 	}
 	
-
+	@Override
+	public String toString() {
+		return "FieldObject [mag=" + mag + ", magErr=" + magErr + ", nObs=" + nObs + ", target=" + target
+				+ ", apertureId=" + apertureId + ", selected=" + selected + ", accepted=" + accepted + ", objectId="
+				+ objectId + ", raHr=" + raHr + ", decDeg=" + decDeg + "]";
+	}
 
 	public static void main(String[] args) {
 
-//		FieldObject fo1 = new FieldObject("wasp12", 6.50862013, 29.688453, 12.345, 0.23);
-//		
-//		System.out.println(fo1.toString());
-//		
-//		FieldObject fo2 = new FieldObject(null, 6.50862013, 29.688453, 14.716, 0.09);
-//		String testId = "06303103+29411843";
-//		
-//		System.out.println(testId);
-//		System.out.println(fo2.getObjectId());
-//		System.out.println(testId.equals(fo2.getObjectId()));
-//		
-//		double deltaMag = 1.234;
-//		int deltaMag1000 = (int) (1000 * deltaMag);
-//		
-//		fo1.setDeltaMag(deltaMag);
-//		System.out.println(String.format("Test overload integer delta mag %.3f, %.3f", 
-//								deltaMag1000 / 1000.0, fo1.getDeltaMag()));
+		FieldObject wasp12 = new FieldObject("wasp12", 6.50862013, 29.688453, 12.345, 0.23);
+		
+		System.out.println(wasp12.toString());
+		
+		FieldObject fo2 = new FieldObject(null, 6.50862013, 29.688453, 14.716, 0.09);
+		String testId = "06303103+29411843";
+		
+		System.out.println(testId);
+		System.out.println(fo2.getObjectId());		
+		
+		var sirius = new FieldObject();
+		sirius.setTarget(wasp12);		
+		System.out.println(String.format("wasp12 is target object %b",  wasp12.isTarget()));
+		System.out.println(String.format("sirius is target object %b",  sirius.isTarget()));
+		
+		
+		System.out.println(wasp12.toString());
+		System.out.println(sirius.toString());
+		System.out.println();
+		
+		var sep = sirius.getRadSepAmin();
+		System.out.println(String.format("Compare ref & computed Radial sep in amin = %.2f, %.2f", 2792.31, sep));
+		
+		var diff = sirius.getDeltaMag();
+		System.out.println(String.format("Compare ref & computed delta mag = %.2f, %.2f", -1.46 - 12.345, diff));
 	}
 
 }
+
+//// copy constructor
+//public FieldObject (FieldObject fo) {
+//	super(fo.getObjectId(), fo.getRaHr(), fo.getDecDeg());
+//	
+//	this.mag = fo.getMag();
+//	this.magErr = fo.getMagErr();
+//	this.nObs = fo.getnObs();
+//	this.apertureId = fo.getApertureId();
+//	this.selected = fo.isSelected();
+//}
+//
 

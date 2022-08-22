@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
  * 
  */
 public class QueryResult {
+	
+	private String CHART_URI = "https://app.aavso.org/vsp/chart/X26836EQ.png?type=chart";
 
 	// query settings associated with current QueryResult
 	private CatalogQuery query = null;
@@ -79,7 +81,7 @@ public class QueryResult {
 
 		// chart X26835JN: wasp12/06:30:32.80/29:40:20.3/60' fov/maglimit=16 /
 		// N-E=up-left
-		setChartUri("https://app.aavso.org/vsp/chart/X26836EQ.png?type=chart");
+		setChartUri(CHART_URI);
 	}
 
 	// import list field objects and update delta mag & radeSep fields
@@ -129,22 +131,7 @@ public class QueryResult {
 	}
 
 	
-	/**
-	 * Sorts catalog table data in ascending order by radial separation or 
-	 * absolute difference between reference and target mag
-	 */
-//	public void applySelectedSort() {
-//		// sort by distance option
-//		if (this.settings.isDistanceRadioButtonValue() == true) {
-//			this.fieldObjects = this.fieldObjects.stream().sorted(Comparator.comparingDouble(p -> p.getRadSepAmin()))
-//					.collect(Collectors.toList());
-//			// sort by delta mag option
-//		} else if (this.settings.isDeltaMagRadioButtonValue() == true) {
-//			this.fieldObjects = this.fieldObjects.stream()
-//					.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag()))).collect(Collectors.toList());
-//		}
-//		setTotalsAndButtons();
-//	}
+
 
 	/**
 	 * Applies observation number and magnitude selection filters to catalog table data
@@ -224,7 +211,7 @@ public class QueryResult {
 		FieldObject targetObject = new FieldObject(objectId, raHr, decDeg, targetMag, targetMagErr);
 
 		// set defaults
-		targetObject.setTarget(true);
+		//targetObject.setTarget(true);
 		targetObject.setSelected(true);
 		targetObject.setAccepted(true);
 		targetObject.setApertureId("T01");
@@ -326,7 +313,7 @@ public class QueryResult {
 		target.setMag(fo.getMag());
 
 		// presets
-		target.setTarget(true);
+		// target.setTarget(true);
 		target.setApertureId("T01");
 		target.setMagErr(0.00);
 		target.setnObs(1);
@@ -505,4 +492,21 @@ public class QueryResult {
 
 	}
 }
+
+/**
+ * Sorts catalog table data in ascending order by radial separation or 
+ * absolute difference between reference and target mag
+ */
+//public void applySelectedSort() {
+//	// sort by distance option
+//	if (this.settings.isDistanceRadioButtonValue() == true) {
+//		this.fieldObjects = this.fieldObjects.stream().sorted(Comparator.comparingDouble(p -> p.getRadSepAmin()))
+//				.collect(Collectors.toList());
+//		// sort by delta mag option
+//	} else if (this.settings.isDeltaMagRadioButtonValue() == true) {
+//		this.fieldObjects = this.fieldObjects.stream()
+//				.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag()))).collect(Collectors.toList());
+//	}
+//	setTotalsAndButtons();
+//}
 

@@ -106,7 +106,7 @@ public class ApassCatalog implements AstroCatalog {
 		// create new field object, auto-name object id & set params
 		FieldObject fo = new FieldObject(null, raHr, decDeg, mag, magErr);
 		fo.setnObs(nObs);
-		fo.setTarget(false);
+		// fo.setTarget(false);
 		fo.setSelected(true);
 		return fo;
 	}

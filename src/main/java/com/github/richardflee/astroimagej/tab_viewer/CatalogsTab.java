@@ -18,6 +18,7 @@ import com.github.richardflee.astroimagej.catalogs.CatalogFactory;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.data_objects.QueryResult;
+import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
 import com.github.richardflee.astroimagej.listeners.CatalogTableListener;
 import com.github.richardflee.astroimagej.models.CatalogTableModel;
@@ -26,6 +27,7 @@ public class CatalogsTab implements CatalogTableListener {
 	
 	private CatalogDataListener catalogDataListener;
 	private CatalogHandler handler = null;
+	private CatalogSettings settings = null;
 	
 	/*
 	 * result field: object compiled from database query parameters and query response data
@@ -44,11 +46,11 @@ public class CatalogsTab implements CatalogTableListener {
 	private JLabel upperLimitValue = null;
 	private JLabel lowerLimitValue = null;
 	
-	private JRadioButton isSortDistance = null;
-	private JRadioButton isSortDelta = null;
+	private JRadioButton sortDistance = null;
+	private JRadioButton sortDeltaMag = null;
 	
-	private JCheckBox isApplyLimits = null;
-	private JCheckBox isDssFits = null;
+	private JCheckBox applyLimits = null;
+	private JCheckBox dssFits = null;
 	
 	private JTextField totalText = null;
 	private JTextField filteredText = null;
@@ -60,12 +62,11 @@ public class CatalogsTab implements CatalogTableListener {
 	private JButton update = null;
 	private JButton clear = null;
 	
-	private static int x = 100;
-	
 	public CatalogsTab(ViewerUi viewer, CatalogTableModel tableModel) {
-		
 		this.handler = new CatalogHandler();
 		handler.setCatalogTableListener(tableModel);
+		
+		this.settings = new CatalogSettings(null);
 		
 		this.catalogTable = new JTable(tableModel);	
 		this.spane = viewer.getTableScrollPane();		
@@ -79,13 +80,13 @@ public class CatalogsTab implements CatalogTableListener {
 		this.upperLimitValue = viewer.getUpperLabel();
 		this.lowerLimitValue = viewer.getLowerLabel();		
 		
-		this.isSortDistance = viewer.getDistanceRadioButton();
-		this.isSortDelta = viewer.getDeltaMagRadioButton();
+		this.sortDistance = viewer.getDistanceRadioButton();
+		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
 		
 		this.nObs = viewer.getNObsSpinner();
 		
-		this.isApplyLimits = viewer.getIsMagLimitsCheckBox();
-		this.isDssFits = viewer.getSaveDssCheckBox();
+		this.applyLimits = viewer.getIsMagLimitsCheckBox();
+		this.dssFits = viewer.getSaveDssCheckBox();
 		
 		this.totalText = viewer.getTotalRecordsField();
 		this.filteredText = viewer.getFilteredRecordsField();
@@ -97,14 +98,13 @@ public class CatalogsTab implements CatalogTableListener {
 		this.update = viewer.getUpdateTableButton();
 		this.clear = viewer.getClearButton();
 		
+		// set active sort radiobutton
+		var sortSettings = CatalogPropertiesFile.readProerties();
+		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
+		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
+		
 		setupActionListeners();
-		viewer.addWindowListener(new WindowAdapter() {
-			 @Override
-	         public void windowClosing(WindowEvent e) {
-				 System.out.println("WindowClosingDemo.windowClosing");
-	             System.exit(0);
-			}
-		});
+		
 	}
 	
 	
@@ -134,20 +134,57 @@ public class CatalogsTab implements CatalogTableListener {
 		clear.addActionListener(e -> doClearTable());
 		
 		this.upperLimit.addChangeListener(e -> {
-			var limit = (double) this.upperLimit.getValue();
-			var targetMag = (double) this.nominal.getValue();
-			var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-			this.upperLimitValue.setText(str);
+			updateUpperLimit();
+//			var limit = (double) this.upperLimit.getValue();
+//			var targetMag = (double) this.nominal.getValue();
+//			var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
+//			this.upperLimitValue.setText(str);
 		});
+		
+		this.nominal.addChangeListener(e -> {
+			updateUpperLimit();
+			updateLowerLimit();
+			
+		});		
 		
 		this.lowerLimit.addChangeListener(e -> {
-			var limit = (double) this.lowerLimit.getValue();
-			var targetMag = (double) this.nominal.getValue();
-			var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-			this.lowerLimitValue.setText(str);
+			updateLowerLimit();			
 		});
 		
+		this.applyLimits.addActionListener(e -> {
+			var isSelected = applyLimits.isSelected();
+			upperLimit.setEnabled(isSelected);
+			nominal.setEnabled(isSelected);
+			lowerLimit.setEnabled(isSelected);
+		});
 		
+		this.sortDistance.addActionListener(e -> {
+			this.settings.setSortDistanceValue(true);
+			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			CatalogPropertiesFile.writeProperties(settings);
+			System.out.println("distance");
+		});
+		
+		this.sortDeltaMag.addActionListener(e -> {
+			this.settings.setSortDistanceValue(false);
+			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			CatalogPropertiesFile.writeProperties(settings);
+			System.out.println("delta mag");			
+		});	
+	}
+	
+	private void updateUpperLimit() {
+		var limit = (double) this.upperLimit.getValue();
+		var targetMag = (double) this.nominal.getValue();
+		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
+		this.upperLimitValue.setText(str);		
+	}
+	
+	private void updateLowerLimit() {
+		var limit = (double) this.lowerLimit.getValue();
+		var targetMag = (double) this.nominal.getValue();
+		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
+		this.lowerLimitValue.setText(str);
 		
 	}
 	
@@ -188,11 +225,6 @@ public class CatalogsTab implements CatalogTableListener {
 	}
 	
 	public void doClearTable() {
-		System.out.println("clear");
-		var settings = getSettingsData();
-		System.out.println(x);
-		settings.setTotalRecordsValue(x++);
-		System.out.println(settings.toString());
 		
 	}
 	
@@ -209,13 +241,13 @@ public class CatalogsTab implements CatalogTableListener {
 		settings.setNominalMagValue((Double) nominal.getValue());
 
 		// mag limits
-		settings.setApplyLimitsValue(isApplyLimits.isSelected());
+		settings.setApplyLimitsValue(applyLimits.isSelected());
 		settings.srtUpperLimitValue(Double.valueOf(upperLimit.getValue().toString()));
 		settings.setLowerLimitValue(Double.valueOf(lowerLimit.getValue().toString()));
 
 		// sort option
-		settings.setSortDistanceValue(isSortDistance.isSelected());
-		settings.setSortDeltaMagValue(isSortDelta.isSelected());
+		settings.setSortDistanceValue(sortDistance.isSelected());
+		settings.setSortDeltaMagValue(sortDeltaMag.isSelected());
 
 		// number of observations
 		settings.setnObsValue((int) nObs.getValue());
