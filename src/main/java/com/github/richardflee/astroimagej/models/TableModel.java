@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.enums.ColumnsEnum;
-import com.github.richardflee.astroimagej.listeners.CatalogTableListener;
+import com.github.richardflee.astroimagej.listeners.TableModelListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 
 
@@ -16,7 +16,7 @@ import com.github.richardflee.astroimagej.utils.AstroCoords;
  * <p>Extends super class AbstractTableModel and implements updateTable method 
  * specified in CatalogTableListener interface.</p>
  */
-public class CatalogTableModel extends AbstractTableModel implements CatalogTableListener {
+public class TableModel extends AbstractTableModel implements TableModelListener {
 	private static final long serialVersionUID = 1L;
 
 	// dataset
@@ -42,7 +42,7 @@ public class CatalogTableModel extends AbstractTableModel implements CatalogTabl
 	private final int USE_COL = ColumnsEnum.USE_COL.getIndex();
 	public final int N_COLS = ColumnsEnum.values().length;
 
-	public CatalogTableModel() {
+	public TableModel() {
 		tableRows = new ArrayList<>();
 	}
 
@@ -65,7 +65,7 @@ public class CatalogTableModel extends AbstractTableModel implements CatalogTabl
 		if (currentTableRows != null) {
 			int idx = 0;
 			for (FieldObject tableRow : currentTableRows) {
-				if (tableRow.isAccepted()) {
+				if (tableRow.isFiltered()) {
 					addItem(idx, tableRow);
 					idx++;
 				}

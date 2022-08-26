@@ -33,7 +33,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
-import com.github.richardflee.astroimagej.models.CatalogTableModel;
+import com.github.richardflee.astroimagej.models.TableModel;
 
 /**
  * @author Richard Lee
@@ -49,13 +49,13 @@ public class ViewerUi extends JFrame {
 	private TargetTab target_tab = null;
 	private CatalogsTab catalogs_tab = null;
 	
-	public ViewerUi(ObservationSite site, CatalogTableModel tableModel) {
+	public ViewerUi(ObservationSite site) { //, CatalogTableModel tableModel) {
 		// this.site = site;
 		
 		initComponents();
 		this.observer_tab = new ObserverTab(this, site);
 		this.target_tab = new TargetTab(this, site);
-		this.catalogs_tab = new CatalogsTab(this, tableModel);
+		this.catalogs_tab = new CatalogsTab(this); //, tableModel);
 	}
 	
 	

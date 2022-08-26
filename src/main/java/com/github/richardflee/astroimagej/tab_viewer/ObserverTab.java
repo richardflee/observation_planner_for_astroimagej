@@ -11,10 +11,10 @@ import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
-import com.github.richardflee.astroimagej.listeners.ObserverDataListener;
+import com.github.richardflee.astroimagej.listeners.ObserverTabListener;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
 
-public class ObserverTab implements ObserverDataListener {
+public class ObserverTab { // implements ObserverTabListener {
 
 	private ObservationSite site = null;
 	
@@ -104,7 +104,7 @@ public class ObserverTab implements ObserverDataListener {
 		setUpActionListeners();		
 	}
 	
-	@Override
+	//@Override
 	public void setNoiseData(NoiseData noiseData) {
 		
 		boolean noData = Double.valueOf(noiseData.getCcdDark()).isNaN();
@@ -117,7 +117,7 @@ public class ObserverTab implements ObserverDataListener {
 	}
 	
 	
-	@Override
+	// @Override
 	public void setObservationSiteData() {
 		longitudeText.setText(this.site.getSiteLongDms());
 		eastWestText.setText(this.site.getSiteEastWest());
@@ -129,7 +129,7 @@ public class ObserverTab implements ObserverDataListener {
 		utcOffsetText.setText(String.format("%3.1f", this.site.getUtcOffsetHr()));			
 	}
 	
-	@Override
+	// @Override
 	public void setObserverData(Observer observer) {
 		codeText.setText(observer.getObserverCode());
 		nameText.setText(observer.getObserverName());
@@ -152,7 +152,7 @@ public class ObserverTab implements ObserverDataListener {
 		
 	}
 	
-	@Override
+	//@Override
 	public Observer getObserverData() {	
 		var observer = new Observer();
 

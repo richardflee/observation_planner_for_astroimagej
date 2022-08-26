@@ -1,9 +1,5 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -13,27 +9,17 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import com.github.richardflee.astroimagej.catalogs.AstroCatalog;
-import com.github.richardflee.astroimagej.catalogs.CatalogFactory;
+import com.github.richardflee.astroimagej.collections.FieldObjects;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
-import com.github.richardflee.astroimagej.data_objects.FieldObject;
-import com.github.richardflee.astroimagej.data_objects.QueryResult;
 import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
-import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
-import com.github.richardflee.astroimagej.listeners.CatalogTableListener;
-import com.github.richardflee.astroimagej.models.CatalogTableModel;
+import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
+import com.github.richardflee.astroimagej.models.TableModel;
 
-public class CatalogsTab implements CatalogTableListener {
+public class CatalogsTab implements CatalogTabListener{
 	
-	private CatalogDataListener catalogDataListener;
 	private CatalogHandler handler = null;
 	private CatalogSettings settings = null;
-	
-	/*
-	 * result field: object compiled from database query parameters and query response data
-	 *  or imported from radec file
-	 */
-	private QueryResult result = null;
+	private TableModel tableModel= null; 
 	
 	private JTable catalogTable = null;
 	private JScrollPane spane = null;
@@ -56,17 +42,20 @@ public class CatalogsTab implements CatalogTableListener {
 	private JTextField filteredText = null;
 	private JTextField selectedText = null;	
 	
-	private JButton query = null;
+	private JButton runQuery = null;
 	private JButton importRaDec = null;
 	private JButton saveRaDec = null;
 	private JButton update = null;
 	private JButton clear = null;
 	
-	public CatalogsTab(ViewerUi viewer, CatalogTableModel tableModel) {
-		this.handler = new CatalogHandler();
-		handler.setCatalogTableListener(tableModel);
+	public CatalogsTab(ViewerUi viewer) {
 		
-		this.settings = new CatalogSettings(null);
+		this.tableModel = new TableModel();		
+		this.handler = new CatalogHandler();
+		handler.setTableModelListener(tableModel);
+		handler.setCatalogTabListener(this);
+		
+		this.settings = new CatalogSettings();
 		
 		this.catalogTable = new JTable(tableModel);	
 		this.spane = viewer.getTableScrollPane();		
@@ -92,13 +81,13 @@ public class CatalogsTab implements CatalogTableListener {
 		this.filteredText = viewer.getFilteredRecordsField();
 		this.selectedText = viewer.getSelectedRecordsField();
 		
-		this.query = viewer.getCatalogQueryButton();
+		this.runQuery = viewer.getCatalogQueryButton();
 		this.importRaDec = viewer.getImportRaDecButton();
 		this.saveRaDec = viewer.getSaveRaDecButton();
 		this.update = viewer.getUpdateTableButton();
 		this.clear = viewer.getClearButton();
 		
-		// set active sort radiobutton
+		// import sort state from properties file
 		var sortSettings = CatalogPropertiesFile.readProerties();
 		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
 		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
@@ -107,138 +96,24 @@ public class CatalogsTab implements CatalogTableListener {
 		
 	}
 	
-	
-	
-	
 	@Override
-	public void updateTable(List<FieldObject> fieldObjects) {
-		// TODO Auto-generated method stub
-		
+	public void updateCounts(FieldObjects fo) {		
+		this.totalText.setText(String.valueOf(fo.getTotalCount()));
+		this.filteredText.setText(String.valueOf(fo.getFilteredCount()));
+		this.selectedText.setText(String.valueOf(fo.getSelectedCount()));
 	}
-	
-	/**
-	 * Configures local catalog listener field to broadcast query & settings update messages
-	 * 
-	 * @param catalogDataListener reference to CatalogDataListener interface
-	 */
-	public void setCatalogDataListener(CatalogDataListener catalogDataListener) {
-		this.catalogDataListener = catalogDataListener;
-	}
-	
-	public void setupActionListeners() {
-		
-		query.addActionListener(e -> doCatalogQuery());
-		importRaDec.addActionListener(e -> doSaveRaDecFile());
-		saveRaDec.addActionListener(e -> handler.doImportRaDecfile());
-		update.addActionListener(e -> doUpdateTable());
-		clear.addActionListener(e -> doClearTable());
-		
-		this.upperLimit.addChangeListener(e -> {
-			updateUpperLimit();
-//			var limit = (double) this.upperLimit.getValue();
-//			var targetMag = (double) this.nominal.getValue();
-//			var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-//			this.upperLimitValue.setText(str);
-		});
-		
-		this.nominal.addChangeListener(e -> {
-			updateUpperLimit();
-			updateLowerLimit();
-			
-		});		
-		
-		this.lowerLimit.addChangeListener(e -> {
-			updateLowerLimit();			
-		});
-		
-		this.applyLimits.addActionListener(e -> {
-			var isSelected = applyLimits.isSelected();
-			upperLimit.setEnabled(isSelected);
-			nominal.setEnabled(isSelected);
-			lowerLimit.setEnabled(isSelected);
-		});
-		
-		this.sortDistance.addActionListener(e -> {
-			this.settings.setSortDistanceValue(true);
-			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
-			CatalogPropertiesFile.writeProperties(settings);
-			System.out.println("distance");
-		});
-		
-		this.sortDeltaMag.addActionListener(e -> {
-			this.settings.setSortDistanceValue(false);
-			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
-			CatalogPropertiesFile.writeProperties(settings);
-			System.out.println("delta mag");			
-		});	
-	}
-	
-	private void updateUpperLimit() {
-		var limit = (double) this.upperLimit.getValue();
-		var targetMag = (double) this.nominal.getValue();
-		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-		this.upperLimitValue.setText(str);		
-	}
-	
-	private void updateLowerLimit() {
-		var limit = (double) this.lowerLimit.getValue();
-		var targetMag = (double) this.nominal.getValue();
-		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-		this.lowerLimitValue.setText(str);
-		
-	}
-	
-	public void doCatalogQuery() {
-		 System.out.println("query");
-		// compile CatalogQuery object from catalog ui Query Settings data
-		var query = catalogDataListener.compileQuery();
-		System.out.println(query.toString());
-		
-		// default settings with catalog ui target mag
-		// assemble catalog result with default settings & targe mag
-		var targetMag = getSettingsData().getNominalMagValue();
-		System.out.println(targetMag);
-		
-		this.result = new QueryResult(query, new CatalogSettings(targetMag));
-		System.out.println(result.toString());
-		
-		// runs query on selected on-line catalog, retruns list of field objects
-		// append this list to CatalogResut object
-		AstroCatalog catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		List<FieldObject> fieldObjects = catalog.runQuery(query);
-		
-		fieldObjects.stream().forEach(p -> System.out.println(p.toString()));
-		
-		
-	}
-	
-	public void doSaveRaDecFile() {
-		System.out.println("import");
-	}
-	
-	public void doImportRaDecfile() {
-		System.out.println("save");
-	}
-
-	public void doUpdateTable() {
-		System.out.println("update");
-	}
-	
-	public void doClearTable() {
-		
-	}
-	
 	
 	/*
 	 * Copies catalog ui user filter and sort selections to CatalogSettings object values 
 	 * 
 	 * @return compiled CatalogSettings object
 	 */
-	public CatalogSettings getSettingsData() {
-		CatalogSettings settings = new CatalogSettings(null);
+	// @Override
+	public CatalogSettings compileSettingsData() {
+		CatalogSettings settings = new CatalogSettings();
 		
 		// target mag
-		settings.setNominalMagValue((Double) nominal.getValue());
+		settings.setNominalMagValue(Double.valueOf(nominal.getValue().toString()));
 
 		// mag limits
 		settings.setApplyLimitsValue(applyLimits.isSelected());
@@ -257,7 +132,126 @@ public class CatalogsTab implements CatalogTableListener {
 		return settings;
 	}
 	
-
+	public CatalogSettings	compileApplyDefaultSettings() {
+		var settings = compileSettingsData();
+		settings.setDefaultSettings();
+		applySettingsData(settings);
+		enableLimits(true);
+		return settings;
+	}
+	
+	public void applySettingsData(CatalogSettings settings) {
+		
+		//nominal.setValue(settings.getNominalMagValue());
+		
+		applyLimits.setSelected(settings.isApplyLimitsValue());
+		upperLimit.setValue(settings.getUpperLimitValue());
+		lowerLimit.setValue(settings.getLowerLimitValue());
+		
+		sortDistance.setSelected(settings.isSortDistanceValue());
+		sortDeltaMag.setSelected(settings.isSortDeltaMagValue());
+		
+		nObs.setValue(settings.getnObsValue());		
+	}
+	
+	private double getTargetMag() {
+		return (Double) nominal.getValue();
+	}
+	
+	
+//	/**
+//	 * Configures local catalog listener field to broadcast query & settings update messages
+//	 * 
+//	 * @param catalogDataListener reference to CatalogDataListener interface
+//	 */
+//	public void setCatalogDataListener(CatalogDataListener catalogDataListener) {
+//		this.catalogDataListener = catalogDataListener;
+//	}
+	
+	public void setupActionListeners() {
+		
+		// reset settings to default except tget mag
+		runQuery.addActionListener(e -> {
+			
+			var settings = compileApplyDefaultSettings();
+			handler.doCatalogQuery(settings);
+		});
+		
+		
+		importRaDec.addActionListener(e -> doSaveRaDecFile());
+		saveRaDec.addActionListener(e -> handler.doImportRaDecfile());
+		update.addActionListener(e -> doUpdateTable());
+		clear.addActionListener(e -> doClearTable());
+		
+		this.upperLimit.addChangeListener(e -> updateLimits());
+		this.nominal.addChangeListener(e -> updateLimits());
+		this.lowerLimit.addChangeListener(e -> updateLimits());			
+		
+		this.applyLimits.addActionListener(e -> {
+			var isSelected = applyLimits.isSelected();
+			enableLimits(isSelected);
+		});
+		
+		this.sortDistance.addActionListener(e -> {
+			this.settings.setSortDistanceValue(true);
+			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			CatalogPropertiesFile.writeProperties(settings);
+		});
+		
+		this.sortDeltaMag.addActionListener(e -> {
+			this.settings.setSortDistanceValue(false);
+			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			CatalogPropertiesFile.writeProperties(settings);
+		});	
+	}
+	
+	private void enableLimits(boolean isSelected) {
+		upperLimit.setEnabled(isSelected);
+		nominal.setEnabled(isSelected);
+		lowerLimit.setEnabled(isSelected);
+	}
+	
+	private void updateLimits() {
+		var nominalMag = (double) this.nominal.getValue();
+		updateUpperLimit(nominalMag);
+		updateLowerLimit(nominalMag);
+		handler.updateNominalMag(nominalMag);
+		
+	}
+	
+	private void updateUpperLimit(double targetMag) {
+		var limit = (double) this.upperLimit.getValue();
+		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
+		this.upperLimitValue.setText(str);		
+	}
+	
+	private void updateLowerLimit(double targetMag) {
+		var limit = (double) this.lowerLimit.getValue();
+		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
+		this.lowerLimitValue.setText(str);		
+	}
 	
 
+//	
+	public void doSaveRaDecFile() {
+		System.out.println("import");
+	}
+	
+	public void doImportRaDecfile() {
+		System.out.println("save");
+	}
+
+	public void doUpdateTable() {
+		System.out.println("update");
+	}
+	
+	public void doClearTable() {
+		
+	}
+
+
+	
+	
+
+	
 }

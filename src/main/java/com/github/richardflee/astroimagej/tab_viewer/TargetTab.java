@@ -30,14 +30,14 @@ import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
-import com.github.richardflee.astroimagej.listeners.CatalogDataListener;
+import com.github.richardflee.astroimagej.listeners.TargetTabListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
 import com.github.richardflee.astroimagej.visibility_plotter.ObjectTracker;
 import com.github.richardflee.astroimagej.visibility_plotter.Solar;
 import com.github.richardflee.astroimagej.visibility_plotter.TimesConverter;
 
-public class TargetTab implements CatalogDataListener {
+public class TargetTab { //implements TargetTabListener {
 	
 	private final static String ALTITUDE_SERIES = "Altitude";
 	private final static DateTimeFormatter X_TICK_FORMATTER = DateTimeFormatter.ofPattern("HH");
@@ -88,7 +88,8 @@ public class TargetTab implements CatalogDataListener {
 		this.filterCombo = viewer.getFilterCombo();
 		
 		// populate target tab textbox and drop down controls
-		setQueryData(TargetPropertiesFile.readProerties());
+		var query = TargetPropertiesFile.readProerties();
+		setQueryData(query);
 		populateFilterCombo(null);
 		
 		// restricts text date entry to day/month/year pickers
@@ -100,7 +101,52 @@ public class TargetTab implements CatalogDataListener {
 
 		setupActionListeners();
 	}
+	
+	// @Override
+	public void setQueryData(CatalogQuery query) {
+		this.objectIdText.setText(query.getObjectId());
+		this.raText.setText(AstroCoords.raHrToRaHms(query.getRaHr()));
+		this.decText.setText(AstroCoords.decDegToDecDms(query.getDecDeg()));
 
+		this.fovText.setText(String.format("%.1f", query.getFovAmin()));
+		this.magLimitText.setText(String.format("%.1f", query.getMagLimit()));
+
+		// selected catalog
+		CatalogsEnum en = query.getCatalogType();
+		this.selectedCatalog = en.toString().toUpperCase();
+		catalogCombo.setSelectedItem(selectedCatalog);
+
+		// populate filterCombo
+		populateFilterCombo(query.getMagBand());
+	}
+
+	// TODO - option to remove if building query from properties file
+	//@Override
+	public CatalogQuery compileQuery() {
+		// copy text field data
+		CatalogQuery query = new CatalogQuery();
+
+		query.setObjectId(this.objectIdText.getText());
+		query.setRaHr(AstroCoords.raHmsToRaHr(this.raText.getText()));
+		query.setDecDeg(AstroCoords.decDmsToDecDeg(this.decText.getText()));
+
+		query.setFovAmin(Double.valueOf(this.fovText.getText()));
+		query.setMagLimit(Double.valueOf(this.magLimitText.getText()));
+
+		// copy combo data
+		query.setCatalogType(CatalogsEnum.getEnum(catalogCombo.getSelectedItem().toString()));
+		query.setMagBand(filterCombo.getSelectedItem().toString());
+
+		return query;
+	}
+	
+	// @Override
+	public void setSolarTimes(SolarTimes solarTimes) {
+		this.viewer.getSunSetField().setText(solarTimes.getCivilSunSetValue());
+		this.viewer.getTwilightEndField().setText(solarTimes.getCivilTwilightEndsValue());
+		this.viewer.getTwilightStartField().setText(solarTimes.getCivilTwilightStartsValue());
+		this.viewer.getSunRiseField().setText(solarTimes.getCivilSunRiseValue());		
+	}
 
 
 	private void initialiseCatalogComboRefs(ViewerUi viewer) {
@@ -265,50 +311,6 @@ public class TargetTab implements CatalogDataListener {
 		
 	}
 
-	@Override
-	public void setQueryData(CatalogQuery query) {
-		this.objectIdText.setText(query.getObjectId());
-		this.raText.setText(AstroCoords.raHrToRaHms(query.getRaHr()));
-		this.decText.setText(AstroCoords.decDegToDecDms(query.getDecDeg()));
-
-		this.fovText.setText(String.format("%.1f", query.getFovAmin()));
-		this.magLimitText.setText(String.format("%.1f", query.getMagLimit()));
-
-		// selected catalog
-		CatalogsEnum en = query.getCatalogType();
-		this.selectedCatalog = en.toString().toUpperCase();
-		catalogCombo.setSelectedItem(selectedCatalog);
-
-		// populate filterCombo
-		populateFilterCombo(query.getMagBand());
-
-	}
-
-	public CatalogQuery compileQuery() {
-		// copy text field data
-		CatalogQuery query = new CatalogQuery();
-
-		query.setObjectId(this.objectIdText.getText());
-		query.setRaHr(AstroCoords.raHmsToRaHr(this.raText.getText()));
-		query.setDecDeg(AstroCoords.decDmsToDecDeg(this.decText.getText()));
-
-		query.setFovAmin(Double.valueOf(this.fovText.getText()));
-		query.setMagLimit(Double.valueOf(this.magLimitText.getText()));
-
-		// copy combo data
-		query.setCatalogType(CatalogsEnum.getEnum(catalogCombo.getSelectedItem().toString()));
-		query.setMagBand(filterCombo.getSelectedItem().toString());
-
-		return query;
-	}
-	
-	@Override
-	public void setSolarTimes(SolarTimes solarTimes) {
-		this.viewer.getSunSetField().setText(solarTimes.getCivilSunSetValue());
-		this.viewer.getTwilightEndField().setText(solarTimes.getCivilTwilightEndsValue());
-		this.viewer.getTwilightStartField().setText(solarTimes.getCivilTwilightStartsValue());
-		this.viewer.getSunRiseField().setText(solarTimes.getCivilSunRiseValue());		
-	}
 
 	/*
 	 * Clears current and imports new filter list in the filter selection combo
@@ -439,7 +441,7 @@ public class TargetTab implements CatalogDataListener {
 
 	public static void main(String[] args) {
 
-		var viewer = new ViewerUi(null, null);
+		var viewer = new ViewerUi(null);
 		// var dataTab = new TargetDataTab(viewer);
 		var simbadTab = new SimbadPanelData(viewer);
 

@@ -39,7 +39,7 @@ public class CatalogPropertiesFile {
 
 	public static CatalogSettings readProerties() {
 
-		var settings = new CatalogSettings(null);
+		var settings = new CatalogSettings();
 		try (InputStream input = new FileInputStream(AijPropsReadWriter.getPropertiesFilePath())) {
 			var prop = new Properties();
 			prop.load(input);
@@ -74,7 +74,7 @@ public class CatalogPropertiesFile {
 
 		var prop = AijPropsReadWriter.getPlannerProps();
 		
-		var settings = new CatalogSettings(null);
+		var settings = new CatalogSettings();
 		settings.setSortDistanceValue(true);
 		settings.setSortDeltaMagValue(! settings.isSortDistanceValue());		
 		CatalogPropertiesFile.writeProperties(settings);

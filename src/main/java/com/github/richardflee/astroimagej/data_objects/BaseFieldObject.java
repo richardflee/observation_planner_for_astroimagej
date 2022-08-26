@@ -8,7 +8,7 @@ import com.github.richardflee.astroimagej.utils.AstroCoords;
  */
 public class BaseFieldObject {
 	
-	protected String objectId = null;
+	protected String objectId = "";
 	protected double raHr = 0.0;
 	protected double decDeg = 0.0;
 	

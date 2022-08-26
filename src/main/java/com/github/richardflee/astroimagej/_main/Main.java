@@ -12,7 +12,7 @@ import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
-import com.github.richardflee.astroimagej.models.CatalogTableModel;
+import com.github.richardflee.astroimagej.models.TableModel;
 import com.github.richardflee.astroimagej.tab_viewer.CatalogHandler;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
@@ -50,10 +50,10 @@ public class Main {
 			var observer = ObserverPropertiesFile.readProerties();
 			
 			// catalog table
-			var tableModel= new CatalogTableModel();
+		//	var tableModel= new CatalogTableModel();
 			
 			// User  interface
-			var viewer = new ViewerUi(site, tableModel);
+			var viewer = new ViewerUi(site); //, tableModel);
 			var observer_tab = viewer.getObserver_tab();
 			observer_tab.setObservationSiteData();
 			observer_tab.setNoiseData(noiseData);
@@ -61,7 +61,7 @@ public class Main {
 			
 			// sets catalog data listener
 			var target_tab = viewer.getTarget_tab();
-			viewer.getCatalogs_tab().setCatalogDataListener(target_tab);
+			//viewer.getCatalogs_tab().setCatalogDataListener(target_tab);
 			
 //			// sets catalog table listener
 //			var handler = new CatalogHandler();

@@ -12,7 +12,7 @@ public class CatalogSettings {
 	private boolean saveDssValue;
 	
 	// nominal mag + spinner limits
-	private double nominalMagValue;
+	private double nominalValue = 10.0;
 	private double upperLimitValue;
 	private double lowerLimitValue;
 
@@ -27,28 +27,31 @@ public class CatalogSettings {
 	// default target magnitude value
 	public static final double DEFAULT_TGT_MAG = 10.0;
 	
+	
 	/**
 	 * One parameter constructor specifies new target spinner value; resets filter
 	 * and sort controls to default values;
 	 * @param targetMag
 	 *     target spinner setting
 	 */
-	public CatalogSettings(Double targetMag) {
-		resetSettingsToDefaults(targetMag);
+	public CatalogSettings() {
+		setDefaultSettings();
 	}
+	
 	
 	// resets sort & filter defaults; optional update target mag data
 	// target mag, dss and sort order controls excluded
-	private void resetSettingsToDefaults(Double targetMag) {
+	public void setDefaultSettings() {
+		
 		// number observations / APASS
 		nObsValue = 1;
 
 		// mag limtis and flag
-		nominalMagValue = (targetMag != null) ? targetMag : CatalogSettings.DEFAULT_TGT_MAG;
 		upperLimitValue = 0.0;
 		lowerLimitValue = 0.0;
-		applyLimitsValue = true;
 		
+		// check-box flags
+		applyLimitsValue = true;
 		saveDssValue = true;
 
 		// record totals
@@ -56,7 +59,7 @@ public class CatalogSettings {
 		filteredRecordsValue = 0;
 		selectedRecordsValue = 0;
 	}
-
+	
 
 	// auto getter - setters
 	public double getUpperLimitValue() {
@@ -68,11 +71,11 @@ public class CatalogSettings {
 	}
 
 	public double getNominalMagValue() {
-		return nominalMagValue;
+		return nominalValue;
 	}
 
-	public void setNominalMagValue(double targetMagValue) {
-		this.nominalMagValue = targetMagValue;
+	public void setNominalMagValue(double nominalMagValue) {
+		this.nominalValue = nominalMagValue;
 	}
 
 	public double getLowerLimitValue() {
@@ -147,78 +150,14 @@ public class CatalogSettings {
 	public String toString() {
 		return "CatalogSettings [\napplyLimitsValue=" + applyLimitsValue + ", \nsortDistanceValue=" + sortDistanceValue
 				+ ", \nsortDeltaMagValue=" + sortDeltaMagValue + ", \nsaveDssValue=" + saveDssValue + ", \nnominalMagValue="
-				+ nominalMagValue + ", \nupperLimitValue=" + upperLimitValue + ", \nlowerLimitValue=" + lowerLimitValue
+				+ nominalValue + ", \nupperLimitValue=" + upperLimitValue + ", \nlowerLimitValue=" + lowerLimitValue
 				+ ", \nnObsValue=" + nObsValue + ", \ntotalRecordsValue=" + totalRecordsValue + ", \nfilteredRecordsValue="
 				+ filteredRecordsValue + ", \nselectedRecordsValue=" + selectedRecordsValue + "]";
 	}
 
 	public static void main(String[] args) {
-		
-		var s0 = new CatalogSettings(null);
+		var s0 = new CatalogSettings();
 		System.out.println(s0.toString());
-
-//		double targetMag = 12.3;
-//		CatalogSettings set0 = new CatalogSettings(targetMag);
-//
-//		set0.srtUpperLimitValue(1.2);
-//		System.out.println(String.format("Target value %.3f", targetMag));
-//
-//		System.out.println("Spinner value:");
-//		set0.setLowerLimitValue(0.00);
-////		System.out.println(String.format("Upper limit spinner = 1.2, upper label: %s", set0.getUpperLabelValue()));
-////		System.out.println(String.format("Lower limit spinner = 0.00, lower label: %s", set0.getLowerLabelValue()));
-//
-//		System.out.println("\nCopy constructor:");
-//		CatalogSettings set1 = new CatalogSettings(set0);
-//		set1.srtUpperLimitValue(0.00);
-//		set1.setLowerLimitValue(-1.3);
-////		System.out.println(String.format("Upper limit spinner = 0.0, upper label: %s", set1.getUpperLabelValue()));
-////		System.out.println(String.format("Lower limit spinner = -1.3, lower label: %s", set1.getLowerLabelValue()));
-//		System.out.println(String.format("Confirm equal target values = 12.3 %.1f, %b", set1.getNominalMagValue(),
-//				set0.getNominalMagValue() == set1.getNominalMagValue()));
-//		
-//		System.out.println(set0.toString());
-
 	}
 
 }
-
-/**
-// * Copy constructor
-// * @param settings
-// *     source object to copy
-// */
-//public CatalogSettings(CatalogSettings settings) {
-//	// target mag value
-//	this.nominalMagValue = settings.getNominalMagValue();
-//
-//	// mag limits
-//	this.upperLimitValue = settings.getUpperLimitValue();
-//	this.lowerLimitValue = settings.getLowerLimitValue();
-//	this.applyLimitsValue = settings.isApplyLimitsValue();
-//
-//	// sort option
-//	this.sortDistanceValue = settings.isSortDistanceValue();
-//	this.sortDeltaMagValue = settings.isSortDeltaMagValue();
-//
-//	// number observations / APASS
-//	this.nObsValue = settings.getnObsValue();
-//
-//	// record totals
-//	this.totalRecordsValue = Integer.valueOf(settings.getTotalRecordsValue());
-//	this.filteredRecordsValue = Integer.valueOf(settings.getFilteredRecordsValue());
-//	this.selectedRecordsValue = Integer.valueOf(settings.getSelectedRecordsValue());
-//
-//	// DSS flag
-//	// this.isSaveDssValue = settings.isSaveDssCheckBoxValue();
-//
-//}
-///**
-//* Default constructor resets filter and sort controls to default values;
-//* current target spinner value is unchanged
-//*/
-//public CatalogSettings() {
-//	resetSettingsToDefaults(null);
-//	this.sortDistanceValue = true;
-//	this.sortDeltaMagValue = false;
-//}

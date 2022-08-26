@@ -9,7 +9,9 @@ import com.github.richardflee.astroimagej.data_objects.FieldObject;
  *
  */
 @FunctionalInterface
-public interface CatalogTableListener {
+public interface TableModelListener {
 	public void updateTable(List<FieldObject> fieldObjects);
-
+	
 }
+
+
