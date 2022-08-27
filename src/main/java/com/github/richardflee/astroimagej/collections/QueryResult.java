@@ -1,5 +1,7 @@
 package com.github.richardflee.astroimagej.collections;
 
+import java.util.List;
+
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
@@ -28,74 +30,65 @@ public class QueryResult {
 	private CatalogQuery query = null;
 
 	// list of target and reference field objects
-	private FieldObjects fieldObjects = null;
-	
-	// catalog ui dialog sort and filter settings
-	//private CatalogSettings settings;
-
-	
-	private FieldObject target = null;
-	
+	private FieldObjectsCollection foCollection = null;
 	
 	public QueryResult() {
-		
+		this.foCollection = new FieldObjectsCollection();		
+	}
+	
+	public void addFieldObjects(List<FieldObject> fos) {
+		this.foCollection.addFieldObjects(fos);
+	}
+	
+	
+	public List<FieldObject> getTableRows(CatalogSettings settings) {
+		var tableRows = this.foCollection.getFieldObjects();
+		tableRows.add(0, FieldObject.compileTargetFromQuery(this.query, settings));
+		return tableRows;
 	}
 	
 	public void update(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);
-	//	fieldObjects.updateComputedFields(target);	
+		foCollection.updateComputedFields(target);	
 	}
 	
 	public void applySort(CatalogSettings settings) {
-		
+		var target = FieldObject.compileTargetFromQuery(this.query, settings);		
 		if (settings.isSortDistanceValue()) {
-			fieldObjects.sortByDistance(this.target);
-
-			System.out.println(fieldObjects.toString());
-		
+			foCollection.sortByDistance(target);
 		}
 		if (settings.isSortDeltaMagValue()) {
-			fieldObjects.sortByDeltaMag(target);
+			foCollection.sortByDeltaMag(target);
 		}
 	}
 	
 	public void applyFilters(CatalogSettings settings) {
-		
+		foCollection.filterByNumberObservations(settings.getnObsValue());
+		foCollection.filterByMagLimits(settings);
 	}
-
-
-	public CatalogQuery getQuery() {
-		return query;
-	}
-
+	
 
 	public void setQuery(CatalogQuery query) {
 		this.query = query;
 	}
 
-
-//	public void getTarget(CatalogSettings settings) {
-//		this.target = FieldObject.compileTargetFromQuery(query,  settings);
-//	}
+	
+	
 
 
-	public FieldObjects getFieldObjects() {
-		return fieldObjects;
+	public FieldObjectsCollection getFieldObjectsCollection() {
+		return foCollection;
 	}
 
-
-	public void setFieldObjects(FieldObjects fieldObjects) {
-		this.fieldObjects = fieldObjects;
+	public void setFieldObjectsCollection(FieldObjectsCollection foCollection) {
+		this.foCollection = foCollection;
 	}
 
 
 	@Override
 	public String toString() {
-		return fieldObjects.toString();
+		return foCollection.toString();
 	}
-	
-	
-	
 }
 
 	

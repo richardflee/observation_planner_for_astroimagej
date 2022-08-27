@@ -1,11 +1,11 @@
 package com.github.richardflee.astroimagej.listeners;
 
-import com.github.richardflee.astroimagej.collections.FieldObjects;
+import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 
 public interface CatalogTabListener {
 
 	// public CatalogSettings getSettingsData();
 
-	public void updateCounts(FieldObjects fieldObjects);
+	public void updateCounts(FieldObjectsCollection fieldObjects);
 	
 }

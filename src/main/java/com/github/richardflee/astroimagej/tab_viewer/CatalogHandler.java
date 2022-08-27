@@ -1,7 +1,7 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
 import com.github.richardflee.astroimagej.catalogs.CatalogFactory;
-import com.github.richardflee.astroimagej.collections.FieldObjects;
+import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
@@ -50,25 +50,29 @@ public class CatalogHandler {
 		 System.out.println("query in handler");
 		 
 		 var query = TargetPropertiesFile.readProerties();
-	//	 var targetMag = settings.getNominalMagValue();
-		 
-		 var fieldObjects = new FieldObjects();
+		 this.result.setQuery(query);
 		 
 		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 fieldObjects.addFieldObjects(catalog.runQuery(query));
-		 
-		 this.result.setQuery(query);
-		 this.result.setFieldObjects(fieldObjects);
-		 
+		 var x = catalog.runQuery(query);
+	 
+		 this.result.addFieldObjects(x);
+
 		 // move to update
 		 
-		 this.result.update(settings);
-		 
+		 this.result.update(settings); 
 		 
 		 this.result.applySort(settings);
 		 
-		 this.tabListener.updateCounts(fieldObjects);	
+		 this.result.applyFilters(settings);
 		 
+		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
+		 
+		 var tableRows = result.getTableRows(settings);
+		 
+		 
+		 System.out.println();
+		 
+		 tableRows.get(1).setObjectId("fred");
 		
 	}
 	

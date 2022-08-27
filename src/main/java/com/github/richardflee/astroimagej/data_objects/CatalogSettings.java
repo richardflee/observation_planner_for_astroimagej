@@ -12,7 +12,8 @@ public class CatalogSettings {
 	private boolean saveDssValue;
 	
 	// nominal mag + spinner limits
-	private double nominalValue = 10.0;
+	// default target magnitude value
+	private double nominalValue;
 	private double upperLimitValue;
 	private double lowerLimitValue;
 
@@ -24,8 +25,8 @@ public class CatalogSettings {
 	private int filteredRecordsValue;
 	private int selectedRecordsValue;
 
-	// default target magnitude value
 	public static final double DEFAULT_TGT_MAG = 10.0;
+	public static final double MIN_LIMIT_MAG = 0.01;
 	
 	
 	/**
@@ -35,6 +36,7 @@ public class CatalogSettings {
 	 *     target spinner setting
 	 */
 	public CatalogSettings() {
+		this.nominalValue = CatalogSettings.DEFAULT_TGT_MAG;
 		setDefaultSettings();
 	}
 	
@@ -60,16 +62,32 @@ public class CatalogSettings {
 		selectedRecordsValue = 0;
 	}
 	
-
+	public static boolean isUpperLimitDisabled(CatalogSettings settings) {
+		var limitValue = settings.getUpperLimitValue();
+		return (Math.abs(limitValue) < CatalogSettings.MIN_LIMIT_MAG);
+	}
+	
+	public static boolean isLowerLimitDisabled(CatalogSettings settings) {
+		var limitValue = settings.getLowerLimitValue();
+		return (Math.abs(limitValue) < CatalogSettings.MIN_LIMIT_MAG);
+	}
+	
 	// auto getter - setters
 	public double getUpperLimitValue() {
 		return upperLimitValue;
 	}
+	
 
-	public void srtUpperLimitValue(double upperLimitValue) {
-		this.upperLimitValue = upperLimitValue;
+	public void setUpperLimitValue(double upperLimitValue) {
+		var limitValue = roundLimit(upperLimitValue);
+		this.upperLimitValue = Math.max(limitValue, 0.0);
 	}
 
+	public void setLowerLimitValue(double lowerLimitValue) {
+		var limitValue = roundLimit(lowerLimitValue);
+		this.lowerLimitValue = Math.min(limitValue, 0.0);
+	}
+	
 	public double getNominalMagValue() {
 		return nominalValue;
 	}
@@ -82,16 +100,13 @@ public class CatalogSettings {
 		return lowerLimitValue;
 	}
 
-	public void setLowerLimitValue(double lowerLimitValue) {
-		this.lowerLimitValue = lowerLimitValue;
-	}
 
 	public boolean isApplyLimitsValue() {
 		return applyLimitsValue;
 	}
 
-	public void setApplyLimitsValue(boolean isMagLimitsValue) {
-		this.applyLimitsValue = isMagLimitsValue;
+	public void setApplyLimitsValue(boolean isApplyLimitsValue) {
+		this.applyLimitsValue = isApplyLimitsValue;
 	}
 
 	public boolean isSortDistanceValue() {
@@ -130,6 +145,10 @@ public class CatalogSettings {
 	public int getFilteredRecordsValue() {
 		return filteredRecordsValue;
 	}
+	
+	private double roundLimit(double limitValue) {		
+		return 1.0 * Math.round(limitValue * 10) / 10.0;
+	}
 
 	// custom setter
 	public void setFilteredRecordsValue(int nFilteredRecords) {
@@ -158,6 +177,10 @@ public class CatalogSettings {
 	public static void main(String[] args) {
 		var s0 = new CatalogSettings();
 		System.out.println(s0.toString());
+		
+		var x = 0.09;
+		System.out.println((1.0 * Math.round(x * 10) / 10.0));
+		
 	}
 
 }

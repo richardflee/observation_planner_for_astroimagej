@@ -13,6 +13,9 @@ public class FieldObject extends BaseFieldObject {
 	private double mag;
 	private double magErr;
 	private Integer nObs;
+	
+	private double radSepAmin;
+	private double deltaMag;
 
 	private String apertureId; 
 	private boolean selected;
@@ -22,23 +25,9 @@ public class FieldObject extends BaseFieldObject {
 	 * No arg constructor, default Sirius parameters
 	 */	
 	public FieldObject() {
-		super( "sirius", 
-				AstroCoords.raHmsToRaHr("06:45:08.917"),
-				AstroCoords.decDmsToDecDeg("-16:42:58.02"));		
-		this.mag = -1.46;
-		this.magErr = 0.02;
-		
-		this.mag = 0.0;
-		this.magErr = 0.0;
-		
-//		this.radSepAmin = 0.0;
-//		this.deltaMag = 0.0;
-
-		this.nObs = 1;
-		this.apertureId = "Cnn"; 
-		this.filtered = true;
-		this.selected = true;
-		
+		this("sirius", 
+				AstroCoords.raHmsToRaHr("06:45:08.917"), AstroCoords.decDmsToDecDeg("-16:42:58.02"), 
+				-1.46, 0.02);
 	}
 	
 	/**
@@ -54,6 +43,12 @@ public class FieldObject extends BaseFieldObject {
 		super(objectId, raHr, decDeg);
 		this.mag = mag;
 		this.magErr = magErr;
+		this.radSepAmin = 0.0;
+		this.deltaMag = 0.0;
+		this.nObs = 1;
+		this.apertureId = "Cnn"; 
+		this.filtered = true;
+		this.selected = true;
 	}
 	
 //	public void compileFromQuery(CatalogQuery query) {
@@ -67,7 +62,9 @@ public class FieldObject extends BaseFieldObject {
 		var raHr = query.getRaHr();
 		var decDeg = query.getDecDeg();
 		var nominalMag = settings.getNominalMagValue();
-		return new FieldObject(objectId, raHr, decDeg, nominalMag, 0.0);
+		var fo = new FieldObject(objectId, raHr, decDeg, nominalMag, 0.0);
+		fo.setApertureId("T01");
+		return fo;
 	}
 	
 	public void copyValues(FieldObject fo) {
@@ -103,19 +100,18 @@ public class FieldObject extends BaseFieldObject {
 		return Math.toDegrees(Math.acos(cosA)) * 60.0;
 	}
 	
-//	public void setRadSepAmin(FieldObject target) {
-//		this.radSepAmin = getRadSepAmin(target);
-//	}
+	public void setRadSepAmin(FieldObject target) {
+		this.radSepAmin = getRadSepAmin(target);
+	}
 	
 	public double getDeltaMag(FieldObject target) {
 		return this.mag - target.getMag();		
 	}
 	
-//	public void setDeltaMag(FieldObject target) {
-//		this.deltaMag = getDeltaMag(target);
-//	}
+	public void setDeltaMag(FieldObject target) {
+		this.deltaMag = getDeltaMag(target);
+	}
 	
-
 	// auto-generated getters, setters and toString methods
 	public String getApertureId() {
 		return apertureId;
@@ -189,13 +185,13 @@ public class FieldObject extends BaseFieldObject {
 	}
 
 	
-//
-//	@Override
-//	public String toString() {
-//		return "FieldObject [mag=" + mag + ", magErr=" + magErr + ", nObs=" + nObs + ", radSepAmin=" + radSepAmin
-//				+ ", deltaMag=" + deltaMag + ", apertureId=" + apertureId + ", selected=" + selected + ", filtered="
-//				+ filtered + "]";
-//	}
+	
+	@Override
+	public String toString() {
+		return "FieldObject [mag=" + mag + ", magErr=" + magErr + ", nObs=" + nObs + ", radSepAmin=" + radSepAmin
+				+ ", deltaMag=" + deltaMag + ", apertureId=" + apertureId + ", selected=" + selected + ", filtered="
+				+ filtered + ", objectId=" + objectId + ", raHr=" + raHr + ", decDeg=" + decDeg + "]";
+	}
 
 	public static void main(String[] args) {
 		// tests coords-based id for unamed apass objects

@@ -9,7 +9,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import com.github.richardflee.astroimagej.collections.FieldObjects;
+import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
@@ -18,7 +18,7 @@ import com.github.richardflee.astroimagej.models.TableModel;
 public class CatalogsTab implements CatalogTabListener{
 	
 	private CatalogHandler handler = null;
-	private CatalogSettings settings = null;
+	//private CatalogSettings settings = null;
 	private TableModel tableModel= null; 
 	
 	private JTable catalogTable = null;
@@ -29,8 +29,8 @@ public class CatalogsTab implements CatalogTabListener{
 	private JSpinner lowerLimit = null;
 	private JSpinner nObs = null;
 	
-	private JLabel upperLimitValue = null;
-	private JLabel lowerLimitValue = null;
+	private JLabel upperLimitLabel = null;
+	private JLabel lowerLimitLabel = null;
 	
 	private JRadioButton sortDistance = null;
 	private JRadioButton sortDeltaMag = null;
@@ -55,7 +55,7 @@ public class CatalogsTab implements CatalogTabListener{
 		handler.setTableModelListener(tableModel);
 		handler.setCatalogTabListener(this);
 		
-		this.settings = new CatalogSettings();
+	//	this.settings = new CatalogSettings();
 		
 		this.catalogTable = new JTable(tableModel);	
 		this.spane = viewer.getTableScrollPane();		
@@ -66,8 +66,8 @@ public class CatalogsTab implements CatalogTabListener{
 		this.nominal = viewer.getTargetMagSpinner();
 		this.lowerLimit = viewer.getLowerLimitSpinner();
 		
-		this.upperLimitValue = viewer.getUpperLabel();
-		this.lowerLimitValue = viewer.getLowerLabel();		
+		this.upperLimitLabel = viewer.getUpperLabel();
+		this.lowerLimitLabel = viewer.getLowerLabel();		
 		
 		this.sortDistance = viewer.getDistanceRadioButton();
 		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
@@ -97,7 +97,7 @@ public class CatalogsTab implements CatalogTabListener{
 	}
 	
 	@Override
-	public void updateCounts(FieldObjects fo) {		
+	public void updateCounts(FieldObjectsCollection fo) {		
 		this.totalText.setText(String.valueOf(fo.getTotalCount()));
 		this.filteredText.setText(String.valueOf(fo.getFilteredCount()));
 		this.selectedText.setText(String.valueOf(fo.getSelectedCount()));
@@ -117,7 +117,7 @@ public class CatalogsTab implements CatalogTabListener{
 
 		// mag limits
 		settings.setApplyLimitsValue(applyLimits.isSelected());
-		settings.srtUpperLimitValue(Double.valueOf(upperLimit.getValue().toString()));
+		settings.setUpperLimitValue(Double.valueOf(upperLimit.getValue().toString()));
 		settings.setLowerLimitValue(Double.valueOf(lowerLimit.getValue().toString()));
 
 		// sort option
@@ -135,12 +135,12 @@ public class CatalogsTab implements CatalogTabListener{
 	public CatalogSettings	compileApplyDefaultSettings() {
 		var settings = compileSettingsData();
 		settings.setDefaultSettings();
-		applySettingsData(settings);
+		updateCatalogTabUi(settings);
 		enableLimits(true);
 		return settings;
 	}
 	
-	public void applySettingsData(CatalogSettings settings) {
+	public void updateCatalogTabUi(CatalogSettings settings) {
 		
 		//nominal.setValue(settings.getNominalMagValue());
 		
@@ -154,9 +154,9 @@ public class CatalogsTab implements CatalogTabListener{
 		nObs.setValue(settings.getnObsValue());		
 	}
 	
-	private double getTargetMag() {
-		return (Double) nominal.getValue();
-	}
+//	private double getTargetMag() {
+//		return (Double) nominal.getValue();
+//	}
 	
 	
 //	/**
@@ -193,14 +193,16 @@ public class CatalogsTab implements CatalogTabListener{
 		});
 		
 		this.sortDistance.addActionListener(e -> {
-			this.settings.setSortDistanceValue(true);
-			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			var settings = compileSettingsData();
+			settings.setSortDistanceValue(true);
+			settings.setSortDeltaMagValue(! settings.isSortDistanceValue());
 			CatalogPropertiesFile.writeProperties(settings);
 		});
 		
 		this.sortDeltaMag.addActionListener(e -> {
-			this.settings.setSortDistanceValue(false);
-			this.settings.setSortDeltaMagValue(! this.settings.isSortDistanceValue());
+			var settings = compileSettingsData();
+			settings.setSortDistanceValue(false);
+			settings.setSortDeltaMagValue(! settings.isSortDistanceValue());
 			CatalogPropertiesFile.writeProperties(settings);
 		});	
 	}
@@ -212,23 +214,26 @@ public class CatalogsTab implements CatalogTabListener{
 	}
 	
 	private void updateLimits() {
-		var nominalMag = (double) this.nominal.getValue();
-		updateUpperLimit(nominalMag);
-		updateLowerLimit(nominalMag);
-		handler.updateNominalMag(nominalMag);
-		
+		var settings = compileSettingsData();
+		updateUpperLimit(settings);
+		updateLowerLimit(settings);
+		handler.updateNominalMag(settings.getNominalMagValue());		
 	}
 	
-	private void updateUpperLimit(double targetMag) {
-		var limit = (double) this.upperLimit.getValue();
-		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-		this.upperLimitValue.setText(str);		
+	private void updateUpperLimit(CatalogSettings settings) {
+		var limit = settings.getUpperLimitValue();
+		upperLimit.setValue(limit);
+		var nominalMag = settings.getNominalMagValue();		
+		var str = CatalogSettings.isUpperLimitDisabled(settings) ? "N/A" : String.format("%.1f", limit + nominalMag);
+		this.upperLimitLabel.setText(str);		
 	}
 	
-	private void updateLowerLimit(double targetMag) {
-		var limit = (double) this.lowerLimit.getValue();
-		var str = (Math.abs(limit) < 0.01) ? "N/A" : String.format("%.1f", limit + targetMag);
-		this.lowerLimitValue.setText(str);		
+	private void updateLowerLimit(CatalogSettings settings) {
+		var limit = settings.getLowerLimitValue();
+		lowerLimit.setValue(limit);
+		var nominalMag = settings.getNominalMagValue();		
+		var str = CatalogSettings.isLowerLimitDisabled(settings) ? "N/A" : String.format("%.1f", limit + nominalMag);
+		this.lowerLimitLabel.setText(str);		
 	}
 	
 

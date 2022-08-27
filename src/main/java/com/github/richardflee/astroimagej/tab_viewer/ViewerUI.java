@@ -1100,11 +1100,11 @@ public class ViewerUi extends JFrame {
 							label40.setText("Nominal Mag:");
 
 							//---- upperLimitSpinner ----
-							upperLimitSpinner.setModel(new SpinnerNumberModel(0.0, -0.1, 5.0, 0.10000000149011612));
+							upperLimitSpinner.setModel(new SpinnerNumberModel(0.0, -0.1, 5.0, 0.2));
 							upperLimitSpinner.setToolTipText("<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>");
 
 							//---- lowerLimitSpinner ----
-							lowerLimitSpinner.setModel(new SpinnerNumberModel(0.0, -5.0, 0.1, 0.10000000149011612));
+							lowerLimitSpinner.setModel(new SpinnerNumberModel(0.0, -5.0, 0.1, 0.2));
 							lowerLimitSpinner.setToolTipText("<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n");
 
 							//---- targetMagSpinner ----
