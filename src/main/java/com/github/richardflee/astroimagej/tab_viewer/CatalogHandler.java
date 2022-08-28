@@ -53,27 +53,15 @@ public class CatalogHandler {
 		 this.result.setQuery(query);
 		 
 		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 var x = catalog.runQuery(query);
+		 var catalogFieldObjects = catalog.runQuery(query);
 	 
-		 this.result.addFieldObjects(x);
+		 this.result.addFieldObjects(catalogFieldObjects);
 
 		 // move to update
 		 
-		 this.result.update(settings); 
-		 
-		 this.result.applySort(settings);
-		 
-		 this.result.applyFilters(settings);
-		 
-		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
-		 
 		 var tableRows = result.getTableRows(settings);
-		 
-		 
-		 System.out.println();
-		 
-		 tableRows.get(1).setObjectId("fred");
-		
+		 this.tableListener.updateTable(tableRows);		
+		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
 	}
 	
 //	public void doCatalogQuery() {

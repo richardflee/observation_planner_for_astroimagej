@@ -22,20 +22,20 @@ public class FieldObjectsCollection {
 	}
 	
 	
-	public void updateComputedFields(FieldObject target) {
+	public void update(FieldObject target) {
 		this.fieldObjects.stream().forEach(p -> p.setRadSepAmin(target));
 		this.fieldObjects.stream().forEach(p -> p.setDeltaMag(target));
 	}
 	
 	public void sortByDistance(FieldObject target) {		
 		this.fieldObjects = this.fieldObjects.stream()
-				.sorted(Comparator.comparingDouble(p -> p.getRadSepAmin(target)))
+				.sorted(Comparator.comparingDouble(p -> p.getRadSepAmin()))
 				.collect(Collectors.toList());	
 	}
 	
 	public void sortByDeltaMag(FieldObject target) {
 		this.fieldObjects = this.fieldObjects.stream()
-				.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag(target))))
+				.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag())))
 				.collect(Collectors.toList());		
 	}
 	

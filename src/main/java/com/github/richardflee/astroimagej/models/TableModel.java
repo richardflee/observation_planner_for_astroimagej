@@ -23,20 +23,8 @@ public class TableModel extends AbstractTableModel implements TableModelListener
 	private List<FieldObject> tableRows;
 
 	// header column names
-	final static String headers[] = { "Ap", "ObjectId", "Ra2000", "Dec2000", "Mag", "Mag Err", "Mag diff", "Dist", "Nobs",
-			"USE" };
-//	
-//	// header tooltips, html formatting
-//	public static final String[] toolTips = { "<html>Identifies measurement aperture for selected rows</html>",
-//			"<html>Object identifer<br>APASS format: HHMMSSS±DDMMSS</html>", "<html>Object coordinates</html>",
-//			"<html>Object coordinates</html>", "<html>Catalog magnitude for selected mag band</html>",
-//			"<html>Error in catalog magnitude</html>",
-//			"<html>Delta mag relative to target for selected mag band<br>"
-//					+ "Optional sort order if user enters a target mag value</html>",
-//			"<html>Radial distance to target object / arcmin<br>"
-//					+ "Default sort order with increasing distance</html>",
-//			"<html>Number of observation sessions<br>" + "(APASS catalog)</html>",
-//			"<html>USE => copy selected rows to radec file<br>Default = selected</html>" };
+	final static String headers[] = { "Ap", "ObjectId", "Ra2000", "Dec2000", "Mag", "Mag Err",
+			"Mag diff", "Dist", "Nobs", "USE" };
 
 	// column numbers 
 	private final int USE_COL = ColumnsEnum.USE_COL.getIndex();
@@ -131,11 +119,11 @@ public class TableModel extends AbstractTableModel implements TableModelListener
 		} else if (en == ColumnsEnum.MAG_ERR_COL) {
 			data = (String) String.format("%.3f", objectRow.getMagErr());
 
-//		} else if (en == ColumnsEnum.MAG_DIFF_COL) {
-//			data = (String) String.format("%.3f", objectRow.getDeltaMag());
+		} else if (en == ColumnsEnum.MAG_DIFF_COL) {
+			data = (String) String.format("%.3f", objectRow.getDeltaMag());
 
-//		} else if (en == ColumnsEnum.DIST_AMIN_COL) {
-//			data = (String) String.format("%.2f", objectRow.getRadSepAmin());
+		} else if (en == ColumnsEnum.DIST_AMIN_COL) {
+			data = (String) String.format("%.2f", objectRow.getRadSepAmin());
 
 		} else if (en == ColumnsEnum.NOBS_COL) {
 			data = (String) String.format("%2d", objectRow.getnObs());

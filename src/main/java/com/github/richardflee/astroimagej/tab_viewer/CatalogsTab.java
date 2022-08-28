@@ -18,7 +18,6 @@ import com.github.richardflee.astroimagej.models.TableModel;
 public class CatalogsTab implements CatalogTabListener{
 	
 	private CatalogHandler handler = null;
-	//private CatalogSettings settings = null;
 	private TableModel tableModel= null; 
 	
 	private JTable catalogTable = null;
@@ -54,8 +53,6 @@ public class CatalogsTab implements CatalogTabListener{
 		this.handler = new CatalogHandler();
 		handler.setTableModelListener(tableModel);
 		handler.setCatalogTabListener(this);
-		
-	//	this.settings = new CatalogSettings();
 		
 		this.catalogTable = new JTable(tableModel);	
 		this.spane = viewer.getTableScrollPane();		

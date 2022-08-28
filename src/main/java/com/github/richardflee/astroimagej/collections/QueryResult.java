@@ -37,22 +37,27 @@ public class QueryResult {
 	}
 	
 	public void addFieldObjects(List<FieldObject> fos) {
-		this.foCollection.addFieldObjects(fos);
+		this.foCollection.addFieldObjects(fos);		
 	}
 	
 	
 	public List<FieldObject> getTableRows(CatalogSettings settings) {
+		var target = FieldObject.compileTargetFromQuery(this.query, settings);
+		foCollection.update(target);
+		applySort(settings);
+		applyFilters(settings);
+			
 		var tableRows = this.foCollection.getFieldObjects();
-		tableRows.add(0, FieldObject.compileTargetFromQuery(this.query, settings));
+		tableRows.add(0, target);
 		return tableRows;
 	}
 	
-	public void update(CatalogSettings settings) {
-		var target = FieldObject.compileTargetFromQuery(this.query, settings);
-		foCollection.updateComputedFields(target);	
-	}
+//	private void update(CatalogSettings settings) {
+//		var target = FieldObject.compileTargetFromQuery(this.query, settings);
+//		foCollection.update(target);
+//	}
 	
-	public void applySort(CatalogSettings settings) {
+	private void applySort(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);		
 		if (settings.isSortDistanceValue()) {
 			foCollection.sortByDistance(target);
@@ -62,7 +67,7 @@ public class QueryResult {
 		}
 	}
 	
-	public void applyFilters(CatalogSettings settings) {
+	private void applyFilters(CatalogSettings settings) {
 		foCollection.filterByNumberObservations(settings.getnObsValue());
 		foCollection.filterByMagLimits(settings);
 	}
@@ -71,9 +76,6 @@ public class QueryResult {
 	public void setQuery(CatalogQuery query) {
 		this.query = query;
 	}
-
-	
-	
 
 
 	public FieldObjectsCollection getFieldObjectsCollection() {

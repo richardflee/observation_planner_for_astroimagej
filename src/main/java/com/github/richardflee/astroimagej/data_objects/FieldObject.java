@@ -26,7 +26,8 @@ public class FieldObject extends BaseFieldObject {
 	 */	
 	public FieldObject() {
 		this("sirius", 
-				AstroCoords.raHmsToRaHr("06:45:08.917"), AstroCoords.decDmsToDecDeg("-16:42:58.02"), 
+				AstroCoords.raHmsToRaHr("06:45:08.917"), 
+				AstroCoords.decDmsToDecDeg("-16:42:58.02"), 
 				-1.46, 0.02);
 	}
 	
@@ -50,12 +51,7 @@ public class FieldObject extends BaseFieldObject {
 		this.filtered = true;
 		this.selected = true;
 	}
-	
-//	public void compileFromQuery(CatalogQuery query) {
-//		this.objectId = query.getObjectId();
-//		this.raHr = query.getRaHr();
-//		this.decDeg = query.getDecDeg();
-//	}
+
 	
 	public static FieldObject compileTargetFromQuery(CatalogQuery query, CatalogSettings settings) {
 		var objectId = query.getObjectId();
@@ -89,27 +85,31 @@ public class FieldObject extends BaseFieldObject {
 	 * 
 	 * @param target target FieldObject 
 	 */
-	public double getRadSepAmin(FieldObject target) {		
-		double ra = Math.toRadians(raHr * 15.0);
+	public double getRadSepAmin() {
+		return this.radSepAmin;
+	}
+	
+	public void setRadSepAmin(FieldObject target) {
+		this.radSepAmin = computeRadSep(target);
+	}
+	
+	private double computeRadSep(FieldObject target) {
+		double ra = Math.toRadians(this.raHr * 15.0);
 		double ra0 = Math.toRadians(target.getRaHr() * 15.0);
 
-		double dec = Math.toRadians(decDeg);
+		double dec = Math.toRadians(this.decDeg);
 		double dec0 = Math.toRadians(target.getDecDeg());
 
 		double cosA = Math.sin(dec) * Math.sin(dec0) + Math.cos(dec) * Math.cos(dec0) * Math.cos(ra - ra0);
 		return Math.toDegrees(Math.acos(cosA)) * 60.0;
 	}
 	
-	public void setRadSepAmin(FieldObject target) {
-		this.radSepAmin = getRadSepAmin(target);
-	}
-	
-	public double getDeltaMag(FieldObject target) {
-		return this.mag - target.getMag();		
+	public double getDeltaMag() {
+		return this.deltaMag;		
 	}
 	
 	public void setDeltaMag(FieldObject target) {
-		this.deltaMag = getDeltaMag(target);
+		this.deltaMag = this.mag - target.getMag();
 	}
 	
 	// auto-generated getters, setters and toString methods
@@ -207,8 +207,8 @@ public class FieldObject extends BaseFieldObject {
 		System.out.println(sirius.toString());
 		System.out.println();
 		
-		var sep = sirius.getRadSepAmin(target_wasp12);
-		var diff = sirius.getDeltaMag(target_wasp12);
+		var sep = sirius.getRadSepAmin();
+		var diff = sirius.getDeltaMag();
 		System.out.println(String.format("Compare ref & computed Radial sep in amin = %.2f, %.2f", 2792.31, sep));
 		System.out.println(String.format("Compare ref & computed delta mag = %.2f, %.2f", -1.46 - 12.345, diff));
 		System.out.println();
