@@ -1,5 +1,9 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -8,9 +12,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
+import com.github.richardflee.astroimagej.enums.ColumnsEnum;
 import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.models.TableModel;
@@ -47,6 +54,9 @@ public class CatalogsTab implements CatalogTabListener{
 	private JButton update = null;
 	private JButton clear = null;
 	
+	private final int TABLE_WIDTH = 1000;
+	private final Integer[] COL_WIDTHS = {5, 22, 14, 14, 9, 9, 9, 9, 5, 4};
+	
 	public CatalogsTab(ViewerUi viewer) {
 		
 		this.tableModel = new TableModel();		
@@ -58,6 +68,8 @@ public class CatalogsTab implements CatalogTabListener{
 		this.spane = viewer.getTableScrollPane();		
 		spane.setViewportView(catalogTable);
 		this.catalogTable.setFillsViewportHeight(true);
+		tableCellsRenderer(catalogTable, COL_WIDTHS);
+		
 		
 		this.upperLimit = viewer.getUpperLimitSpinner();
 		this.nominal = viewer.getTargetMagSpinner();
@@ -89,8 +101,7 @@ public class CatalogsTab implements CatalogTabListener{
 		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
 		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
 		
-		setupActionListeners();
-		
+		setupActionListeners();		
 	}
 	
 	@Override
@@ -250,10 +261,19 @@ public class CatalogsTab implements CatalogTabListener{
 	public void doClearTable() {
 		
 	}
-
-
 	
 	
-
+	private void tableCellsRenderer(JTable table, Integer[] widths) {
+		var cr0 = new DefaultTableCellRenderer();
+		cr0.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		var totalWidth = Arrays.asList(widths).stream().mapToInt(Integer::intValue).sum();		
+		for (int idx = 0; idx < table.getColumnModel().getColumnCount(); idx++) {
+			table.getColumnModel().getColumn(idx).setPreferredWidth(TABLE_WIDTH * widths[idx] / totalWidth);			
+			if (idx != ColumnsEnum.USE_COL.getIndex()) {
+				table.getColumnModel().getColumn(idx).setCellRenderer(cr0);
+			}			
+		}	
+	}
 	
 }
