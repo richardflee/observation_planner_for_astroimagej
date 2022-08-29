@@ -19,8 +19,10 @@ import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.enums.ColumnsEnum;
 import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.models.TableModel;
+import com.github.richardflee.astroimagej.utils.AstroCoords;
 
 public class CatalogsTab implements CatalogTabListener{
 	
@@ -104,10 +106,32 @@ public class CatalogsTab implements CatalogTabListener{
 		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
 		
 		this.tablePopulated = false;
-		this.enableButtons(this.tablePopulated);
+		this.enableButtons(this.tablePopulated);	
 		
-		
+		// updateQueryPanel(viewer)
 		setupActionListeners();		
+		
+		
+	}
+	
+	public void updateQueryPanel(ViewerUi viewer) { 
+		var query = TargetPropertiesFile.readProerties();
+		var objectId = query.getObjectId();
+		var fov = query.getFovAmin();
+		var strVal = String.format("ID: %s | FOV: %.1f", objectId, fov);
+		viewer.getQueryIdLabel().setText(strVal);
+		
+		var raHms = AstroCoords.raHrToRaHms(query.getRaHr());
+		var decDms = AstroCoords.decDegToDecDms(query.getDecDeg());
+		strVal = String.format("RA: %s | Dec: %s", raHms, decDms);
+		viewer.getQueryRaDecLabel().setText(strVal);
+		
+		String catalog = query.getCatalogType().toString();
+		String filter = query.getMagBand();
+		var magLimit = query.getMagLimit();
+		strVal = String.format("Catalog: %s | Filter: %s | Mag: <%.1f", catalog, filter, magLimit);
+		viewer.getQueryCatFilterLabel().setText(strVal);
+		
 	}
 	
 	@Override
@@ -206,7 +230,8 @@ public class CatalogsTab implements CatalogTabListener{
 		});
 		
 		clear.addActionListener(e ->{
-		//	handler.doClearTable();
+			var settings = compileApplyDefaultSettings();
+			handler.doClearTable(settings);
 			this.enableButtons(false);
 		});
 		
@@ -246,7 +271,6 @@ public class CatalogsTab implements CatalogTabListener{
 		var settings = compileSettingsData();
 		updateUpperLimit(settings);
 		updateLowerLimit(settings);
-		handler.updateNominalMag(settings.getNominalMagValue());		
 	}
 	
 	private void updateUpperLimit(CatalogSettings settings) {

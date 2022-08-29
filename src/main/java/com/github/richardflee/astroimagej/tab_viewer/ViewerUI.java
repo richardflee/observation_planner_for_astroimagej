@@ -56,6 +56,8 @@ public class ViewerUi extends JFrame {
 		this.observer_tab = new ObserverTab(this, site);
 		this.target_tab = new TargetTab(this, site);
 		this.catalogs_tab = new CatalogsTab(this); //, tableModel);
+		
+		this.aijTabbedPane.addChangeListener(e -> catalogs_tab.updateQueryPanel(this));
 	}
 	
 	
@@ -351,11 +353,23 @@ public class ViewerUi extends JFrame {
 		return lowerLabel;
 	}
 
+	public JLabel getQueryIdLabel() {
+		return queryIdLabel;
+	}
+
+	public JLabel getQueryRaDecLabel() {
+		return queryRaDecLabel;
+	}
+
+	public JLabel getQueryCatFilterLabel() {
+		return queryCatFilterLabel;
+	}
+
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		tabbedPane1 = new JTabbedPane();
+		aijTabbedPane = new JTabbedPane();
 		targetTab = new JPanel();
 		targetPanel = new JPanel();
 		targetTabPanel = new JPanel();
@@ -411,11 +425,10 @@ public class ViewerUi extends JFrame {
 		catalogsTab = new JPanel();
 		catalogsPanel = new JPanel();
 		catalogSettingsPanel = new JPanel();
-		querySummaryPAnel = new JPanel();
-		label13 = new JLabel();
-		label47 = new JLabel();
-		label48 = new JLabel();
-		label49 = new JLabel();
+		querySummaryPanel = new JPanel();
+		queryIdLabel = new JLabel();
+		queryRaDecLabel = new JLabel();
+		queryCatFilterLabel = new JLabel();
 		sortByPanel = new JPanel();
 		distanceRadioButton = new JRadioButton();
 		deltaMagRadioButton = new JRadioButton();
@@ -507,7 +520,7 @@ public class ViewerUi extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		var contentPane = getContentPane();
 
-		//======== tabbedPane1 ========
+		//======== aijTabbedPane ========
 		{
 
 			//======== targetTab ========
@@ -991,7 +1004,7 @@ public class ViewerUi extends JFrame {
 						.addComponent(targetPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 			}
-			tabbedPane1.addTab("Target", targetTab);
+			aijTabbedPane.addTab("Target", targetTab);
 
 			//======== catalogsTab ========
 			{
@@ -1002,53 +1015,46 @@ public class ViewerUi extends JFrame {
 					//======== catalogSettingsPanel ========
 					{
 
-						//======== querySummaryPAnel ========
+						//======== querySummaryPanel ========
 						{
-							querySummaryPAnel.setBorder(new TitledBorder("Query Data"));
-							querySummaryPAnel.setPreferredSize(new Dimension(190, 164));
+							querySummaryPanel.setBorder(new TitledBorder("Query Data"));
+							querySummaryPanel.setPreferredSize(new Dimension(190, 164));
 
-							//---- label13 ----
-							label13.setText("ID: WASP12 | FOV: 60");
-							label13.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							//---- queryIdLabel ----
+							queryIdLabel.setText("ID: WASP12 | FOV: 60");
+							queryIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-							//---- label47 ----
-							label47.setText("RA: 06:30:32.80 | Dec:+20:40:20.27");
-							label47.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							//---- queryRaDecLabel ----
+							queryRaDecLabel.setText("RA: 06:30:32.80 | Dec:+20:40:20.27");
+							queryRaDecLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-							//---- label48 ----
-							label48.setText("Catalog: VSP | Filter B | Mag <17.0");
-							label48.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							//---- queryCatFilterLabel ----
+							queryCatFilterLabel.setText("Catalog: VSP | Filter B | Mag <17.0");
+							queryCatFilterLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-							//---- label49 ----
-							label49.setText("Start Date: 2022-08-18");
-							label49.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-							GroupLayout querySummaryPAnelLayout = new GroupLayout(querySummaryPAnel);
-							querySummaryPAnel.setLayout(querySummaryPAnelLayout);
-							querySummaryPAnelLayout.setHorizontalGroup(
-								querySummaryPAnelLayout.createParallelGroup()
-									.addGroup(querySummaryPAnelLayout.createSequentialGroup()
+							GroupLayout querySummaryPanelLayout = new GroupLayout(querySummaryPanel);
+							querySummaryPanel.setLayout(querySummaryPanelLayout);
+							querySummaryPanelLayout.setHorizontalGroup(
+								querySummaryPanelLayout.createParallelGroup()
+									.addGroup(querySummaryPanelLayout.createSequentialGroup()
 										.addContainerGap()
-										.addGroup(querySummaryPAnelLayout.createParallelGroup()
-											.addGroup(querySummaryPAnelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-												.addComponent(label48, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(label47, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(label49, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-											.addComponent(label13, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+										.addGroup(querySummaryPanelLayout.createParallelGroup()
+											.addGroup(querySummaryPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+												.addComponent(queryCatFilterLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(queryRaDecLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+											.addComponent(queryIdLabel, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
 										.addContainerGap())
 							);
-							querySummaryPAnelLayout.setVerticalGroup(
-								querySummaryPAnelLayout.createParallelGroup()
-									.addGroup(GroupLayout.Alignment.TRAILING, querySummaryPAnelLayout.createSequentialGroup()
+							querySummaryPanelLayout.setVerticalGroup(
+								querySummaryPanelLayout.createParallelGroup()
+									.addGroup(GroupLayout.Alignment.TRAILING, querySummaryPanelLayout.createSequentialGroup()
 										.addContainerGap()
-										.addComponent(label13)
+										.addComponent(queryIdLabel)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(label47)
+										.addComponent(queryRaDecLabel)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(label48)
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(label49)
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addComponent(queryCatFilterLabel)
+										.addContainerGap(20, Short.MAX_VALUE))
 							);
 						}
 
@@ -1198,7 +1204,7 @@ public class ViewerUi extends JFrame {
 										.addGroup(slectionFiltersPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label37)
 											.addComponent(nObsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addContainerGap())
+										.addContainerGap(39, Short.MAX_VALUE))
 							);
 						}
 
@@ -1257,7 +1263,7 @@ public class ViewerUi extends JFrame {
 										.addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label44)
 											.addComponent(selectedRecordsField))
-										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addContainerGap(18, Short.MAX_VALUE))
 							);
 						}
 
@@ -1265,13 +1271,13 @@ public class ViewerUi extends JFrame {
 						catalogSettingsPanel.setLayout(catalogSettingsPanelLayout);
 						catalogSettingsPanelLayout.setHorizontalGroup(
 							catalogSettingsPanelLayout.createParallelGroup()
-								.addGroup(catalogSettingsPanelLayout.createSequentialGroup()
-									.addContainerGap()
-									.addGroup(catalogSettingsPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-										.addComponent(sortByPanel, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-										.addComponent(slectionFiltersPanel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-										.addComponent(panel1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(querySummaryPAnel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
+								.addGroup(GroupLayout.Alignment.TRAILING, catalogSettingsPanelLayout.createSequentialGroup()
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addGroup(catalogSettingsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+										.addComponent(sortByPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+										.addComponent(querySummaryPanel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+										.addComponent(slectionFiltersPanel, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+										.addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 									.addContainerGap())
 						);
 						catalogSettingsPanelLayout.setVerticalGroup(
@@ -1280,11 +1286,11 @@ public class ViewerUi extends JFrame {
 									.addContainerGap()
 									.addComponent(sortByPanel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									.addComponent(slectionFiltersPanel, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
+									.addComponent(slectionFiltersPanel, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 									.addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									.addComponent(querySummaryPAnel, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+									.addComponent(querySummaryPanel, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
 						);
 					}
 
@@ -1300,7 +1306,7 @@ public class ViewerUi extends JFrame {
 						);
 						catalogTablePanelLayout.setVerticalGroup(
 							catalogTablePanelLayout.createParallelGroup()
-								.addComponent(tableScrollPane, GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+								.addComponent(tableScrollPane)
 						);
 					}
 
@@ -1406,7 +1412,7 @@ public class ViewerUi extends JFrame {
 						.addComponent(catalogsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 			}
-			tabbedPane1.addTab("CATALOGS WIP", catalogsTab);
+			aijTabbedPane.addTab("CATALOGS WIP", catalogsTab);
 
 			//======== observerTab ========
 			{
@@ -1864,7 +1870,7 @@ public class ViewerUi extends JFrame {
 				);
 				observerTabLayout.linkSize(SwingConstants.VERTICAL, new Component[] {saveObserverButton, updateParamsButton});
 			}
-			tabbedPane1.addTab("Observer", observerTab);
+			aijTabbedPane.addTab("Observer", observerTab);
 		}
 
 		GroupLayout contentPaneLayout = new GroupLayout(contentPane);
@@ -1873,14 +1879,14 @@ public class ViewerUi extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1)
+					.addComponent(aijTabbedPane)
 					.addContainerGap())
 		);
 		contentPaneLayout.setVerticalGroup(
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(tabbedPane1)
+					.addComponent(aijTabbedPane)
 					.addContainerGap())
 		);
 		pack();
@@ -1895,7 +1901,7 @@ public class ViewerUi extends JFrame {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JTabbedPane tabbedPane1;
+	private JTabbedPane aijTabbedPane;
 	private JPanel targetTab;
 	private JPanel targetPanel;
 	private JPanel targetTabPanel;
@@ -1951,11 +1957,10 @@ public class ViewerUi extends JFrame {
 	private JPanel catalogsTab;
 	private JPanel catalogsPanel;
 	private JPanel catalogSettingsPanel;
-	private JPanel querySummaryPAnel;
-	private JLabel label13;
-	private JLabel label47;
-	private JLabel label48;
-	private JLabel label49;
+	private JPanel querySummaryPanel;
+	private JLabel queryIdLabel;
+	private JLabel queryRaDecLabel;
+	private JLabel queryCatFilterLabel;
 	private JPanel sortByPanel;
 	private JRadioButton distanceRadioButton;
 	private JRadioButton deltaMagRadioButton;

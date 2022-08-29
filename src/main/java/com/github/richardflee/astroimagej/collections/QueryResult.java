@@ -41,6 +41,11 @@ public class QueryResult {
 		this.foCollection.addFieldObjects(fos);		
 	}
 	
+	public void clearFieldObjects() {
+		this.foCollection.getFieldObjects().clear();
+		System.out.println(foCollection.getFieldObjects().size());
+	}
+	
 	public List<FieldObject> getTableRows(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);
 		foCollection.update(target);
@@ -57,17 +62,6 @@ public class QueryResult {
 	}
 	
 	
-//	public List<FieldObject> getTableRows(CatalogSettings settings) {
-//		var target = FieldObject.compileTargetFromQuery(this.query, settings);
-//		var tableRows = updateTableRows(settings);
-//		tableRows.add(0, target);
-//		return tableRows;
-//	}
-	
-//	private void update(CatalogSettings settings) {
-//		var target = FieldObject.compileTargetFromQuery(this.query, settings);
-//		foCollection.update(target);
-//	}
 	
 	private void applySort(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);		

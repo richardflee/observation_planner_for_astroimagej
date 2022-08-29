@@ -49,8 +49,6 @@ public class CatalogHandler {
 	 */
 	
 	public void doCatalogQuery(CatalogSettings settings) {
-		 System.out.println("query in handler");
-		 
 		 var query = TargetPropertiesFile.readProerties();
 		 this.result = new QueryResult();
 		 this.result.setQuery(query);
@@ -80,13 +78,19 @@ public class CatalogHandler {
 		
 	}
 	
+	public void doClearTable(CatalogSettings settings) {
+		this.result.clearFieldObjects();		
+		System.out.println("handler clear");
+		
+		var tableRows = result.getTableRows(settings);
+		this.tableListener.updateTable(tableRows);		
+		this.tabListener.updateCounts(result.getFieldObjectsCollection());
+		
+	}
+	
 	
 	public void doImportRaDecfile() {
 		System.out.println("save in handler");
-	}
-	
-	public void updateNominalMag(double nominalMag) {
-		System.out.println(String.format("upddate target mag %.3f", nominalMag));
 	}
 	
 	

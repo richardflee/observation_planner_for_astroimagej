@@ -21,7 +21,6 @@ public class FieldObjectsCollection {
 		this.fieldObjects.addAll(fos);
 	}
 	
-	
 	public void update(FieldObject target) {
 		this.fieldObjects.stream().forEach(p -> p.setRadSepAmin(target));
 		this.fieldObjects.stream().forEach(p -> p.setDeltaMag(target));

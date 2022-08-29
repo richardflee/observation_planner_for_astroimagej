@@ -4,14 +4,14 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp tabbedPane1:::::x, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "DEMO!!"
 			"defaultCloseOperation": 2
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
-				name: "tabbedPane1"
+				name: "aijTabbedPane"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 					"$horizontalGroup": "par l {comp targetPanel::l:::x}"
 					"$verticalGroup": "par l {comp targetPanel::l:::x}"
@@ -363,36 +363,40 @@ new FormModel {
 					} ) {
 						name: "catalogsPanel"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {seq l {space :::p, par t:::p {comp sortByPanel::::239:x, comp slectionFiltersPanel::l::239:x, comp panel1::l:::x, comp querySummaryPAnel:::p:239:p}, space :::p}}"
-							"$verticalGroup": "par l {seq l {space :::p, comp sortByPanel:::p:48:p, space u:::p, comp slectionFiltersPanel:::p:204:p, space u:::p, comp panel1:::p::p, space u:::p, comp querySummaryPAnel::::118:x}}"
+							"$horizontalGroup": "par l {seq t {space :::x, par l:::p {comp sortByPanel::t::239:x, comp querySummaryPanel::t:p:239:p, comp slectionFiltersPanel::l::239:x, comp panel1::l:::x}, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::p, comp sortByPanel:::p:48:p, space u:::p, comp slectionFiltersPanel:::p:224:p, space u:::p, comp panel1:::p::p, space u:::p, comp querySummaryPanel::::108:x}}"
 						} ) {
 							name: "catalogSettingsPanel"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq {space :::p, par l {par l:l::p {comp label48:::::x, comp label47::l:::x, comp label49::l:p:209:p}, comp label13::l:p:209:p}, space :::p}}"
-								"$verticalGroup": "par l {seq t {space :::p, comp label13:::p::p, space :::p, comp label47:::p::p, space :::p, comp label48:::p::p, space :::p, comp label49:::p::p, space :::x}}"
+								"$horizontalGroup": "par l {seq {space :::p, par l {par l:l::p {comp queryCatFilterLabel:::::x, comp queryRaDecLabel::l:::x}, comp queryIdLabel::l:p:209:p}, space :::p}}"
+								"$verticalGroup": "par l {seq t {space :::p, comp queryIdLabel:::p::p, space :::p, comp queryRaDecLabel:::p::p, space :::p, comp queryCatFilterLabel:::p::p, space ::20:x}}"
 							} ) {
-								name: "querySummaryPAnel"
+								name: "querySummaryPanel"
 								"border": new javax.swing.border.TitledBorder( "Query Data" )
 								"preferredSize": #Dimension0
 								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "label13"
+									name: "queryIdLabel"
 									"text": "ID: WASP12 | FOV: 60"
 									"font": &Font2 new java.awt.Font( "Tahoma", 0, 12 )
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "label47"
+									name: "queryRaDecLabel"
 									"text": "RA: 06:30:32.80 | Dec:+20:40:20.27"
 									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "label48"
+									name: "queryCatFilterLabel"
 									"text": "Catalog: VSP | Filter B | Mag <17.0"
 									"font": #Font2
-								} )
-								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "label49"
-									"text": "Start Date: 2022-08-18"
-									"font": #Font2
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
 								} )
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -422,7 +426,7 @@ new FormModel {
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 								"$horizontalGroup": "par l {seq {space :::p, par l {comp saveDssCheckBox:::p:131:p, seq l {par t:::p {seq l {comp label37:::p::p, space u:::p, comp nObsSpinner:::::x}, seq l {par l {seq {space :p:9:p, par l {comp label39::t:p::p, comp label38::t:p::p}}, comp label40::l:p::p}, space :::p, par t {comp upperLimitSpinner::t:p:60:p, comp lowerLimitSpinner::t:p:60:p, comp targetMagSpinner:::p:60:p}}}, space u:p::p, par l {comp upperLabel::l:p::p, comp label41::l:p::p, comp lowerLabel::l:p::p}}, comp isMagLimitsCheckBox::l:p::p}, space :::p}}"
-								"$verticalGroup": "par l {seq t {space :::p, comp saveDssCheckBox:::p::p, space :::p, comp isMagLimitsCheckBox:::p::p, space u:::p, par l {comp label39::t:p::p, seq t {par b {comp upperLimitSpinner::b:p::p, comp upperLabel::b:p::p, comp label38::b:p::p}, space :::p, par b {comp targetMagSpinner::b:p::p, comp label41::b:p::p, comp label40::b:p::p}, space :::p, par b {comp lowerLimitSpinner::b:p::p, comp lowerLabel::b:p::p}}}, space s:::p, par b {comp label37::b:p::p, comp nObsSpinner::b:p::p}, space :::p}}"
+								"$verticalGroup": "par l {seq t {space :::p, comp saveDssCheckBox:::p::p, space :::p, comp isMagLimitsCheckBox:::p::p, space u:::p, par l {comp label39::t:p::p, seq t {par b {comp upperLimitSpinner::b:p::p, comp upperLabel::b:p::p, comp label38::b:p::p}, space :::p, par b {comp targetMagSpinner::b:p::p, comp label41::b:p::p, comp label40::b:p::p}, space :::p, par b {comp lowerLimitSpinner::b:p::p, comp lowerLabel::b:p::p}}}, space s:::p, par b {comp label37::b:p::p, comp nObsSpinner::b:p::p}, space ::39:x}}"
 							} ) {
 								name: "slectionFiltersPanel"
 								"border": new javax.swing.border.TitledBorder( "Selection Filters + DSS FITS" )
@@ -514,7 +518,7 @@ new FormModel {
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 								"$horizontalGroup": "par l {seq l {space :::p, par l {comp label42::t:p::p, comp label43::t:p::p, comp label44::t:p::p}, space :::p, par l {comp totalRecordsField:7::p:29:p, comp filteredRecordsField:7::p::p, comp selectedRecordsField:7::p::p}, space :::x}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp label42::b:p::p, comp totalRecordsField::b:p::p}, space :::p, par b {comp label43::b:p::p, comp filteredRecordsField::b:p::p}, space :::p, par b {comp label44::b:p::p, comp selectedRecordsField::b:p::p}, space :::x}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label42::b:p::p, comp totalRecordsField::b:p::p}, space :::p, par b {comp label43::b:p::p, comp filteredRecordsField::b:p::p}, space :::p, par b {comp label44::b:p::p, comp selectedRecordsField::b:p::p}, space ::18:x}}"
 							} ) {
 								name: "panel1"
 								"border": new javax.swing.border.TitledBorder( "Catalog Record Counts" )
@@ -555,7 +559,7 @@ new FormModel {
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 							"$horizontalGroup": "par l {comp tableScrollPane::l::643:x}"
-							"$verticalGroup": "par l {comp tableScrollPane::l::520:x}"
+							"$verticalGroup": "par l {comp tableScrollPane::l:::x}"
 						} ) {
 							name: "catalogTablePanel"
 							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
