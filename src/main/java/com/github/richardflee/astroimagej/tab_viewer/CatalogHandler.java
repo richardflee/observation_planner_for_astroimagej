@@ -1,9 +1,11 @@
 package com.github.richardflee.astroimagej.tab_viewer;
 
+import javax.swing.JOptionPane;
+
 import com.github.richardflee.astroimagej.catalogs.CatalogFactory;
-import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
+import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.listeners.TableModelListener;
@@ -50,12 +52,18 @@ public class CatalogHandler {
 		 System.out.println("query in handler");
 		 
 		 var query = TargetPropertiesFile.readProerties();
+		 this.result = new QueryResult();
 		 this.result.setQuery(query);
 		 
 		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 var catalogFieldObjects = catalog.runQuery(query);
-	 
+		 var catalogFieldObjects = catalog.runQuery(query);	 
 		 this.result.addFieldObjects(catalogFieldObjects);
+		 
+		 if (settings.isSaveDssValue()) {
+			 var message = DssFitsWriter.downloadDssFits(query);
+			 JOptionPane.showMessageDialog(null, message);
+		 }
+		 
 
 		 // move to update
 		 
@@ -64,28 +72,14 @@ public class CatalogHandler {
 		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
 	}
 	
-//	public void doCatalogQuery() {
-//	
-
-//	System.out.println(query.toString());
-//	
-//	// default settings with catalog ui target mag
-//	// assemble catalog result with default settings & targe mag
-//	var targetMag = getSettingsData().getNominalMagValue();
-//	System.out.println(targetMag);
-//	
-//	this.result = new QueryResult(query, new CatalogSettings(targetMag));
-//	System.out.println(result.toString());
-//	
-//	// runs query on selected on-line catalog, retruns list of field objects
-//	// append this list to CatalogResut object
-//	AstroCatalog catalog = CatalogFactory.createCatalog(query.getCatalogType());
-//	List<FieldObject> fieldObjects = catalog.runQuery(query);
-//	
-//	fieldObjects.stream().forEach(p -> System.out.println(p.toString()));
-//	
-//	
-//}
+	public void doUpdateTable(CatalogSettings settings) {
+		var tableRows = this.result.getTableRows(settings);
+		
+		this.tableListener.updateTable(tableRows);		
+		this.tabListener.updateCounts(result.getFieldObjectsCollection());
+		
+	}
+	
 	
 	public void doImportRaDecfile() {
 		System.out.println("save in handler");
@@ -95,11 +89,6 @@ public class CatalogHandler {
 		System.out.println(String.format("upddate target mag %.3f", nominalMag));
 	}
 	
-	public void test() {
-		
-		this.tableListener.updateTable(null);
-		
-	}
 	
 	public static void main(String[] args) {
 		

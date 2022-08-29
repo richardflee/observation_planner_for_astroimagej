@@ -63,18 +63,35 @@ public class FieldObject extends BaseFieldObject {
 		return fo;
 	}
 	
-	public void copyValues(FieldObject fo) {
-		this.objectId = fo.getObjectId();
-		this.raHr = fo.getRaHr();
-		this.decDeg = fo.getDecDeg();
+//	public FieldObject copy(FieldObject fieldObject) {
+//		var objectId = fieldObject.getObjectId();
+//		var raHr = fieldObject.getRaHr();
+//		var decDeg = fieldObject.getDecDeg();
+//		var mag = fieldObject.getMag();
+//		var magErr = fieldObject.getMagErr();
+//		
+//		var fo = new FieldObject(objectId, raHr, decDeg, mag, magErr);		
+//		fo.nObs = fieldObject.getnObs();
+//		fo.apertureId = fieldObject.getApertureId();
+//		fo.filtered = fieldObject.isFiltered();
+//		fo.selected = fieldObject.isSelected();
+//		return fo;
+//	}
+//	
+	
+	public FieldObject copy() {
+		var objectId = this.getObjectId();
+		var raHr = this.getRaHr();
+		var decDeg = this.getDecDeg();
+		var mag = this.getMag();
+		var magErr = this.getMagErr();
 		
-		this.mag = fo.getMag();
-		this.magErr = fo.getMagErr();
-		this.nObs = fo.getnObs();
-		this.apertureId = fo.getApertureId();
-		this.filtered = fo.isFiltered();
-		this.selected = fo.isSelected();
-		
+		var fo = new FieldObject(objectId, raHr, decDeg, mag, magErr);		
+		fo.nObs = this.getnObs();
+		fo.apertureId = this.getApertureId();
+		fo.filtered = this.isFiltered();
+		fo.selected = this.isSelected();
+		return fo;
 	}
 	
 	

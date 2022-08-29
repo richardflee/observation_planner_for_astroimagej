@@ -60,7 +60,7 @@ public class TargetTab { //implements TargetTabListener {
 	private DatePicker datePicker = null; 
 
 	private JButton save;
-	private JButton runQuey;
+	private JButton runSimbadQuery;
 
 	private ViewerUi viewer = null;
 	private VerifyTextFields verifier = null;
@@ -97,7 +97,7 @@ public class TargetTab { //implements TargetTabListener {
 
 		// buttons
 		this.save = viewer.getSaveQueryButton();
-		this.runQuey = viewer.getRunSimbadButton();
+		this.runSimbadQuery = viewer.getRunSimbadButton();
 
 		setupActionListeners();
 	}
@@ -238,8 +238,8 @@ public class TargetTab { //implements TargetTabListener {
 			}
 		});
 
-		// run simbad query
-		runQuey.addActionListener(e -> {
+		// run cat\simbad query
+		runSimbadQuery.addActionListener(e -> {
 			System.out.println(verifier.verifyAllTextInputs());
 			if (verifier.verifyAllTextInputs()) {
 				var message = this.runSimbadQuery();				
@@ -247,16 +247,6 @@ public class TargetTab { //implements TargetTabListener {
 				JOptionPane.showMessageDialog(null, message);
 			}
 		});
-		
-//		// !! temp dss button
-//		this.viewer.getDssButton().addActionListener(e -> {
-//			if (this.viewer.getSaveDssCheckBox().isSelected() == true) {
-//				var query = compileQuery();
-//				var message = DssFitsWriter.downloadDssFits(query);
-//				JOptionPane.showMessageDialog(null, message);
-//			}
-//		});
-		
 	}
 	
 	private void doSaveQueryData() {

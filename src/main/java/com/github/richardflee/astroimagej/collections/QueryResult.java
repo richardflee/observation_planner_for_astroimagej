@@ -1,5 +1,6 @@
 package com.github.richardflee.astroimagej.collections;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
@@ -40,17 +41,28 @@ public class QueryResult {
 		this.foCollection.addFieldObjects(fos);		
 	}
 	
-	
 	public List<FieldObject> getTableRows(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);
 		foCollection.update(target);
-		applySort(settings);
-		applyFilters(settings);
-			
-		var tableRows = this.foCollection.getFieldObjects();
+		this.applySort(settings);
+		this.applyFilters(settings);
+		
+		
+		List<FieldObject> tableRows = new ArrayList<>();
+		for (var fo : foCollection.getFieldObjects()) {
+			tableRows.add(fo);
+		}
 		tableRows.add(0, target);
 		return tableRows;
 	}
+	
+	
+//	public List<FieldObject> getTableRows(CatalogSettings settings) {
+//		var target = FieldObject.compileTargetFromQuery(this.query, settings);
+//		var tableRows = updateTableRows(settings);
+//		tableRows.add(0, target);
+//		return tableRows;
+//	}
 	
 //	private void update(CatalogSettings settings) {
 //		var target = FieldObject.compileTargetFromQuery(this.query, settings);

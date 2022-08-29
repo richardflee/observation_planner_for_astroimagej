@@ -2,6 +2,7 @@ package com.github.richardflee.astroimagej.tab_viewer;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -11,7 +12,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -44,15 +44,17 @@ public class CatalogsTab implements CatalogTabListener{
 	private JCheckBox applyLimits = null;
 	private JCheckBox dssFits = null;
 	
-	private JTextField totalText = null;
-	private JTextField filteredText = null;
-	private JTextField selectedText = null;	
+	private JLabel totalLabel = null;
+	private JLabel filteredLabel = null;
+	private JLabel selectedLabel = null;	
 	
 	private JButton runQuery = null;
 	private JButton importRaDec = null;
 	private JButton saveRaDec = null;
 	private JButton update = null;
 	private JButton clear = null;
+	
+	private boolean tablePopulated;
 	
 	private final int TABLE_WIDTH = 1000;
 	private final Integer[] COL_WIDTHS = {5, 22, 14, 14, 9, 9, 9, 9, 5, 4};
@@ -78,37 +80,43 @@ public class CatalogsTab implements CatalogTabListener{
 		this.upperLimitLabel = viewer.getUpperLabel();
 		this.lowerLimitLabel = viewer.getLowerLabel();		
 		
-		this.sortDistance = viewer.getDistanceRadioButton();
-		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
-		
 		this.nObs = viewer.getNObsSpinner();
 		
 		this.applyLimits = viewer.getIsMagLimitsCheckBox();
 		this.dssFits = viewer.getSaveDssCheckBox();
 		
-		this.totalText = viewer.getTotalRecordsField();
-		this.filteredText = viewer.getFilteredRecordsField();
-		this.selectedText = viewer.getSelectedRecordsField();
+		this.totalLabel = viewer.getTotalRecordsField();
+		this.filteredLabel = viewer.getFilteredRecordsField();
+		this.selectedLabel = viewer.getSelectedRecordsField();
 		
 		this.runQuery = viewer.getCatalogQueryButton();
 		this.importRaDec = viewer.getImportRaDecButton();
 		this.saveRaDec = viewer.getSaveRaDecButton();
-		this.update = viewer.getUpdateTableButton();
+		this.update = viewer.getUpdateButton();
 		this.clear = viewer.getClearButton();
 		
 		// import sort state from properties file
+		this.sortDistance = viewer.getDistanceRadioButton();
+		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
+		
 		var sortSettings = CatalogPropertiesFile.readProerties();
 		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
 		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
+		
+		this.tablePopulated = false;
+		this.enableButtons(this.tablePopulated);
+		
 		
 		setupActionListeners();		
 	}
 	
 	@Override
-	public void updateCounts(FieldObjectsCollection fo) {		
-		this.totalText.setText(String.valueOf(fo.getTotalCount()));
-		this.filteredText.setText(String.valueOf(fo.getFilteredCount()));
-		this.selectedText.setText(String.valueOf(fo.getSelectedCount()));
+	public void updateCounts(FieldObjectsCollection foCollection) {
+		var totalCounts = foCollection.getTotalCount();
+		this.totalLabel.setText(String.valueOf(totalCounts));
+		this.filteredLabel.setText(String.valueOf(foCollection.getFilteredCount()));
+		this.selectedLabel.setText(String.valueOf(foCollection.getSelectedCount()));
+		this.tablePopulated = (totalCounts != 0);
 	}
 	
 	/*
@@ -135,7 +143,7 @@ public class CatalogsTab implements CatalogTabListener{
 		// number of observations
 		settings.setnObsValue((int) nObs.getValue());
 		
-		// settings.setSaveDssCheckBoxValue(isDssFits.isSelected());
+		settings.setSaveDssValue(dssFits.isSelected());
 
 		return settings;
 	}
@@ -158,6 +166,7 @@ public class CatalogsTab implements CatalogTabListener{
 		
 		sortDistance.setSelected(settings.isSortDistanceValue());
 		sortDeltaMag.setSelected(settings.isSortDeltaMagValue());
+		dssFits.setSelected(settings.isSaveDssValue());
 		
 		nObs.setValue(settings.getnObsValue());		
 	}
@@ -183,13 +192,23 @@ public class CatalogsTab implements CatalogTabListener{
 			
 			var settings = compileApplyDefaultSettings();
 			handler.doCatalogQuery(settings);
+			this.enableButtons(this.tablePopulated);			
 		});
 		
 		
 		importRaDec.addActionListener(e -> doSaveRaDecFile());
 		saveRaDec.addActionListener(e -> handler.doImportRaDecfile());
-		update.addActionListener(e -> doUpdateTable());
-		clear.addActionListener(e -> doClearTable());
+		
+		update.addActionListener(e -> {
+			var settings = compileSettingsData();
+			handler.doUpdateTable(settings);
+			
+		});
+		
+		clear.addActionListener(e ->{
+		//	handler.doClearTable();
+			this.enableButtons(false);
+		});
 		
 		this.upperLimit.addChangeListener(e -> updateLimits());
 		this.nominal.addChangeListener(e -> updateLimits());
@@ -200,19 +219,21 @@ public class CatalogsTab implements CatalogTabListener{
 			enableLimits(isSelected);
 		});
 		
-		this.sortDistance.addActionListener(e -> {
-			var settings = compileSettingsData();
-			settings.setSortDistanceValue(true);
-			settings.setSortDeltaMagValue(! settings.isSortDistanceValue());
-			CatalogPropertiesFile.writeProperties(settings);
-		});
+		this.sortDistance.addActionListener(e -> updateSort());		
+		this.sortDeltaMag.addActionListener(e -> updateSort());		
+	}
 		
-		this.sortDeltaMag.addActionListener(e -> {
-			var settings = compileSettingsData();
-			settings.setSortDistanceValue(false);
-			settings.setSortDeltaMagValue(! settings.isSortDistanceValue());
-			CatalogPropertiesFile.writeProperties(settings);
-		});	
+	private void updateSort() {
+		var settings = compileSettingsData();
+		CatalogPropertiesFile.writeProperties(compileSettingsData());
+		handler.doUpdateTable(settings);		
+	}
+	
+	
+	private void enableButtons(boolean isEnabled) {
+		update.setEnabled(isEnabled);
+		clear.setEnabled(isEnabled);
+		saveRaDec.setEnabled(isEnabled);
 	}
 	
 	private void enableLimits(boolean isSelected) {
@@ -244,8 +265,8 @@ public class CatalogsTab implements CatalogTabListener{
 		this.lowerLimitLabel.setText(str);		
 	}
 	
-
-//	
+	
+	
 	public void doSaveRaDecFile() {
 		System.out.println("import");
 	}
@@ -253,10 +274,10 @@ public class CatalogsTab implements CatalogTabListener{
 	public void doImportRaDecfile() {
 		System.out.println("save");
 	}
-
-	public void doUpdateTable() {
-		System.out.println("update");
-	}
+//
+//	public void doUpdateTable() {
+//		System.out.println("update");
+//	}
 	
 	public void doClearTable() {
 		
@@ -273,7 +294,28 @@ public class CatalogsTab implements CatalogTabListener{
 			if (idx != ColumnsEnum.USE_COL.getIndex()) {
 				table.getColumnModel().getColumn(idx).setCellRenderer(cr0);
 			}			
-		}	
+		}
+		table.getColumnModel().getColumn(0).setCellRenderer(new ColumnRenderer());
+	}
+	
+	private class ColumnRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public Component getTableCellRendererComponent(
+				JTable table, Object value, 
+				boolean isSelected, boolean hasFocus, 
+				int row, int column) {
+			Component cellComponent = super.getTableCellRendererComponent(
+					table, value, isSelected, hasFocus, row, column);
+			
+			// sets top (target) ApId cell = green, other ApIds = red + horiz text align
+			Color color = (row == 0) ? Color.GREEN : Color.RED;
+			cellComponent.setForeground(color);
+			cellComponent.setFont(cellComponent.getFont().deriveFont(Font.BOLD));
+			setHorizontalAlignment(SwingConstants.CENTER);
+			return cellComponent;
+		}
 	}
 	
 }

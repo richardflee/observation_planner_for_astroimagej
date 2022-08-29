@@ -530,26 +530,23 @@ new FormModel {
 									name: "label44"
 									"text": "Selected records:"
 								} )
-								add( new FormComponent( "javax.swing.JTextField" ) {
+								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "totalRecordsField"
 									"text": "0"
-									"editable": false
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
-								add( new FormComponent( "javax.swing.JTextField" ) {
+								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "filteredRecordsField"
 									"text": "0"
-									"editable": false
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
-								add( new FormComponent( "javax.swing.JTextField" ) {
+								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "selectedRecordsField"
 									"text": "0"
-									"editable": false
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -573,8 +570,8 @@ new FormModel {
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {seq l {space :::p, comp catalogQueryButton:6:::116:x, space u:::p, comp importRaDecButton:6::p::p, space u:::p, comp saveRaDecButton:6::p::p, space u:::p, comp updateTableButton:6::p::p, space ::233:x, comp clearButton:6::p::p, space :::p}}"
-							"$verticalGroup": "par l {seq l {space :::p, par l {par b {comp clearButton:5:b:p:30:p, comp updateTableButton:5:b:p:30:p}, par c {comp catalogQueryButton:5:c:p:30:p, comp importRaDecButton:5:c:p:30:p, comp saveRaDecButton:5:c:p:30:p}}, space :::x}}"
+							"$horizontalGroup": "par l {seq l {space :::p, comp catalogQueryButton:6:::116:x, space u:::p, comp importRaDecButton:6::p::p, space u:::p, comp saveRaDecButton:6::p::p, space u:::p, comp updateButton:6::p::p, space ::233:x, comp clearButton:6::p::p, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::p, par l {par b {comp clearButton:5:b:p:30:p, comp updateButton:5:b:p:30:p}, par c {comp catalogQueryButton:5:c:p:30:p, comp importRaDecButton:5:c:p:30:p, comp saveRaDecButton:5:c:p:30:p}}, space :::x}}"
 						} ) {
 							name: "solarPanel2"
 							"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
@@ -606,8 +603,8 @@ new FormModel {
 								}
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
-								name: "updateTableButton"
-								"text": "Update Table"
+								name: "updateButton"
+								"text": "Update"
 								"font": #Font1
 								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
 								auxiliary() {

@@ -12,7 +12,6 @@ public class CatalogSettings {
 	private boolean saveDssValue;
 	
 	// nominal mag + spinner limits
-	// default target magnitude value
 	private double nominalValue;
 	private double upperLimitValue;
 	private double lowerLimitValue;
@@ -54,7 +53,7 @@ public class CatalogSettings {
 		
 		// check-box flags
 		applyLimitsValue = true;
-		saveDssValue = true;
+		//saveDssValue = true;
 
 		// record totals
 		totalRecordsValue = 0;
@@ -137,10 +136,6 @@ public class CatalogSettings {
 		return totalRecordsValue;
 	}
 
-	// custom setter
-	public void setTotalRecordsValue(int nTotalRecords) {
-		this.totalRecordsValue = Math.max(nTotalRecords, 0);
-	}
 
 	public int getFilteredRecordsValue() {
 		return filteredRecordsValue;
@@ -165,6 +160,17 @@ public class CatalogSettings {
 	}
 
 	
+	
+	public boolean isSaveDssValue() {
+		return saveDssValue;
+	}
+
+
+	public void setSaveDssValue(boolean saveDssValue) {
+		this.saveDssValue = saveDssValue;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CatalogSettings [\napplyLimitsValue=" + applyLimitsValue + ", \nsortDistanceValue=" + sortDistanceValue
