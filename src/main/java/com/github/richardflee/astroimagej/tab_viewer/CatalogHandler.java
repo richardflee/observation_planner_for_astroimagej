@@ -8,6 +8,7 @@ import com.github.richardflee.astroimagej.charts.VspChart;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
+import com.github.richardflee.astroimagej.fileio.RaDecFileWriter;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.listeners.TableModelListener;
@@ -19,11 +20,15 @@ public class CatalogHandler {
 	
 	private QueryResult result = null;
 	private VspChart vspChart = null;
+//	
+//	private RaDecFileReader radecFileReader = null;
+	private RaDecFileWriter fileWriter = null;
 	
 	
 	public CatalogHandler() {
 		this.result = new QueryResult();
 		this.vspChart = new VspChart();
+		this.fileWriter = new RaDecFileWriter();
 		
 	}
 	
@@ -58,8 +63,8 @@ public class CatalogHandler {
 		 this.result.setQuery(query);
 		 
 		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 var catalogFieldObjects = catalog.runQuery(query);	 
-		 this.result.addFieldObjects(catalogFieldObjects);
+		 var fosCatalog = catalog.runQuery(query);	 
+		 this.result.addFieldObjects(fosCatalog);
 		 
 		 if (settings.isSaveDssValue()) {
 			 var message = DssFitsWriter.downloadDssFits(query);
@@ -80,6 +85,9 @@ public class CatalogHandler {
 //		 this.tableListener.updateTable(tableRows);		
 //		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
 	}
+	
+	
+	
 	
 	public void doUpdateTable(CatalogSettings settings) {
 		updateTable(settings);
@@ -116,6 +124,11 @@ public class CatalogHandler {
 		System.out.println("save in handler");
 	}
 	
+	public void doSaveRaDecFile(CatalogSettings settings) {
+		System.out.println("save the radec");
+		this.fileWriter.writeRaDecFile(this.result, settings);
+		
+	}
 	
 	public static void main(String[] args) {
 		

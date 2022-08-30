@@ -33,6 +33,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
+import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 
 /**
  * @author Richard Lee
@@ -48,6 +49,11 @@ public class ViewerUi extends JFrame {
 	private TargetTab target_tab = null;
 	private CatalogsTab catalogs_tab = null;
 	
+	public static final int TARGET_TAB_IDX = 0;
+	public static final int CATALOGS_TAB_IDX = 1;
+	public static final int OBSERVER_TAB_IDX = 2;
+	
+	
 	public ViewerUi(ObservationSite site) { //, CatalogTableModel tableModel) {
 		// this.site = site;
 		
@@ -56,7 +62,23 @@ public class ViewerUi extends JFrame {
 		this.target_tab = new TargetTab(this, site);
 		this.catalogs_tab = new CatalogsTab(this); //, tableModel);
 		
-		this.aijTabbedPane.addChangeListener(e -> catalogs_tab.updateQueryPanel(this));
+		this.aijTabbedPane.addChangeListener(e -> {
+			switch (aijTabbedPane.getSelectedIndex()) {
+			case TARGET_TAB_IDX:
+				System.out.println("target");
+				var query = TargetPropertiesFile.readProerties();
+				target_tab.applyQueryData(query);
+				break;
+			case CATALOGS_TAB_IDX:
+				System.out.println("catalog");
+				catalogs_tab.updateQueryPanel(this);
+				break;
+				
+			case OBSERVER_TAB_IDX:
+				System.out.println("obs");				
+				break;
+			}
+		});
 	}
 	
 	
@@ -612,8 +634,6 @@ public class ViewerUi extends JFrame {
 											.addComponent(label12, GroupLayout.Alignment.TRAILING))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(panel3Layout.createParallelGroup()
-											.addComponent(filterCombo, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-											.addComponent(catalogCombo, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 											.addGroup(panel3Layout.createSequentialGroup()
 												.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
 													.addComponent(fovField, GroupLayout.Alignment.LEADING)
@@ -626,7 +646,10 @@ public class ViewerUi extends JFrame {
 													.addComponent(label8)
 													.addComponent(label9)
 													.addComponent(label10)))
-											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
+											.addComponent(objectIdField, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
+											.addGroup(panel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+												.addComponent(filterCombo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+												.addComponent(catalogCombo, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)))
 										.addContainerGap(11, Short.MAX_VALUE))
 							);
 							panel3Layout.setVerticalGroup(
@@ -1885,7 +1908,7 @@ public class ViewerUi extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(aijTabbedPane)
+					.addComponent(aijTabbedPane, GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		pack();

@@ -42,6 +42,8 @@ public class VspChart {
 
 	// aperture diameter
 	private static final int AP_WIDTH = 22;
+	
+	private static final String AAVSO = "aavso";
 
 	private JDialog dialog;
 
@@ -73,9 +75,11 @@ public class VspChart {
 	 *     list of target and reference objects
 	 */
 	public void showChart(QueryResult result, CatalogSettings settings) {
+		// clears open chart dialog
+		closeChart();
 		
 		String chartUri = result.getChartUri();
-		if (chartUri == null) {
+		if ((chartUri == null) || !(chartUri.contains(VspChart.AAVSO))) {
 			return;
 		}
 		

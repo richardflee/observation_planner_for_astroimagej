@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp aijTabbedPane::::623:x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "DEMO!!"
@@ -28,7 +28,7 @@ new FormModel {
 						} ) {
 							name: "targetTabPanel"
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {comp filterCombo:::p:42:p, comp catalogCombo::l:p:96:p, seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:169:p}, space ::11:x}}"
+								"$horizontalGroup": "par l {seq l {space :p:15:p, par l {comp label1::t:p::p, comp label2::t:p::p, comp label3::t:p::p, comp label4::t:p::p, comp label5::t:p::p, comp label11::t:p::p, comp label12::t:p::p}, space :::p, par l {seq {par t:::p {comp fovField::l:::x, comp decField::l::96:x, comp raField::l:::x, comp magLimitField:::::x}, space :::p, par l {comp label7:::p::p, comp label8:::p::p, comp label9:::p::p, comp label10:::p::p}}, comp objectIdField::l:p:169:p, par t:l::p {comp filterCombo::l::96:x, comp catalogCombo::l::96:x}}, space ::11:x}}"
 								"$verticalGroup": "par l {seq l {space :::p, par b {comp label1::b:p::p, comp objectIdField::b:p::p}, par l {seq {space :p:16:p, comp label2:::p::p}, seq {space u:::p, par b {comp raField::b:p::p, comp label7::b:p::p}}}, par l {seq {space :p:16:p, comp label3:::p::p}, seq {space u:::p, par b {comp decField::b:p::p, comp label8::b:p::p}}}, par l {seq {space :p:16:p, comp label4:::p::p}, seq {space u:::p, par b {comp fovField::b:p::p, comp label9::b:p::p}}}, par l {seq {space :p:16:p, comp label5:::p::p}, seq {space u:::p, par b {comp magLimitField::b:p::p, comp label10::b:p::p}}}, space u:::p, par b {comp catalogCombo::b:p::p, comp label11::b:p::p}, space u:::p, par b {comp label12::b:p::p, comp filterCombo::b:p::p}, space :::x}}"
 							} ) {
 								name: "panel3"

@@ -117,6 +117,10 @@ public class FieldObject extends BaseFieldObject {
 		this.radSepAmin = computeRadSep(target);
 	}
 	
+	public void setRadSepAmin(double radSepAmin) {
+		this.radSepAmin = radSepAmin;
+	}
+	
 	private double computeRadSep(FieldObject target) {
 		double ra = Math.toRadians(this.raHr * 15.0);
 		double ra0 = Math.toRadians(target.getRaHr() * 15.0);
@@ -128,12 +132,17 @@ public class FieldObject extends BaseFieldObject {
 		return Math.toDegrees(Math.acos(cosA)) * 60.0;
 	}
 	
+	
 	public double getDeltaMag() {
 		return this.deltaMag;		
 	}
 	
 	public void setDeltaMag(FieldObject target) {
 		this.deltaMag = this.mag - target.getMag();
+	}
+	
+	public void setDeltaMag(double deltaMag) {
+		this.deltaMag = deltaMag;
 	}
 	
 	// auto-generated getters, setters and toString methods

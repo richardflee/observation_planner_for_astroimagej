@@ -211,7 +211,7 @@ public class CatalogsTab implements CatalogTabListener{
 	
 	public void setupActionListeners() {
 		
-		// reset settings to default except tget mag
+		// reset settings to default except tgt mag
 		runQuery.addActionListener(e -> {
 			
 			var settings = compileApplyDefaultSettings();
@@ -220,8 +220,11 @@ public class CatalogsTab implements CatalogTabListener{
 		});
 		
 		
-		importRaDec.addActionListener(e -> doSaveRaDecFile());
-		saveRaDec.addActionListener(e -> handler.doImportRaDecfile());
+		importRaDec.addActionListener(e -> handler.doImportRaDecfile());
+		saveRaDec.addActionListener(e -> {
+			var settings = compileSettingsData();
+			handler.doSaveRaDecFile(settings);
+		});
 		
 		update.addActionListener(e -> {
 			var settings = compileSettingsData();

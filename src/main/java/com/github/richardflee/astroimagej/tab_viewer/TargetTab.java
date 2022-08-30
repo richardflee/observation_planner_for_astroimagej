@@ -69,8 +69,6 @@ public class TargetTab { //implements TargetTabListener {
 	public TargetTab(ViewerUi viewer, ObservationSite site) {
 
 		this.viewer = viewer;
-		
-		
 		this.tracker = new ObjectTracker(site);
 		this.solar = new Solar(site);		
 		setSolarTimes(solar.getCivilSunTimes(LocalDate.now()));
@@ -88,8 +86,8 @@ public class TargetTab { //implements TargetTabListener {
 		
 		// populate target tab textbox and drop down controls
 		var query = TargetPropertiesFile.readProerties();
-		setQueryData(query);
-		populateFilterCombo(null);
+		this.applyQueryData(query);
+		this.populateFilterCombo(null);
 		
 		// restricts text date entry to day/month/year pickers
 		configureDatePicker();		
@@ -102,7 +100,7 @@ public class TargetTab { //implements TargetTabListener {
 	}
 	
 	// @Override
-	public void setQueryData(CatalogQuery query) {
+	public void applyQueryData(CatalogQuery query) {
 		this.objectIdText.setText(query.getObjectId());
 		this.raText.setText(AstroCoords.raHrToRaHms(query.getRaHr()));
 		this.decText.setText(AstroCoords.decDegToDecDms(query.getDecDeg()));

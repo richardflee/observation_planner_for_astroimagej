@@ -65,6 +65,20 @@ public class FieldObjectsCollection {
 		return this.fieldObjects;
 	}
 	
+	public List<FieldObject> getFilteredFieldObjects() {
+		var filteredList = getFieldObjects().stream()
+				.filter(p -> p.isFiltered())
+				.collect(Collectors.toList());
+		return filteredList;
+	}
+	
+	public List<FieldObject> getSelectedFieldObjects() {
+		var selectedList = getFilteredFieldObjects().stream()
+				.filter(p -> p.isSelected())
+				.collect(Collectors.toList());
+		return selectedList;
+	}
+	
 	public int getTotalCount() {
 		return this.fieldObjects.size();
 	}
