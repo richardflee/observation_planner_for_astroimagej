@@ -1,6 +1,7 @@
 package com.github.richardflee.astroimagej.data_objects;
 
 
+import com.github.richardflee.astroimagej.catalogs.VspCatalog;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 
 /**
@@ -20,6 +21,8 @@ public class FieldObject extends BaseFieldObject {
 	private String apertureId; 
 	private boolean selected;
 	private boolean filtered;
+	
+	public static final String TGT_AP_LABEL = "T01";
 	
 	/**
 	 * No arg constructor, default Sirius parameters
@@ -59,7 +62,7 @@ public class FieldObject extends BaseFieldObject {
 		var decDeg = query.getDecDeg();
 		var nominalMag = settings.getNominalMagValue();
 		var fo = new FieldObject(objectId, raHr, decDeg, nominalMag, 0.0);
-		fo.setApertureId("T01");
+		fo.setApertureId(FieldObject.TGT_AP_LABEL);
 		return fo;
 	}
 	
@@ -92,6 +95,10 @@ public class FieldObject extends BaseFieldObject {
 		fo.filtered = this.isFiltered();
 		fo.selected = this.isSelected();
 		return fo;
+	}
+	
+	public boolean isTarget() {
+		return this.apertureId.equals(FieldObject.TGT_AP_LABEL);
 	}
 	
 	

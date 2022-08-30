@@ -10,7 +10,6 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
-import com.github.richardflee.astroimagej.data_objects.Observer;
 
 public class CatalogPropertiesFile {
 
@@ -72,7 +71,7 @@ public class CatalogPropertiesFile {
 
 	public static void main(String[] args) {
 
-		var prop = AijPropsReadWriter.getPlannerProps();
+		// var prop = AijPropsReadWriter.getPlannerProps();
 		
 		var settings = new CatalogSettings();
 		settings.setSortDistanceValue(true);

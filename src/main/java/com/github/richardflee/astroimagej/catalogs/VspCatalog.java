@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
@@ -104,7 +103,7 @@ public class VspCatalog implements AstroCatalog {
 	 * @param query curent CatalogQuery parameters
 	 * @return full uri text string extracted from VSP response
 	 */
-	public String downloadVspChart(CatalogQuery query) {
+	public String downloadChartUri(CatalogQuery query) {
 		String chartUri = null;
 		JsonNode root = null;
 		query.setCatalogType(CatalogsEnum.VSP);

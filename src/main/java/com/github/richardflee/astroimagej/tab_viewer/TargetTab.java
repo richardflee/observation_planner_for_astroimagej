@@ -30,7 +30,6 @@ import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
-import com.github.richardflee.astroimagej.listeners.TargetTabListener;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
 import com.github.richardflee.astroimagej.visibility_plotter.ObjectTracker;

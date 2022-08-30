@@ -11,9 +11,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
-import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
-import com.github.richardflee.astroimagej.models.TableModel;
-import com.github.richardflee.astroimagej.tab_viewer.CatalogHandler;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 
@@ -60,7 +57,7 @@ public class Main {
 			observer_tab.setObserverData(observer);
 			
 			// sets catalog data listener
-			var target_tab = viewer.getTarget_tab();
+		//	var target_tab = viewer.getTarget_tab();
 			//viewer.getCatalogs_tab().setCatalogDataListener(target_tab);
 			
 //			// sets catalog table listener

@@ -3,6 +3,8 @@ package com.github.richardflee.astroimagej.tab_viewer;
 import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.catalogs.CatalogFactory;
+import com.github.richardflee.astroimagej.catalogs.VspCatalog;
+import com.github.richardflee.astroimagej.charts.VspChart;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
@@ -16,10 +18,12 @@ public class CatalogHandler {
 	private TableModelListener tableListener;
 	
 	private QueryResult result = null;
+	private VspChart vspChart = null;
 	
 	
 	public CatalogHandler() {
 		this.result = new QueryResult();
+		this.vspChart = new VspChart();
 		
 	}
 	
@@ -64,18 +68,37 @@ public class CatalogHandler {
 		 
 
 		 // move to update
+		 updateTable(settings);
 		 
-		 var tableRows = result.getTableRows(settings);
-		 this.tableListener.updateTable(tableRows);		
-		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
+//		 var vspCatalog = new VspCatalog();
+//		 var chartUri = vspCatalog.downloadChartUri(query);
+//		 result.setChartUri(chartUri);
+//		 this.vspChart.showChart(result, settings);
+		 
+//		 
+//		 var tableRows = result.getTableRows(settings);
+//		 this.tableListener.updateTable(tableRows);		
+//		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
 	}
 	
 	public void doUpdateTable(CatalogSettings settings) {
-		var tableRows = this.result.getTableRows(settings);
+		updateTable(settings);
 		
+//		var tableRows = this.result.getTableRows(settings);
+//		
+//		this.tableListener.updateTable(tableRows);		
+//		this.tabListener.updateCounts(result.getFieldObjectsCollection());
+		
+	}
+	
+	private void updateTable(CatalogSettings settings) { 
+		var tableRows = result.getTableRows(settings);
 		this.tableListener.updateTable(tableRows);		
 		this.tabListener.updateCounts(result.getFieldObjectsCollection());
 		
+		 var chartUri = new VspCatalog().downloadChartUri(this.result.getQuery());
+		 this.result.setChartUri(chartUri);
+		 this.vspChart.showChart(result, settings);
 	}
 	
 	public void doClearTable(CatalogSettings settings) {

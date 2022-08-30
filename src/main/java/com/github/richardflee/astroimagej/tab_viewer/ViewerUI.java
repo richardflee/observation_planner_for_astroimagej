@@ -33,7 +33,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
-import com.github.richardflee.astroimagej.models.TableModel;
 
 /**
  * @author Richard Lee
@@ -1021,15 +1020,15 @@ public class ViewerUi extends JFrame {
 							querySummaryPanel.setPreferredSize(new Dimension(190, 164));
 
 							//---- queryIdLabel ----
-							queryIdLabel.setText("ID: WASP12 | FOV: 60");
+							queryIdLabel.setText("ID: . | FOV: .");
 							queryIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- queryRaDecLabel ----
-							queryRaDecLabel.setText("RA: 06:30:32.80 | Dec:+20:40:20.27");
+							queryRaDecLabel.setText("RA: .| Dec:.");
 							queryRaDecLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- queryCatFilterLabel ----
-							queryCatFilterLabel.setText("Catalog: VSP | Filter B | Mag <17.0");
+							queryCatFilterLabel.setText("Catalog: . | Filter . | Mag <.");
 							queryCatFilterLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							GroupLayout querySummaryPanelLayout = new GroupLayout(querySummaryPanel);

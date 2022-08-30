@@ -61,8 +61,24 @@ public class QueryResult {
 		return tableRows;
 	}
 	
+	public void setChartUri(String chartUri) {
+	if (chartUri == null) {
+		return;
+	}
+
+	// strip leading "#" from radec chart uri
+	chartUri = chartUri.startsWith("#") ? chartUri.substring(1) : chartUri;
+
+	// strip any text from url including and beyond "?" char
+	chartUri = (chartUri.contains("?")) ? chartUri.split("\\?")[0] : chartUri;
+	this.chartUri = chartUri;
+	}
 	
 	
+	public String getChartUri() {
+		return chartUri;
+	}
+
 	private void applySort(CatalogSettings settings) {
 		var target = FieldObject.compileTargetFromQuery(this.query, settings);		
 		if (settings.isSortDistanceValue()) {
@@ -92,6 +108,11 @@ public class QueryResult {
 		this.foCollection = foCollection;
 	}
 
+	public CatalogQuery getQuery() {
+		return query;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -253,19 +274,7 @@ public class QueryResult {
 //	 * @param chartUri
 //	 *     pre-processed vsp chart address
 //	 */
-//	public void setChartUri(String chartUri) {
-//
-//		if (chartUri == null) {
-//			return;
-//		}
-//
-//		// strip leading "#" from radec chart uri
-//		chartUri = chartUri.startsWith("#") ? chartUri.substring(1) : chartUri;
-//
-//		// strip any text from url including and beyond "?" char
-//		chartUri = (chartUri.contains("?")) ? chartUri.split("\\?")[0] : chartUri;
-//		this.chartUri = chartUri;
-//	}
+//	
 //
 //	private FieldObject createTargetObject(CatalogQuery query) {
 //		// initialise target from query params

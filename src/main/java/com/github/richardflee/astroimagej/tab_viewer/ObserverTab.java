@@ -11,7 +11,6 @@ import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
-import com.github.richardflee.astroimagej.listeners.ObserverTabListener;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
 
 public class ObserverTab { // implements ObserverTabListener {
