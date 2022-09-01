@@ -36,9 +36,6 @@ public class RaDecFileReader extends RaDecFileBase {
 	private String radecFilepath = "";
 	private List<String> radecLines = null;
 	
-	// foCollecition
-	// url
-	//query
 	public QueryResult getRaDecResult() {
 		var result = new QueryResult();
 		var radecQuery = getRaDecQuery();
@@ -216,5 +213,7 @@ public class RaDecFileReader extends RaDecFileBase {
 		System.out.println(result.getChartUri());
 		System.out.println();
 		System.out.println(result.getFieldObjectsCollection().toString());
+		System.out.println();
+		System.out.println(fr.getRaDecNominalMag());
 	}
 }

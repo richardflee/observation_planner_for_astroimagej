@@ -8,6 +8,7 @@ import com.github.richardflee.astroimagej.charts.VspChart;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
+import com.github.richardflee.astroimagej.fileio.RaDecFileReader;
 import com.github.richardflee.astroimagej.fileio.RaDecFileWriter;
 import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
@@ -73,21 +74,20 @@ public class CatalogHandler {
 	}
 	
 	
-	public void doImportRaDecfile() {
-		System.out.println("save in handler");
-		// compile radec_query
+	public void doImportRaDecfile(CatalogSettings settings) {
 		
-		// new Result
+		var fr = new RaDecFileReader();
 		
-		// save radec_query -> props
+		if (! fr.isRaDecFileSelected()) {
+			return;
+		}
 		
-		// compile default settings with radec target mag
-		
-		// compile radec FO
-		
-		// updateTAble
+		this.result = fr.getRaDecResult();
+		var isSortedByDeltaMag = result.getFieldObjectsCollection().isSortedByDeltaMag();		
+		var nominalMag = fr.getRaDecNominalMag();
+		tabListener.importRaDecSettings(nominalMag, isSortedByDeltaMag);
+		updateTable(settings);
 	}
-	
 	
 	
 	

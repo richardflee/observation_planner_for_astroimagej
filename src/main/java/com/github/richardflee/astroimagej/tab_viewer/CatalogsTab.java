@@ -114,6 +114,24 @@ public class CatalogsTab implements CatalogTabListener{
 		
 	}
 	
+	@Override
+	public void updateCounts(FieldObjectsCollection foCollection) {
+		var totalCounts = foCollection.getTotalCount();
+		this.totalLabel.setText(String.valueOf(totalCounts));
+		this.filteredLabel.setText(String.valueOf(foCollection.getFilteredCount()));
+		this.selectedLabel.setText(String.valueOf(foCollection.getSelectedCount()));
+		this.tablePopulated = (totalCounts != 0);
+	}
+	
+	@Override
+	public void importRaDecSettings(double nominalMag, boolean isSortedByDeltaMag) {
+		var settings = new CatalogSettings();
+		settings.setNominalMagValue(nominalMag);
+		settings.setSortDeltaMagValue(! isSortedByDeltaMag);
+		settings.setSortDistanceValue(! isSortedByDeltaMag);
+		updateCatalogTabUi(settings);		
+	}
+	
 	public void updateQueryPanel(ViewerUi viewer) { 
 		var query = TargetPropertiesFile.readProerties();
 		var objectId = query.getObjectId();
@@ -134,21 +152,13 @@ public class CatalogsTab implements CatalogTabListener{
 		
 	}
 	
-	@Override
-	public void updateCounts(FieldObjectsCollection foCollection) {
-		var totalCounts = foCollection.getTotalCount();
-		this.totalLabel.setText(String.valueOf(totalCounts));
-		this.filteredLabel.setText(String.valueOf(foCollection.getFilteredCount()));
-		this.selectedLabel.setText(String.valueOf(foCollection.getSelectedCount()));
-		this.tablePopulated = (totalCounts != 0);
-	}
+	
 	
 	/*
 	 * Copies catalog ui user filter and sort selections to CatalogSettings object values 
 	 * 
 	 * @return compiled CatalogSettings object
 	 */
-	// @Override
 	public CatalogSettings compileSettingsData() {
 		CatalogSettings settings = new CatalogSettings();
 		
@@ -176,7 +186,7 @@ public class CatalogsTab implements CatalogTabListener{
 		var settings = compileSettingsData();
 		settings.setDefaultSettings();
 		updateCatalogTabUi(settings);
-		enableLimits(true);
+		// enableLimits(true);
 		return settings;
 	}
 	
@@ -212,26 +222,34 @@ public class CatalogsTab implements CatalogTabListener{
 	public void setupActionListeners() {
 		
 		// reset settings to default except tgt mag
-		runQuery.addActionListener(e -> {
-			
+		runQuery.addActionListener(e -> {			
 			var settings = compileApplyDefaultSettings();
 			handler.doCatalogQuery(settings);
 			this.enableButtons(this.tablePopulated);			
 		});
 		
 		
-		importRaDec.addActionListener(e -> handler.doImportRaDecfile());
+		// import radec file data
+		importRaDec.addActionListener(e ->{
+			handler.doImportRaDecfile(new CatalogSettings());
+			this.enableButtons(this.tablePopulated);
+		});
+		
+		// saves table to radec file
 		saveRaDec.addActionListener(e -> {
 			var settings = compileSettingsData();
 			handler.doSaveRaDecFile(settings);
 		});
 		
+		// updates table with current filter settings
 		update.addActionListener(e -> {
 			var settings = compileSettingsData();
 			handler.doUpdateTable(settings);
 			
 		});
 		
+		// clears table, resets catalog ui reset default values
+		// nominal mag & sort options are unchanged
 		clear.addActionListener(e ->{
 			var settings = compileApplyDefaultSettings();
 			handler.doClearTable(settings);
@@ -344,5 +362,7 @@ public class CatalogsTab implements CatalogTabListener{
 			return cellComponent;
 		}
 	}
-	
+
+
+
 }

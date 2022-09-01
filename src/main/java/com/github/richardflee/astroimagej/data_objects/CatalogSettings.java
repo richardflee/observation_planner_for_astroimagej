@@ -40,8 +40,8 @@ public class CatalogSettings {
 	}
 	
 	
-	// resets sort & filter defaults; optional update target mag data
-	// target mag, dss and sort order controls excluded
+	// resets filter defaults and state checkboxes to selected
+	// nominal mag & current sort selection are unchanged
 	public void setDefaultSettings() {
 		
 		// number observations / APASS
@@ -53,7 +53,7 @@ public class CatalogSettings {
 		
 		// check-box flags
 		applyLimitsValue = true;
-		//saveDssValue = true;
+		saveDssValue = true;
 
 		// record totals
 		totalRecordsValue = 0;
