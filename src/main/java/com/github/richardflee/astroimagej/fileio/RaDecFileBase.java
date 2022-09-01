@@ -15,7 +15,9 @@ import com.github.richardflee.astroimagej.utils.AstroCoords;
  */
 class RaDecFileBase {
 
-	private String statusMessage = "ERROR: Coding error";
+	private static final String statusMessage = "ERROR: Coding error";
+	public static final String USER_DIR = "user.dir";
+	public static final String RADEC_DIR = "radec";
 
 	/*
 	 * Returns single row of catalog table data in a comma-delimited string
@@ -97,7 +99,4 @@ class RaDecFileBase {
 		return statusMessage;
 	}
 
-	public void setStatusMessage(String statusMessage) {
-		this.statusMessage = statusMessage;
-	}
 }

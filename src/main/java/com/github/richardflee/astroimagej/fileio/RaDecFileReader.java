@@ -3,18 +3,17 @@ package com.github.richardflee.astroimagej.fileio;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
-import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.enums.RaDecFilesEnum;
 
@@ -33,56 +32,45 @@ import com.github.richardflee.astroimagej.enums.RaDecFilesEnum;
  * <p>Block 4: text line somprising vsp chart chart uri for current query</p>
  */
 public class RaDecFileReader extends RaDecFileBase {
-
-	private String radecFilepath = null;
-	// private double targetMag;
-
-	public RaDecFileReader() {
-	}
-
-	/**
-	 * Compiles a QueryResult object from user-selected radec file. <p>Determines
-	 * sort order from radec table data</p>
-	 * @return QueryResult object in distance or mag difference sort order
-	 */
-	public QueryResult importRaDecResult() {
-		// open file dialog, file = null => cancel
-		File file = radecFileDialog();
-		if (file == null) {
-			String statusMessage = "Cancel pressed, no file selected";
-			setStatusMessage(statusMessage);
-			return null;
-		}
-		// map radec file contents into line array
-		List<String> radecLines = loadRaDecLines(file);
-
-		// extract catalog query data
-		CatalogQuery radecQuery = getRaDecQuery(radecLines);
-
-		// extract target object, first row in table data
-		FieldObject radecTarget = getRaDecTargetObject(radecLines);
-
-		// extract remainder of table data into field object list
-		List<FieldObject> radecFieldObjects = getRaDecFieldObjects(radecLines);
+	
+	private String radecFilepath = "";
+	private List<String> radecLines = null;
+	
+	// foCollecition
+	// url
+	//query
+	public QueryResult getRaDecResult() {
+		var result = new QueryResult();
+		var radecQuery = getRaDecQuery();
+		result.setQuery(radecQuery);
+		
+		var fos = getRaDecFieldObjects();
+		result.addFieldObjects(fos);
 		
 		// extract chart uri
-		String chartUri = getChartUriLine(radecLines);
-
-		// CatalogSettings object, initialised with radec targetMag value
-		// auto-selects sort radio button based on table sort order
-		double targetMag = radecTarget.getMag();
-		CatalogSettings radecSettings = getRaDecSettings(radecFieldObjects, targetMag);
-
-		// compile and return QueryResult object
-		QueryResult radecResult = new QueryResult(radecQuery, radecSettings);
-		radecResult.appendFieldObjects(radecFieldObjects);
+		var chartUri = getChartUriLine();
+		result.setChartUri(chartUri);
 		
-		// add chart uri
-		radecResult.setChartUri(chartUri);
-
-		String statusMessage = String.format("Imported radec file: %s", file.getAbsoluteFile());
-		setStatusMessage(statusMessage);
-		return radecResult;
+		return result;
+	}
+	
+	public double getRaDecNominalMag() {
+		var nominalMag = getRaDecTarget().getMag();
+		return nominalMag;
+	}
+	
+	
+	public boolean isRaDecFileSelected() {
+		var jfc = radecFileChooser();
+		
+		// sets file object to selected text file or null if Cancel
+		File file = null;			
+		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			file = jfc.getSelectedFile();
+			loadRaDecLines(file);
+			setRadecFilepath(file.getAbsolutePath());			
+		}
+		return file != null;
 	}
 	
 	/*
@@ -91,61 +79,10 @@ public class RaDecFileReader extends RaDecFileBase {
 	 * @param radecLines text array mapped from selected radec file
 	 * @return radec file catalog query object
 	 */
-	private CatalogQuery getRaDecQuery(List<String> radecLines) {
-		String dataLine = matchQueryLine(radecLines);
+	private CatalogQuery getRaDecQuery() {
+		int matchIndex = matchIndex(RaDecFilesEnum.QUERY_DATA_LINE);
+		var dataLine = radecLines.get(matchIndex + 2);		
 		return CatalogQuery.fromFormattedString(dataLine);
-	}
-	
-	/*
-	 * Compiles target object from data line embedded in radec line array
-	 * 
-	 * @param radecLines text array mapped from selected radec file
-	 * @return radec file target object, first table line
-	 */
-	private FieldObject getRaDecTargetObject(List<String> radecLines) {
-		String dataLine = matchTargetLine(radecLines);
-		return compileFieldObject(dataLine);
-	}
-	
-	
-	/*
-	 * Compiles list of reference field objects data lines embedded in radec line array
-	 * 
-	 * @param radecLines text array mapped from selected radec file
-	 * @return radec file table lines comprising field object data
-	 */
-	private List<FieldObject> getRaDecFieldObjects(List<String> radecLines) {
-		List<FieldObject> tableRows = new ArrayList<>();
-		List<String> tableLines = matchTableLines(radecLines);
-		for (String line : tableLines) {
-			FieldObject fo = compileFieldObject(line);
-			tableRows.add(fo);
-		}
-		return tableRows;
-	}
-	
-	/*
-	 * Finds chart uri text embedded in radec line array
-	 * 
-	 * @param radecLines text array mapped from selected radec file
-	 * @return chart uri data
-	 */
-	private String getChartUriLine(List<String> radecLines) {
-		int matchIndex = matchIndex(radecLines, RaDecFilesEnum.CHART_URI_LINE);
-		// data 1 row below marker
-		return radecLines.get(matchIndex + 1);
-	}
-	
-	/*
-	 * Finds line of CatalogQuery data embedded in radec line array
-	 * 
-	 * @param radecLines text array mapped from selected radec file
-	 * @return query data line
-	 */
-	private String matchQueryLine(List<String> radecLines) {
-		int matchIndex = matchIndex(radecLines, RaDecFilesEnum.QUERY_DATA_LINE);
-		// query data 2 rows below marker
-		return radecLines.get(matchIndex + 2);
 	}
 	
 	/*
@@ -154,10 +91,25 @@ public class RaDecFileReader extends RaDecFileBase {
 	 * @param radecLines text array mapped from selected radec file
 	 * @return target object data line
 	 */
-	private String matchTargetLine(List<String> radecLines) {
-		int matchIndex = matchIndex(radecLines, RaDecFilesEnum.DATA_TABLE_START);
-		// target data 2 rows below marker
-		return radecLines.get(matchIndex + 2);
+	private FieldObject getRaDecTarget() {
+		int matchIndex = matchIndex(RaDecFilesEnum.DATA_TABLE_START);
+		var dataLine = radecLines.get(matchIndex + 2);
+		var target = compileFieldObject(dataLine);
+		return target;
+	}
+	
+	/*
+	 * Compiles list of reference field objects data lines embedded in radec line array
+	 * 
+	 * @param radecLines text array mapped from selected radec file
+	 * @return radec file table lines comprising field object data
+	 */
+	private List<FieldObject> getRaDecFieldObjects() {
+		List<String> tableLines = extractTableLines();
+		List<FieldObject> fos = tableLines.stream()
+				.map(p -> compileFieldObject(p))
+				.collect(Collectors.toList());
+		return fos;
 	}
 	
 	
@@ -167,110 +119,31 @@ public class RaDecFileReader extends RaDecFileBase {
 	 * @param radecLines text array mapped from selected radec file
 	 * @return text array comprising field object data
 	 */
-	private List<String> matchTableLines(List<String> radecLines) {
+	private List<String> extractTableLines() {
 		// start index 3 row below DATA_TABLE_START 
-		int matchIndex = matchIndex(radecLines, RaDecFilesEnum.DATA_TABLE_START);
-		int startIndex = matchIndex + 3;
+		var matchIndex = matchIndex(RaDecFilesEnum.DATA_TABLE_START);
+		var startIndex = matchIndex + 3;
 		
 		// end index same row as DATA_TABLE_END
-		matchIndex = matchIndex(radecLines, RaDecFilesEnum.DATA_TABLE_END);
-		int endIndex = matchIndex;
+		matchIndex = matchIndex(RaDecFilesEnum.DATA_TABLE_END);
+		var endIndex = matchIndex;
 		return radecLines.subList(startIndex, endIndex);
 	}
-	
-
-	/*
-	 * Opens file dialog configured for radec folder and file type
-	 * @return file reference to selected file, or null if Cancel pressed
-	 */
-	private File radecFileDialog() {
-		// configures file chooser dialog start folder and file type
-		File file = new File(System.getProperty("user.dir"), "radec");
-		JFileChooser jfc = new JFileChooser(file);
-		jfc.setDialogTitle("Select radec file");
-		jfc.setAcceptAllFileFilterUsed(false);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("RaDec files (*.txt)", "txt");
-		jfc.addChoosableFileFilter(filter);
-
-		// sets file object to selected text file or null if Cancel
-		file = null;
-		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			file = jfc.getSelectedFile();
-			setRadecFilepath(file.getAbsolutePath());
-		}
-		return file;
-	}
-
-	/*
-	 * Converts user selected radec text file to text list
-	 * @param file reference to selected file
-	 * @return text file contents copied to String array
-	 */
-	private List<String> loadRaDecLines(File file) {
-		List<String> lines = new ArrayList<>();
-
-		Path path = file.toPath();
-		try (Stream<String> stream = Files.lines(path)) {
-			lines = stream.collect(Collectors.toList());
-		} catch (IOException e) {
-			// error statusMessage
-			String statusMessage = String.format("ERROR: Error reading radec file: %s", path.toString());
-			setStatusMessage(statusMessage);
-		}
-		return lines;
-	}
 
 	
-
 	/*
-	 * Compiles a CatalogSetting object with radec target mag and infers table sort
-	 * order.
-	 * @param radecFieldObjects list of reference field objects sorted relative to
-	 * target object
-	 * @param targetMag radec targe mag value
-	 * @return QueryResult object encapsulating contents of user selected radec file
+	 * Finds chart uri text embedded in radec line array
+	 * 
+	 * @param radecLines text array mapped from selected radec file
+	 * @return chart uri data
 	 */
-	private CatalogSettings getRaDecSettings(List<FieldObject> radecFieldObjects, double targetMag) {
-		// initialise default settings
-		CatalogSettings settings = new CatalogSettings();
-
-		// set target mag from field value
-		settings.setTargetMagSpinnerValue(targetMag);
-
-		// sets distance and delta mag sort settings inferred from fieldObjects list
-		boolean sortedByDeltaMag = isSortedByDeltaMag(radecFieldObjects);
-		settings.setDeltaMagRadioButtonValue(sortedByDeltaMag);
-		settings.setDistanceRadioButtonValue(!sortedByDeltaMag);
-
-		return settings;
+	private String getChartUriLine() {
+		int matchIndex = matchIndex(RaDecFilesEnum.CHART_URI_LINE);
+		// data 1 row below marker
+		return radecLines.get(matchIndex + 1);
 	}
-
-	/**
-	 * Tests if |mag diff| is sorted in ascending order
-	 * @param radecFieldObjects
-	 *     sorted list of field objeccts
-	 * @return true if sorted in order of increasing |mag diff|, false otherwise
-	 */
-	private boolean isSortedByDeltaMag(List<FieldObject> radecFieldObjects) {
-		// delta mag sort
-		boolean sortedByDeltaMag = true;
-		for (int idx = 1; idx < radecFieldObjects.size(); idx++) {
-			double currentDeltaMag = Math.abs(radecFieldObjects.get(idx).getDeltaMag());
-			double previousDeltaMag = Math.abs(radecFieldObjects.get(idx - 1).getDeltaMag());
-			sortedByDeltaMag = sortedByDeltaMag && (currentDeltaMag >= previousDeltaMag);
-		}
-		return sortedByDeltaMag;
-	}
-
-
-	public String getRadecFilepath() {
-		return radecFilepath;
-	}
-
-	public void setRadecFilepath(String radecFilepath) {
-		this.radecFilepath = radecFilepath;
-	}
-
+	
+	
 	/*
 	 * Finds first line in line array matching enum text
 	 * 
@@ -280,14 +153,68 @@ public class RaDecFileReader extends RaDecFileBase {
 	 * @param en enum specifying line ot match
 	 * @return matching index in lines array; -1 if no match found 
 	 */
-	private int matchIndex(List<String> lines, RaDecFilesEnum en) {
-		int matchIndex = -1;
-		for (int idx = 0; idx < lines.size(); idx++) {
-			if (lines.get(idx).contains(en.toString()) == true) {
-				matchIndex = idx;
-				break;
-			}
-		}
+	private int matchIndex(RaDecFilesEnum en) {
+		var enStr = en.toString();		
+		Integer matchIndex = this.radecLines.stream()
+				.filter(p -> p.contains(enStr))
+				.map(p -> radecLines.indexOf(p)).findFirst()
+                .orElse(-1);		
 		return matchIndex;
+	}
+	
+	
+	/*
+	 * Converts user selected radec text file to text list
+	 * @param file reference to selected file
+	 * @return text file contents copied to String array
+	 */
+	private void loadRaDecLines(File file) {
+		List<String> lines = new ArrayList<String>();
+		try (Stream<String> stream = Files.lines(file.toPath())) {
+			lines = stream.collect(Collectors.toList());
+		} catch (IOException e) {
+			String message = String.format("Error reading radec file:\n %s", this.radecFilepath);
+			JOptionPane.showMessageDialog(null, message);
+		}
+		this.radecLines = lines;
+	}
+	
+	/*
+	 * Opens file dialog configured for radec folder and file type
+	 * @return file reference to selected file, or null if Cancel pressed
+	 */
+	private JFileChooser radecFileChooser() {
+		// configures file chooser dialog start folder and file type
+		File file = new File(System.getProperty(RaDecFileBase.USER_DIR), RaDecFileBase.RADEC_DIR);
+		JFileChooser jfc = new JFileChooser(file);
+		jfc.setDialogTitle("Select radec file");
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("RaDec files (*.txt)", "txt");
+		jfc.addChoosableFileFilter(filter);		
+		return jfc;
+	}
+	
+	public String getRadecFilepath() {
+		return radecFilepath;
+	}
+
+	public void setRadecFilepath(String radecFilepath) {
+		this.radecFilepath = radecFilepath;
+	}
+	
+	public static void main(String[] args) {		
+		var fr = new RaDecFileReader();
+		
+		if (! fr.isRaDecFileSelected()) {
+			System.exit(0);	
+			System.out.println("cancel");
+		}
+		System.out.println(fr.getRadecFilepath());
+		
+		var result = fr.getRaDecResult();
+		System.out.println(result.getQuery().toString());
+		System.out.println(result.getChartUri());
+		System.out.println();
+		System.out.println(result.getFieldObjectsCollection().toString());
 	}
 }

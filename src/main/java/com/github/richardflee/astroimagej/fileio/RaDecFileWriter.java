@@ -38,7 +38,7 @@ public class RaDecFileWriter extends RaDecFileBase {
 		isDataBlock = true;
 		
 		// first use, create new radec folder in user.dir path
-		File dir = new File(System.getProperty("user.dir"), "radec");
+		File dir = new File(System.getProperty(RaDecFileBase.USER_DIR), RaDecFileBase.RADEC_DIR);
 		dir.mkdirs();
 	}
 
@@ -66,10 +66,8 @@ public class RaDecFileWriter extends RaDecFileBase {
 			}
 		} catch (IOException e) {
 			String message = String.format("ERROR: Error saving radec file: %s", filePath);
-			setStatusMessage(message);
 		}
 		String statusMessage = String.format("Saved radec file: %s", filePath);
-		setStatusMessage(statusMessage);
 		return statusMessage;
 	}
 
@@ -92,7 +90,7 @@ public class RaDecFileWriter extends RaDecFileBase {
 	 */
 	private File getFile(CatalogQuery query) {
 		// path to radec file, create new folder if necessary
-		File dir = new File(System.getProperty("user.dir"), "radec");
+		File dir = new File(System.getProperty(RaDecFileBase.USER_DIR), RaDecFileBase.RADEC_DIR);
 		File file = new File(dir, compileFilename(query));
 		return file;
 	}

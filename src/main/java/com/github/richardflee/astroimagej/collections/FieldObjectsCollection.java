@@ -32,10 +32,38 @@ public class FieldObjectsCollection {
 				.collect(Collectors.toList());	
 	}
 	
+	/**
+	 * Tests if |mag diff| is sorted in ascending order
+	 * @param radecFieldObjects
+	 *     sorted list of field objeccts
+	 * @return true if sorted in order of increasing |mag diff|, false otherwise
+	 */
 	public void sortByDeltaMag(FieldObject target) {
 		this.fieldObjects = this.fieldObjects.stream()
 				.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag())))
 				.collect(Collectors.toList());		
+	}
+	
+	
+	/**
+	 * Tests if |mag diff| is sorted in ascending order
+	 * @param radecFieldObjects
+	 *     sorted list of field objeccts
+	 * @return true if sorted in order of increasing |mag diff|, false otherwise
+	 */
+	public boolean isSortedByDeltaMag() {
+		boolean sortedByDeltaMag = true;
+		var fo = fieldObjects.get(0);
+		
+		var lastFieldObject = fieldObjects.get(0);
+		for (int idx = 1; idx < getTotalCount(); idx++) {
+			var thisFieldObject = fieldObjects.get(idx);			
+			var thisDeltaMag = Math.abs(thisFieldObject.getDeltaMag());
+			var lastDeltaMag = Math.abs(lastFieldObject.getDeltaMag());
+			sortedByDeltaMag = sortedByDeltaMag && (thisDeltaMag >= lastDeltaMag);
+			lastFieldObject = thisFieldObject;
+		}		
+		return sortedByDeltaMag;
 	}
 	
 	public void filterByNumberObservations(int numberObs) {

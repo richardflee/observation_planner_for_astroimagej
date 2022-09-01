@@ -22,13 +22,12 @@ public class CatalogHandler {
 	private VspChart vspChart = null;
 //	
 //	private RaDecFileReader radecFileReader = null;
-	private RaDecFileWriter fileWriter = null;
+//	private RaDecFileWriter fileWriter = null;
 	
 	
 	public CatalogHandler() {
 		this.result = new QueryResult();
 		this.vspChart = new VspChart();
-		this.fileWriter = new RaDecFileWriter();
 		
 	}
 	
@@ -70,20 +69,23 @@ public class CatalogHandler {
 			 var message = DssFitsWriter.downloadDssFits(query);
 			 JOptionPane.showMessageDialog(null, message);
 		 }
-		 
-
-		 // move to update
 		 updateTable(settings);
-		 
-//		 var vspCatalog = new VspCatalog();
-//		 var chartUri = vspCatalog.downloadChartUri(query);
-//		 result.setChartUri(chartUri);
-//		 this.vspChart.showChart(result, settings);
-		 
-//		 
-//		 var tableRows = result.getTableRows(settings);
-//		 this.tableListener.updateTable(tableRows);		
-//		 this.tabListener.updateCounts(result.getFieldObjectsCollection());
+	}
+	
+	
+	public void doImportRaDecfile() {
+		System.out.println("save in handler");
+		// compile radec_query
+		
+		// new Result
+		
+		// save radec_query -> props
+		
+		// compile default settings with radec target mag
+		
+		// compile radec FO
+		
+		// updateTAble
 	}
 	
 	
@@ -120,13 +122,8 @@ public class CatalogHandler {
 	}
 	
 	
-	public void doImportRaDecfile() {
-		System.out.println("save in handler");
-	}
-	
 	public void doSaveRaDecFile(CatalogSettings settings) {
-		System.out.println("save the radec");
-		this.fileWriter.writeRaDecFile(this.result, settings);
+		new RaDecFileWriter().writeRaDecFile(this.result, settings);
 		
 	}
 	
