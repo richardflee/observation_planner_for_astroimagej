@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.richardflee.astroimagej</groupId>
   <artifactId>aijplanner</artifactId>
-  <name>jlogviewer</name>
+  <name>aijplanner</name>
   <version>SNAPSHOT-1.0a</version>
   <url>https://github.com/richardflee</url>
   <build>
-    <finalName>aij_planner</finalName>
+    <finalName>aijplanner-onejar-1.0a</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

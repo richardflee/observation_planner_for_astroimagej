@@ -2,7 +2,7 @@ package com.github.richardflee.astroimagej.data_objects;
 
 import java.time.LocalDateTime;
 
-import com.github.richardflee.astroimagej.visibility_plotter.Solar;
+import com.github.richardflee.astroimagej.staralt_plotter.Solar;
 
 public class SolarTimes {
 	private LocalDateTime civilSunSet = null;

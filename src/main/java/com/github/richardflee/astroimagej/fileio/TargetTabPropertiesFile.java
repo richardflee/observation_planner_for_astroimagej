@@ -14,7 +14,7 @@ import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 
 
-public class TargetPropertiesFile {
+public class TargetTabPropertiesFile {
 	
 	private static final String CLASS_PROPS_ID = "target_tab.";
 	

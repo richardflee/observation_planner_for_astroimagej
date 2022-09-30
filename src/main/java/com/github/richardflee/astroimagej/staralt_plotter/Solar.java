@@ -1,4 +1,4 @@
-package com.github.richardflee.astroimagej.visibility_plotter;
+package com.github.richardflee.astroimagej.staralt_plotter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,9 +9,9 @@ import java.util.Map;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
 import com.github.richardflee.astroimagej.data_objects.SolarTimes;
+import com.github.richardflee.astroimagej.staralt_plotter.CoordsConverter.CoordsEnum;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.MathUtils;
-import com.github.richardflee.astroimagej.visibility_plotter.CoordsConverter.CoordsEnum;
 
 /**
  * Computes sunrise, set and astronomical twilight times at a specified

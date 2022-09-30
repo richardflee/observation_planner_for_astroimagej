@@ -53,7 +53,6 @@ public class FieldObjectsCollection {
 	 */
 	public boolean isSortedByDeltaMag() {
 		boolean sortedByDeltaMag = true;
-		var fo = fieldObjects.get(0);
 		
 		var lastFieldObject = fieldObjects.get(0);
 		for (int idx = 1; idx < getTotalCount(); idx++) {

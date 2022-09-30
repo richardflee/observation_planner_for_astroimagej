@@ -1,4 +1,4 @@
-package com.github.richardflee.astroimagej.visibility_plotter;
+package com.github.richardflee.astroimagej.staralt_plotter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

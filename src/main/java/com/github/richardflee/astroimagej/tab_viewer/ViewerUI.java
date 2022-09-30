@@ -33,7 +33,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
 import com.github.richardflee.astroimagej.data_objects.ObservationSite;
-import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetTabPropertiesFile;
 
 /**
  * @author Richard Lee
@@ -66,7 +66,7 @@ public class ViewerUi extends JFrame {
 			switch (aijTabbedPane.getSelectedIndex()) {
 			case TARGET_TAB_IDX:
 				System.out.println("target");
-				var query = TargetPropertiesFile.readProerties();
+				var query = TargetTabPropertiesFile.readProerties();
 				target_tab.applyQueryData(query);
 				break;
 			case CATALOGS_TAB_IDX:

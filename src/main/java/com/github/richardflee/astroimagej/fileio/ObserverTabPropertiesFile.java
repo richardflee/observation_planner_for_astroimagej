@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
-public class ObserverPropertiesFile {
+public class ObserverTabPropertiesFile {
 
 	private static final String CLASS_PROPS_ID = "observer_tab.";
 

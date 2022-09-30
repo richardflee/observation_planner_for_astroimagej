@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import com.github.richardflee.astroimagej.collections.FieldObjectsCollection;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.enums.ColumnsEnum;
-import com.github.richardflee.astroimagej.fileio.CatalogPropertiesFile;
-import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.CatalogTabPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetTabPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.models.TableModel;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
@@ -101,7 +101,7 @@ public class CatalogsTab implements CatalogTabListener{
 		this.sortDistance = viewer.getDistanceRadioButton();
 		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
 		
-		var sortSettings = CatalogPropertiesFile.readProerties();
+		var sortSettings = CatalogTabPropertiesFile.readProerties();
 		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
 		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
 		
@@ -133,7 +133,7 @@ public class CatalogsTab implements CatalogTabListener{
 	}
 	
 	public void updateQueryPanel(ViewerUi viewer) { 
-		var query = TargetPropertiesFile.readProerties();
+		var query = TargetTabPropertiesFile.readProerties();
 		var objectId = query.getObjectId();
 		var fov = query.getFovAmin();
 		var strVal = String.format("ID: %s | FOV: %.1f", objectId, fov);
@@ -271,7 +271,7 @@ public class CatalogsTab implements CatalogTabListener{
 		
 	private void updateSort() {
 		var settings = compileSettingsData();
-		CatalogPropertiesFile.writeProperties(compileSettingsData());
+		CatalogTabPropertiesFile.writeProperties(compileSettingsData());
 		handler.doUpdateTable(settings);		
 	}
 	

@@ -29,14 +29,14 @@ import com.github.richardflee.astroimagej.data_objects.SolarTimes;
 import com.github.richardflee.astroimagej.enums.CatalogsEnum;
 import com.github.richardflee.astroimagej.exceptions.SimbadNotFoundException;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetTabPropertiesFile;
+import com.github.richardflee.astroimagej.staralt_plotter.ObjectTracker;
+import com.github.richardflee.astroimagej.staralt_plotter.Solar;
+import com.github.richardflee.astroimagej.staralt_plotter.TimesConverter;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 import com.github.richardflee.astroimagej.utils.InputsVerifier;
-import com.github.richardflee.astroimagej.visibility_plotter.ObjectTracker;
-import com.github.richardflee.astroimagej.visibility_plotter.Solar;
-import com.github.richardflee.astroimagej.visibility_plotter.TimesConverter;
 
-public class TargetTab { //implements TargetTabListener {
+public class TargetTab { 
 	
 	private final static String ALTITUDE_SERIES = "Altitude";
 	private final static DateTimeFormatter X_TICK_FORMATTER = DateTimeFormatter.ofPattern("HH");
@@ -85,7 +85,7 @@ public class TargetTab { //implements TargetTabListener {
 		this.filterCombo = viewer.getFilterCombo();
 		
 		// populate target tab textbox and drop down controls
-		var query = TargetPropertiesFile.readProerties();
+		var query = TargetTabPropertiesFile.readProerties();
 		this.applyQueryData(query);
 		this.populateFilterCombo(null);
 		
@@ -193,7 +193,7 @@ public class TargetTab { //implements TargetTabListener {
 		
 		var xData = IntStream.range(0, TimesConverter.MINS_IN_DAY).boxed().collect(Collectors.toList());
 		var startDate = LocalDate.now();
-		var fo = (BaseFieldObject) TargetPropertiesFile.readProerties();
+		var fo = (BaseFieldObject) TargetTabPropertiesFile.readProerties();
 		var yData = new ObjectTracker(site).computeAltitudeData(fo, startDate);	
 		chart.addSeries(ALTITUDE_SERIES, xData, yData).setMarker(SeriesMarkers.NONE);
 		chart.setTitle(getChartTitle(startDate));
@@ -247,7 +247,7 @@ public class TargetTab { //implements TargetTabListener {
 	}
 	
 	private void doSaveQueryData() {
-		TargetPropertiesFile.writeProperties(this.compileQuery());
+		TargetTabPropertiesFile.writeProperties(this.compileQuery());
 		doChartUpdate(datePicker.getDate());
 	}
 	

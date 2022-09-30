@@ -1,7 +1,6 @@
 package com.github.richardflee.astroimagej.data_objects;
 
 
-import com.github.richardflee.astroimagej.catalogs.VspCatalog;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
 
 /**

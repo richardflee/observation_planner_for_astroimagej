@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.github.richardflee.astroimagej.fileio.AijPrefsFileIO;
 import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
-import com.github.richardflee.astroimagej.fileio.ObserverPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.ObserverTabPropertiesFile;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 
@@ -44,7 +44,7 @@ public class Main {
 			var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();			
 			
 			// creates aij_planner data objects
-			var observer = ObserverPropertiesFile.readProerties();
+			var observer = ObserverTabPropertiesFile.readProerties();
 			
 			// catalog table
 		//	var tableModel= new CatalogTableModel();

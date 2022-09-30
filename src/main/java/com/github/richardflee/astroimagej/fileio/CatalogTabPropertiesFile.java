@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 
-public class CatalogPropertiesFile {
+public class CatalogTabPropertiesFile {
 
 	private static final String CLASS_PROPS_ID = "catalog_tab.";
 
@@ -45,12 +45,10 @@ public class CatalogPropertiesFile {
 
 			switch (prop.getProperty(SORT_BY)) {
 			case SORT_BY_DISTANCE:
-				System.out.println("distance");
 				settings.setSortDistanceValue(true);
 				settings.setSortDeltaMagValue(false);
 				break;
 			case SORT_BY_DELTAMAG:
-				System.out.println("deltamag");
 				settings.setSortDistanceValue(false);
 				settings.setSortDeltaMagValue(true);
 				break;
@@ -58,8 +56,6 @@ public class CatalogPropertiesFile {
 				var message = String.format("File read error:%s", AijPropsReadWriter.getPropertiesFilePath());
 				JOptionPane.showMessageDialog(null, message);
 			}
-			
-
 		} catch (IOException ex) {
 			// error dialog
 			String message = String.format("Failed to read properties file: \n%s",
@@ -76,17 +72,17 @@ public class CatalogPropertiesFile {
 		var settings = new CatalogSettings();
 		settings.setSortDistanceValue(true);
 		settings.setSortDeltaMagValue(! settings.isSortDistanceValue());		
-		CatalogPropertiesFile.writeProperties(settings);
+		CatalogTabPropertiesFile.writeProperties(settings);
 		
-		settings = CatalogPropertiesFile.readProerties();		
+		settings = CatalogTabPropertiesFile.readProerties();		
 		System.out.println(String.format("Sort by distance: %b", settings.isSortDistanceValue()));
 		System.out.println(String.format("Sort by delt amg: %b", settings.isSortDeltaMagValue()));
 		System.out.println();
 		
 		settings.setSortDistanceValue(false);
 		settings.setSortDeltaMagValue(! settings.isSortDistanceValue());			
-		CatalogPropertiesFile.writeProperties(settings);
-		settings = CatalogPropertiesFile.readProerties();		
+		CatalogTabPropertiesFile.writeProperties(settings);
+		settings = CatalogTabPropertiesFile.readProerties();		
 		System.out.println(String.format("Sort by distance: %b", settings.isSortDistanceValue()));
 		System.out.println(String.format("Sort by delt amg: %b", settings.isSortDeltaMagValue()));
 	}

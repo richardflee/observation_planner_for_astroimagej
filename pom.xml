@@ -12,7 +12,7 @@
 	<version>SNAPSHOT-1.0a</version>
 
 	<packaging>jar</packaging>
-	<name>jlogviewer</name>
+	<name>aijplanner</name>
 	<url>https://github.com/richardflee</url>
 
 	<properties>
@@ -92,7 +92,7 @@
 
 	<build>
 		<!-- **** Final package name -->
-		<finalName>aij_planner</finalName>
+		<finalName>aijplanner-onejar-1.0a</finalName>
 
 		<!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
 		<plugins>

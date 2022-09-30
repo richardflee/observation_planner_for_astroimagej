@@ -10,7 +10,7 @@ import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.RaDecFileReader;
 import com.github.richardflee.astroimagej.fileio.RaDecFileWriter;
-import com.github.richardflee.astroimagej.fileio.TargetPropertiesFile;
+import com.github.richardflee.astroimagej.fileio.TargetTabPropertiesFile;
 import com.github.richardflee.astroimagej.listeners.CatalogTabListener;
 import com.github.richardflee.astroimagej.listeners.TableModelListener;
 
@@ -58,7 +58,7 @@ public class CatalogHandler {
 	 */
 	
 	public void doCatalogQuery(CatalogSettings settings) {
-		 var query = TargetPropertiesFile.readProerties();
+		 var query = TargetTabPropertiesFile.readProerties();
 		 this.result = new QueryResult();
 		 this.result.setQuery(query);
 		 
