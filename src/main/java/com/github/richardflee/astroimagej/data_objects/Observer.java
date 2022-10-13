@@ -16,8 +16,8 @@ public class Observer {
 	private int horizArraySize;
 	private int vertArraySize;
 	
-	private double darkCurrent;
-	private double readoutNoise;
+//	private double darkCurrent;
+//	private double readoutNoise;
 	
 	// set defaults
 	public Observer() {
@@ -34,8 +34,8 @@ public class Observer {
 		this.horizArraySize = 4096;
 		this.vertArraySize = 4096;
 		
-		this.darkCurrent = 0.05;
-		this.readoutNoise = 9.0;
+//		this.darkCurrent = 0.05;
+//		this.readoutNoise = 9.0;
 	}
 	
 	
@@ -87,12 +87,6 @@ public class Observer {
 	}
 	public int getVertArraySize() {
 		return vertArraySize;
-	}
-	public double getDarkCurrent() {
-		return darkCurrent;
-	}
-	public double getReadoutNoise() {
-		return readoutNoise;
 	}
 
 
@@ -151,25 +145,16 @@ public class Observer {
 	}
 
 
-	public void setDarkCurrent(double darkCurrent) {
-		this.darkCurrent = darkCurrent;
-	}
-
-
-	public void setReadoutNoise(double readoutNoise) {
-		this.readoutNoise = readoutNoise;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Observer [observerCode=" + observerCode + ", observerName=" + observerName + ", telescopeShortName="
 				+ telescopeShortName + ", telescopeLongName=" + telescopeLongName + ", telescopeAperture="
 				+ telescopeAperture + ", telescopeFocalLength=" + telescopeFocalLength + ", camera=" + camera
 				+ ", horizPixelSize=" + horizPixelSize + ", vertPixelSize=" + vertPixelSize + ", horizArraySize="
-				+ horizArraySize + ", vertArraySize=" + vertArraySize + ", darkCurrent=" + darkCurrent
-				+ ", readoutNoise=" + readoutNoise + "]";
+				+ horizArraySize + ", vertArraySize=" + vertArraySize + "]";
 	}
+
+
 	
 	
 	

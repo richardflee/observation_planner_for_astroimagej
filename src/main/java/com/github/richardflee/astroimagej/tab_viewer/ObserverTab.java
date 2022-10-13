@@ -43,8 +43,9 @@ public class ObserverTab {
 	private JTextField horizFovAminText;
 	private JTextField vertFovAminText;
 	
-	private JTextField darkCurrentText;
+	private JTextField gainText;
 	private JTextField readoutNoiseText;
+	private JTextField darkCurrentText;
 	
 	private JTextField latitudeText;
 	private JTextField longitudeText;
@@ -86,8 +87,9 @@ public class ObserverTab {
 		horizFovAminText = viewer.getHorizFovAminField();
 		vertFovAminText = viewer.getVertFovAminField();
 		
-		darkCurrentText = viewer.getDarkCurrentField();
+		gainText = viewer.getGainField();
 		readoutNoiseText = viewer.getReadoutNoiseField();
+		darkCurrentText = viewer.getDarkCurrentField();
 		
 		latitudeText = viewer.getLatitudeField();
 		longitudeText = viewer.getLongitudeField();
@@ -103,20 +105,24 @@ public class ObserverTab {
 		setUpActionListeners();		
 	}
 	
-	//@Override
+	/**
+	 * writes CCD noise data from AIJ_Prefs.txt file to observert tab text controls
+	 */
 	public void setNoiseData(NoiseData noiseData) {
 		
-		boolean noData = Double.valueOf(noiseData.getCcdDark()).isNaN();
-		var data = noData ? "" : String.format("%1.4f", noiseData.getCcdDark());
-		darkCurrentText.setText(data);
+		boolean noData = Double.valueOf(noiseData.getCcdGain()).isNaN();
+		var data = noData ? "" : String.format("%.4f", noiseData.getCcdGain());
+		gainText.setText(data);
 		
 		noData = Double.valueOf(noiseData.getCcdNoise()).isNaN();
 		data = noData ? "" : String.format("%.1f",  noiseData.getCcdNoise());
 		readoutNoiseText.setText(data);
+		
+		noData = Double.valueOf(noiseData.getCcdDark()).isNaN();
+		data = noData ? "" : String.format("%.4f", noiseData.getCcdDark());
+		darkCurrentText.setText(data);		
 	}
 	
-	
-	// @Override
 	public void setObservationSiteData() {
 		longitudeText.setText(this.site.getSiteLongDms());
 		eastWestText.setText(this.site.getSiteEastWest());
@@ -128,7 +134,6 @@ public class ObserverTab {
 		utcOffsetText.setText(String.format("%3.1f", this.site.getUtcOffsetHr()));			
 	}
 	
-	// @Override
 	public void setObserverData(Observer observer) {
 		codeText.setText(observer.getObserverCode());
 		nameText.setText(observer.getObserverName());
@@ -144,14 +149,10 @@ public class ObserverTab {
 		horizArrayText.setText(String.format("%d", observer.getHorizArraySize()));
 		vertArrayText.setText(String.format("%d", observer.getVertArraySize()));
 		
-		darkCurrentText.setText(String.format("%.3f", observer.getDarkCurrent()));
-		readoutNoiseText.setText(String.format("%.4f", observer.getReadoutNoise()));
-		
 		getDerivedParameters();
 		
 	}
 	
-	//@Override
 	public Observer getObserverData() {	
 		var observer = new Observer();
 
@@ -170,10 +171,6 @@ public class ObserverTab {
 		
 		observer.setHorizArraySize(Integer.valueOf(horizArrayText.getText()));
 		observer.setVertArraySize(Integer.valueOf(vertArrayText.getText()));
-		
-		observer.setDarkCurrent(Double.valueOf(darkCurrentText.getText()));
-		observer.setReadoutNoise(Double.valueOf(readoutNoiseText.getText()));
-		
 		return observer;
 	}
 

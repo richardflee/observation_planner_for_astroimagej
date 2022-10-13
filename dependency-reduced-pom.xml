@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.richardflee.astroimagej</groupId>
-  <artifactId>aijplanner</artifactId>
-  <name>aijplanner</name>
-  <version>SNAPSHOT-1.0a</version>
+  <artifactId>planner</artifactId>
+  <name>planner</name>
+  <version>1.0a</version>
   <url>https://github.com/richardflee</url>
   <build>
-    <finalName>aijplanner-onejar-1.0a</finalName>
+    <finalName>planner</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

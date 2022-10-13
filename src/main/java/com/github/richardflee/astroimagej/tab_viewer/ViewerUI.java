@@ -23,7 +23,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.ScrollPaneConstants;
@@ -96,10 +95,6 @@ public class ViewerUi extends JFrame {
 
 	public JTextField getVertPixelSizeAsecField() {
 		return vertPixelSizeAsecField;
-	}
-
-	public JTextField getVertFovAminField() {
-		return vertFovAminField;
 	}
 
 	public JTextField getCodeField() {
@@ -182,8 +177,8 @@ public class ViewerUi extends JFrame {
 		return longitudeText;
 	}
 
-	public JTextField getDarkCurrentField() {
-		return darkCurrentField;
+	public JTextField getGainField() {
+		return gainField;
 	}
 
 	public JTextField getReadoutNoiseField() {
@@ -386,6 +381,14 @@ public class ViewerUi extends JFrame {
 		return queryCatFilterLabel;
 	}
 
+	public JTextField getVertFovAminField() {
+		return vertFovAminField;
+	}
+
+	public JTextField getDarkCurrentField() {
+		return darkCurrentField;
+	}
+
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -503,8 +506,6 @@ public class ViewerUi extends JFrame {
 		vertPixelSizeAsecField = new JTextField();
 		vertFovAminField = new JTextField();
 		observerNotesPanel = new JPanel();
-		scrollPane1 = new JScrollPane();
-		textArea1 = new JTextArea();
 		scrollPane2 = new JScrollPane();
 		equipmentPanel2 = new JPanel();
 		label20 = new JLabel();
@@ -530,9 +531,11 @@ public class ViewerUi extends JFrame {
 		label30 = new JLabel();
 		vertArraySizeField = new JTextField();
 		label31 = new JLabel();
-		darkCurrentField = new JTextField();
+		gainField = new JTextField();
 		label32 = new JLabel();
 		readoutNoiseField = new JTextField();
+		label45 = new JLabel();
+		darkCurrentField = new JTextField();
 		saveObserverButton = new JButton();
 		updateParamsButton = new JButton();
 
@@ -893,10 +896,12 @@ public class ViewerUi extends JFrame {
 							//---- sunSetField ----
 							sunSetField.setText("00:00");
 							sunSetField.setEditable(false);
+							sunSetField.setToolTipText("Local Sunset time");
 
 							//---- twilightEndField ----
 							twilightEndField.setEditable(false);
 							twilightEndField.setText("00:00");
+							twilightEndField.setToolTipText("Local time when Astronomical Twilight ends");
 
 							//---- label35 ----
 							label35.setText("Twi Start:");
@@ -904,6 +909,7 @@ public class ViewerUi extends JFrame {
 							//---- twilightStartField ----
 							twilightStartField.setEditable(false);
 							twilightStartField.setText("00:00");
+							twilightStartField.setToolTipText("Local time when Astronomical Twilight starts");
 
 							//---- label36 ----
 							label36.setText("Sunrise");
@@ -911,6 +917,7 @@ public class ViewerUi extends JFrame {
 							//---- sunRiseField ----
 							sunRiseField.setEditable(false);
 							sunRiseField.setText("00:00");
+							sunRiseField.setToolTipText("Local Sunrise time");
 
 							GroupLayout panel11Layout = new GroupLayout(panel11);
 							panel11.setLayout(panel11Layout);
@@ -965,7 +972,7 @@ public class ViewerUi extends JFrame {
 							solarPanelLayout.createParallelGroup()
 								.addGroup(solarPanelLayout.createSequentialGroup()
 									.addContainerGap()
-									.addComponent(runSimbadButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(runSimbadButton)
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 									.addComponent(saveQueryButton)
 									.addGap(18, 18, 18)
@@ -973,7 +980,7 @@ public class ViewerUi extends JFrame {
 									.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 									.addComponent(datePickerPanel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
 									.addGap(18, 18, 18)
-									.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
+									.addComponent(panel11, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
 						);
 						solarPanelLayout.setVerticalGroup(
 							solarPanelLayout.createParallelGroup()
@@ -1088,9 +1095,11 @@ public class ViewerUi extends JFrame {
 							//---- distanceRadioButton ----
 							distanceRadioButton.setText("Distance");
 							distanceRadioButton.setSelected(true);
+							distanceRadioButton.setToolTipText("Sorts table by increasing radial distance to target");
 
 							//---- deltaMagRadioButton ----
 							deltaMagRadioButton.setText("|Delta Mag|");
+							deltaMagRadioButton.setToolTipText("<html>\nSorts table by increasing absolute\n<p>difference to Nominal Mag</p>\n</html>");
 
 							GroupLayout sortByPanelLayout = new GroupLayout(sortByPanel);
 							sortByPanel.setLayout(sortByPanelLayout);
@@ -1128,12 +1137,12 @@ public class ViewerUi extends JFrame {
 							label40.setText("Nominal Mag:");
 
 							//---- upperLimitSpinner ----
-							upperLimitSpinner.setModel(new SpinnerNumberModel(0.0, -0.1, 5.0, 0.2));
-							upperLimitSpinner.setToolTipText("<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>");
+							upperLimitSpinner.setModel(new SpinnerNumberModel(0.0, -0.01, 5.0, 0.1));
+							upperLimitSpinner.setToolTipText("<html>\nSet the target mag upper limit\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n<p>Setting Upper = 0 disables this limit</p>\n</html>");
 
 							//---- lowerLimitSpinner ----
-							lowerLimitSpinner.setModel(new SpinnerNumberModel(0.0, -5.0, 0.1, 0.2));
-							lowerLimitSpinner.setToolTipText("<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n");
+							lowerLimitSpinner.setModel(new SpinnerNumberModel(0.0, -5.0, 0.01, 0.1));
+							lowerLimitSpinner.setToolTipText("<html>\nSet the target mag lower limit\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n<p>Setting Lower = 0 disables this limit</p>\n</html>\n");
 
 							//---- targetMagSpinner ----
 							targetMagSpinner.setModel(new SpinnerNumberModel(10.0, 5.5, 25.0, 0.10000000149011612));
@@ -1142,15 +1151,18 @@ public class ViewerUi extends JFrame {
 							//---- isMagLimitsCheckBox ----
 							isMagLimitsCheckBox.setText("Apply mag limits");
 							isMagLimitsCheckBox.setSelected(true);
+							isMagLimitsCheckBox.setToolTipText("<html>\nApply mag limits to filter table rows\n<p>Default: apply limits</p>\n</html>\n");
 
 							//---- upperLabel ----
 							upperLabel.setText("N/A");
+							upperLabel.setToolTipText("<html>\nMag band upper limit\n<p>N/A: upper limit is disabled</p>\n</html>");
 
 							//---- label41 ----
 							label41.setText(".");
 
 							//---- lowerLabel ----
 							lowerLabel.setText("N/A");
+							lowerLabel.setToolTipText("<html>\nMag band lower limit\n<p>N/A: lower limit is disabled</p>\n</html>");
 
 							//---- label37 ----
 							label37.setText("Nobs (APASS)");
@@ -1162,6 +1174,7 @@ public class ViewerUi extends JFrame {
 							//---- saveDssCheckBox ----
 							saveDssCheckBox.setText("Save DSS Fits File");
 							saveDssCheckBox.setSelected(true);
+							saveDssCheckBox.setToolTipText("<html>\nDownload and save DSS fits file \n<p>to dss folder</p>\n<p>Default: save fits file</p>\n</html>");
 
 							GroupLayout slectionFiltersPanelLayout = new GroupLayout(slectionFiltersPanel);
 							slectionFiltersPanel.setLayout(slectionFiltersPanelLayout);
@@ -1339,27 +1352,27 @@ public class ViewerUi extends JFrame {
 						//---- catalogQueryButton ----
 						catalogQueryButton.setText("Run Query");
 						catalogQueryButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						catalogQueryButton.setToolTipText("<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>");
+						catalogQueryButton.setToolTipText("<html>\nRuns a 'Query Data' based online query \n<p>on the selected database</p>\n</html>");
 
 						//---- importRaDecButton ----
 						importRaDecButton.setText("Import RaDec Fille");
 						importRaDecButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						importRaDecButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+						importRaDecButton.setToolTipText("Opens a dialog to import radec table data ");
 
 						//---- saveRaDecButton ----
 						saveRaDecButton.setText("Save RaDec File");
 						saveRaDecButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						saveRaDecButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+						saveRaDecButton.setToolTipText("<html>\nSaves current table data to radec file text file\n<p>filename format [objectID].[filter].[fov].radec.txt</p>\n</html>");
 
 						//---- updateButton ----
 						updateButton.setText("Update");
 						updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						updateButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+						updateButton.setToolTipText("Applies filter settings to table rows");
 
 						//---- clearButton ----
 						clearButton.setText("Clear");
 						clearButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-						clearButton.setToolTipText("Validates and saves current query entries to aij_planner.properties file");
+						clearButton.setToolTipText("Clear all");
 
 						GroupLayout solarPanel2Layout = new GroupLayout(solarPanel2);
 						solarPanel2.setLayout(solarPanel2Layout);
@@ -1434,7 +1447,7 @@ public class ViewerUi extends JFrame {
 						.addComponent(catalogsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 			}
-			aijTabbedPane.addTab("CATALOGS WIP", catalogsTab);
+			aijTabbedPane.addTab("Catalogs", catalogsTab);
 
 			//======== observerTab ========
 			{
@@ -1454,9 +1467,11 @@ public class ViewerUi extends JFrame {
 						//---- latitudeField ----
 						latitudeField.setEditable(false);
 						latitudeField.setFocusable(false);
+						latitudeField.setToolTipText("<html>\nLatitude of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>");
 
 						//---- northSouthField ----
 						northSouthField.setEditable(false);
+						northSouthField.setToolTipText("<html>\nNorth / South\n<p>North positive latitude</p>\n</html>");
 
 						//---- label15 ----
 						label15.setText("Longitude:");
@@ -1465,9 +1480,11 @@ public class ViewerUi extends JFrame {
 						//---- longitudeText ----
 						longitudeText.setEditable(false);
 						longitudeText.setFocusable(false);
+						longitudeText.setToolTipText("<html>\nLongitude of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>");
 
 						//---- eastWestField ----
 						eastWestField.setEditable(false);
+						eastWestField.setToolTipText("<html>\nWest / East\n<p>East positive longitude</p>\n</html>");
 
 						//---- label16 ----
 						label16.setText("Altitude (m):");
@@ -1476,6 +1493,7 @@ public class ViewerUi extends JFrame {
 						//---- altitudeField ----
 						altitudeField.setEditable(false);
 						altitudeField.setFocusable(false);
+						altitudeField.setToolTipText("<html>\nHeight of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>");
 
 						//---- label17 ----
 						label17.setText("UTC Offset (hr):");
@@ -1484,6 +1502,7 @@ public class ViewerUi extends JFrame {
 						//---- utcOffsetField ----
 						utcOffsetField.setEditable(false);
 						utcOffsetField.setFocusable(false);
+						utcOffsetField.setToolTipText("<html>\nUTC offset at observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>");
 
 						GroupLayout locationPanelLayout = new GroupLayout(locationPanel);
 						locationPanel.setLayout(locationPanelLayout);
@@ -1544,7 +1563,7 @@ public class ViewerUi extends JFrame {
 						//---- horizPixelSizeAsecField ----
 						horizPixelSizeAsecField.setEditable(false);
 						horizPixelSizeAsecField.setFocusable(false);
-						horizPixelSizeAsecField.setToolTipText("Horiz pixel size / arcsec");
+						horizPixelSizeAsecField.setToolTipText("<html>\nUnbinned horiz image scale (\"/pix)\n</html>");
 
 						//---- label19 ----
 						label19.setText("Field-of-View (arcmin):");
@@ -1552,17 +1571,17 @@ public class ViewerUi extends JFrame {
 						//---- horizFovAminField ----
 						horizFovAminField.setEditable(false);
 						horizFovAminField.setFocusable(false);
-						horizFovAminField.setToolTipText("Horiz FOV / arcmin");
+						horizFovAminField.setToolTipText("Horiz FOV (')");
 
 						//---- vertPixelSizeAsecField ----
 						vertPixelSizeAsecField.setEditable(false);
 						vertPixelSizeAsecField.setFocusable(false);
-						vertPixelSizeAsecField.setToolTipText("Vert pixel size / arcsec");
+						vertPixelSizeAsecField.setToolTipText("<html>\nUnbinned vert image scale (\"/pix)\n</html>");
 
 						//---- vertFovAminField ----
 						vertFovAminField.setEditable(false);
 						vertFovAminField.setFocusable(false);
-						vertFovAminField.setToolTipText("Vert FOV / arcmin");
+						vertFovAminField.setToolTipText("Vert FOV (')");
 
 						GroupLayout systemParamsPanelLayout = new GroupLayout(systemParamsPanel);
 						systemParamsPanel.setLayout(systemParamsPanelLayout);
@@ -1605,23 +1624,19 @@ public class ViewerUi extends JFrame {
 
 					//======== observerNotesPanel ========
 					{
-						observerNotesPanel.setBorder(new TitledBorder(null, "NOTES:", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
+						observerNotesPanel.setBorder(new TitledBorder(null, "Space for user notes", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION,
 							new Font("Tahoma", Font.BOLD, 12)));
-
-						//======== scrollPane1 ========
-						{
-							scrollPane1.setViewportView(textArea1);
-						}
+						observerNotesPanel.setToolTipText("<html>\n<b>USER NOTES NOT IMPLEMENTED</b>\n</html>");
 
 						GroupLayout observerNotesPanelLayout = new GroupLayout(observerNotesPanel);
 						observerNotesPanel.setLayout(observerNotesPanelLayout);
 						observerNotesPanelLayout.setHorizontalGroup(
 							observerNotesPanelLayout.createParallelGroup()
-								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+								.addGap(0, 408, Short.MAX_VALUE)
 						);
 						observerNotesPanelLayout.setVerticalGroup(
 							observerNotesPanelLayout.createParallelGroup()
-								.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+								.addGap(0, 370, Short.MAX_VALUE)
 						);
 					}
 
@@ -1640,6 +1655,7 @@ public class ViewerUi extends JFrame {
 
 							//---- codeField ----
 							codeField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							codeField.setToolTipText("<html>\nObserver's BAA VSS code\n<p>(Iwhere available)</p>\n</html>");
 
 							//---- label21 ----
 							label21.setText("Observer Name:");
@@ -1712,22 +1728,34 @@ public class ViewerUi extends JFrame {
 							vertArraySizeField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- label31 ----
-							label31.setText("Dark current (e-/s/pixel):");
+							label31.setText("Gain (e-/count): ");
 							label31.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-							//---- darkCurrentField ----
-							darkCurrentField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-							darkCurrentField.setEditable(false);
-							darkCurrentField.setFocusable(false);
+							//---- gainField ----
+							gainField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							gainField.setEditable(false);
+							gainField.setFocusable(false);
+							gainField.setToolTipText("<html>\nCCD gain\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>");
 
 							//---- label32 ----
-							label32.setText("Readout Noise (e-/pixel):");
+							label32.setText("Readout noise (e-/pix):");
 							label32.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 							//---- readoutNoiseField ----
 							readoutNoiseField.setFont(new Font("Tahoma", Font.PLAIN, 12));
 							readoutNoiseField.setEditable(false);
 							readoutNoiseField.setFocusable(false);
+							readoutNoiseField.setToolTipText("<html>\nCCD readout noise\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>");
+
+							//---- label45 ----
+							label45.setText("Dark current (e-/s/pix):");
+							label45.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							//---- darkCurrentField ----
+							darkCurrentField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+							darkCurrentField.setEditable(false);
+							darkCurrentField.setFocusable(false);
+							darkCurrentField.setToolTipText("<html>\nCCD dark current\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>");
 
 							GroupLayout equipmentPanel2Layout = new GroupLayout(equipmentPanel2);
 							equipmentPanel2.setLayout(equipmentPanel2Layout);
@@ -1748,11 +1776,12 @@ public class ViewerUi extends JFrame {
 											.addComponent(label29, GroupLayout.Alignment.TRAILING)
 											.addComponent(label30, GroupLayout.Alignment.TRAILING)
 											.addComponent(label31, GroupLayout.Alignment.TRAILING)
-											.addComponent(label32, GroupLayout.Alignment.TRAILING))
+											.addComponent(label32, GroupLayout.Alignment.TRAILING)
+											.addComponent(label45, GroupLayout.Alignment.TRAILING))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(equipmentPanel2Layout.createParallelGroup()
 											.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-												.addComponent(darkCurrentField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+												.addComponent(gainField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 												.addComponent(vertArraySizeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 												.addComponent(horizArraySizeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 												.addComponent(vertPixelSizeUmField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
@@ -1763,7 +1792,8 @@ public class ViewerUi extends JFrame {
 												.addComponent(teleShortField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 												.addComponent(nameField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
 												.addComponent(codeField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-												.addComponent(readoutNoiseField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
+												.addComponent(readoutNoiseField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+												.addComponent(darkCurrentField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
 											.addComponent(teleFullField, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
 										.addGap(141, 141, 141))
 							);
@@ -1814,15 +1844,19 @@ public class ViewerUi extends JFrame {
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label30)
 											.addComponent(vertArraySizeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGap(18, 18, 18)
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label31)
-											.addComponent(darkCurrentField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addComponent(gainField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 											.addComponent(label32)
 											.addComponent(readoutNoiseField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(52, Short.MAX_VALUE))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(equipmentPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+											.addComponent(label45)
+											.addComponent(darkCurrentField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(13, Short.MAX_VALUE))
 							);
 						}
 						scrollPane2.setViewportView(equipmentPanel2);
@@ -1838,9 +1872,9 @@ public class ViewerUi extends JFrame {
 									.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
 									.addComponent(systemParamsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(observerPanelLayout.createParallelGroup()
-									.addComponent(locationPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(observerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+									.addComponent(locationPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(observerNotesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 					);
 					observerPanelLayout.setVerticalGroup(
 						observerPanelLayout.createParallelGroup()
@@ -1860,7 +1894,7 @@ public class ViewerUi extends JFrame {
 				//---- saveObserverButton ----
 				saveObserverButton.setText("Save");
 				saveObserverButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				saveObserverButton.setToolTipText("Saves Observer and Equipment inputs t AIJ_Planner.properties file");
+				saveObserverButton.setToolTipText("<html>\nSaves Observer and Equipment inputs to \n<p>Planner.properties file</p>\n</html>");
 
 				//---- updateParamsButton ----
 				updateParamsButton.setText("Update Params");
@@ -1908,7 +1942,7 @@ public class ViewerUi extends JFrame {
 			contentPaneLayout.createParallelGroup()
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(aijTabbedPane, GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+					.addComponent(aijTabbedPane)
 					.addContainerGap())
 		);
 		pack();
@@ -2036,8 +2070,6 @@ public class ViewerUi extends JFrame {
 	private JTextField vertPixelSizeAsecField;
 	private JTextField vertFovAminField;
 	private JPanel observerNotesPanel;
-	private JScrollPane scrollPane1;
-	private JTextArea textArea1;
 	private JScrollPane scrollPane2;
 	private JPanel equipmentPanel2;
 	private JLabel label20;
@@ -2063,9 +2095,11 @@ public class ViewerUi extends JFrame {
 	private JLabel label30;
 	private JTextField vertArraySizeField;
 	private JLabel label31;
-	private JTextField darkCurrentField;
+	private JTextField gainField;
 	private JLabel label32;
 	private JTextField readoutNoiseField;
+	private JLabel label45;
+	private JTextField darkCurrentField;
 	private JButton saveObserverButton;
 	private JButton updateParamsButton;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables

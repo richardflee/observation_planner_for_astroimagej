@@ -87,7 +87,7 @@ public class TargetTab {
 		// populate target tab textbox and drop down controls
 		var query = TargetTabPropertiesFile.readProerties();
 		this.applyQueryData(query);
-		this.populateFilterCombo(null);
+		this.populateFilterCombo(query.getMagBand());
 		
 		// restricts text date entry to day/month/year pickers
 		configureDatePicker();		

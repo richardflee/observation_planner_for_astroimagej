@@ -44,23 +44,24 @@ public class AijPrefsFileIO {
 		return site;
 	}
 	
+	/**
+	 * Imports CCD data from AIJ_Prefs.txt file and returns in NoiseData object
+	 */
 	public static NoiseData readCcdNoisePrefsData() {
-
 		NoiseData data = null;
 		try (InputStream input = new FileInputStream(getAijPrefsFilePath())) {
 			Properties prop = new Properties();
 			prop.load(input);
-
+			
+			double ccdGain = Double.valueOf(prop.getProperty(".aperture.ccdgain").toString());
 			double ccdNoise = Double.valueOf(prop.getProperty(".aperture.ccdnoise").toString());
 			double ccdDark = Double.valueOf(prop.getProperty(".aperture.ccddark").toString());
-			data = new NoiseData(ccdNoise, ccdDark);
-
+			data = new NoiseData(ccdGain, ccdNoise, ccdDark);
 		} catch (NullPointerException | IOException ex) {
 			String message = "Failed to read ccd noise data: \n"  + getAijPrefsFilePath();
 			JOptionPane.showMessageDialog(null, message);
 		}
 		return data;
-
 	}
 	
 	

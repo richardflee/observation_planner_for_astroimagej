@@ -192,7 +192,7 @@ public class CatalogsTab implements CatalogTabListener{
 	
 	public void updateCatalogTabUi(CatalogSettings settings) {
 		
-		//nominal.setValue(settings.getNominalMagValue());
+		nominal.setValue(settings.getNominalMagValue());
 		
 		applyLimits.setSelected(settings.isApplyLimitsValue());
 		upperLimit.setValue(settings.getUpperLimitValue());

@@ -6,13 +6,13 @@
 
 	<!-- ***** Project  GroupId, ArtifactId-->
 	<groupId>com.github.richardflee.astroimagej</groupId>
-	<artifactId>aijplanner</artifactId>
+	<artifactId>planner</artifactId>
 
 	<!-- ***** Version-->
-	<version>SNAPSHOT-1.0a</version>
+	<version>1.0a</version>
 
 	<packaging>jar</packaging>
-	<name>aijplanner</name>
+	<name>planner</name>
 	<url>https://github.com/richardflee</url>
 
 	<properties>
@@ -92,7 +92,7 @@
 
 	<build>
 		<!-- **** Final package name -->
-		<finalName>aijplanner-onejar-1.0a</finalName>
+		<finalName>planner</finalName>
 
 		<!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
 		<plugins>

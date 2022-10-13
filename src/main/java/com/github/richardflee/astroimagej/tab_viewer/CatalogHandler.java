@@ -92,13 +92,7 @@ public class CatalogHandler {
 	
 	
 	public void doUpdateTable(CatalogSettings settings) {
-		updateTable(settings);
-		
-//		var tableRows = this.result.getTableRows(settings);
-//		
-//		this.tableListener.updateTable(tableRows);		
-//		this.tabListener.updateCounts(result.getFieldObjectsCollection());
-		
+		updateTable(settings);		
 	}
 	
 	private void updateTable(CatalogSettings settings) { 
@@ -123,8 +117,7 @@ public class CatalogHandler {
 	
 	
 	public void doSaveRaDecFile(CatalogSettings settings) {
-		new RaDecFileWriter().writeRaDecFile(this.result, settings);
-		
+		new RaDecFileWriter().writeRaDecFile(this.result, settings);		
 	}
 	
 	public static void main(String[] args) {

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
@@ -51,9 +53,8 @@ public class RaDecFileWriter extends RaDecFileBase {
 	 *     order
 	 * @param query
 	 *     parameters of on-line database query
-	 * @return message result of file write operation.
 	 */
-	public String writeRaDecFile(QueryResult result, CatalogSettings settings) {
+	public void writeRaDecFile(QueryResult result, CatalogSettings settings) {
 		// converts query data to string list to write to radec file
 		List<String> lines = compileRaDecList(result, settings);
 
@@ -65,10 +66,11 @@ public class RaDecFileWriter extends RaDecFileBase {
 				bw.append(line);
 			}
 		} catch (IOException e) {
-			String message = String.format("ERROR: Error saving radec file: %s", filePath);
+			var message = String.format("ERROR: Error saving radec file: %s", filePath);
+			JOptionPane.showMessageDialog(null,  message);
 		}
-		String statusMessage = String.format("Saved radec file: %s", filePath);
-		return statusMessage;
+		var message = String.format("Saved radec file: %s", filePath);
+		JOptionPane.showMessageDialog(null,  message);		
 	}
 
 	/*

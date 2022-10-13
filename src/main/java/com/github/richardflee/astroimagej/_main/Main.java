@@ -14,29 +14,28 @@ import com.github.richardflee.astroimagej.fileio.ObserverTabPropertiesFile;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 
-/**
- * 
- * Main class for JVoyagerLogViewer program to read, view and save selected
- * abstracts from Voyager session logs
- *
- */
-public class Main {
 
-	public final static String PLANNER_TITLE = "AstroImageJ Observation Planner";
-	public final static String PLANNER_VERSION = "SNAPSHOT-1.00a";
+public class Main {
+	
+	private static final String BUILD_NO = ".04";
+
+	public static final String PLANNER_TITLE = "AstroImageJ Observation Planner";
+	public static final String PLANNER_VERSION = "1.00a" + BUILD_NO;
 
 		public static void runApp() {
 			
 			// aborts with extended error message if AIJ_Prefs.txt not found
 			if (! AijPrefsFileIO.fileExists()) {
-				JOptionPane.showMessageDialog(null,  AijPrefsFileIO.errorMessage());
+				var message = AijPrefsFileIO.errorMessage();
+				JOptionPane.showMessageDialog(null, message);
 				System.exit(0);
 			}
 			
 			// creates new properties file with default data if AIJ_Planner.properties not found
 			if (! AijPropsReadWriter.fileExists()) {
 				AijPropsReadWriter.writeDefaultPropsFile();
-				JOptionPane.showMessageDialog(null,  AijPropsReadWriter.newFileMessage());
+				var message = AijPropsReadWriter.newFileMessage();
+				JOptionPane.showMessageDialog(null, message);
 			}
 			
 			// creates AIJ_Prefs data objects
@@ -46,8 +45,6 @@ public class Main {
 			// creates aij_planner data objects
 			var observer = ObserverTabPropertiesFile.readProerties();
 			
-			// catalog table
-		//	var tableModel= new CatalogTableModel();
 			
 			// User  interface
 			var viewer = new ViewerUi(site); //, tableModel);
@@ -56,15 +53,7 @@ public class Main {
 			observer_tab.setNoiseData(noiseData);
 			observer_tab.setObserverData(observer);
 			
-			// sets catalog data listener
-		//	var target_tab = viewer.getTarget_tab();
-			//viewer.getCatalogs_tab().setCatalogDataListener(target_tab);
-			
-//			// sets catalog table listener
-//			var handler = new CatalogHandler();
-//			handler.setCatalogTableListener(tableModel);
-			
-//			// window title text
+			// window title text
 			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_VERSION); 
 			viewer.setTitle(version);
 			viewer.setVisible(true);
@@ -78,7 +67,8 @@ public class Main {
 			UIManager.put("TabbedPane.selectedBackground", Color.white);
 			UIManager.put("OptionPane.minimumSize",new Dimension(500,80)); 
 		} catch (Exception ex) {
-			System.err.println("Failed to initialize LaF");
+			var message = "Failed to initialize LaF";
+			JOptionPane.showMessageDialog(null,  message);
 		}
 		
 		// runs app in EDT (event dispatching thread)

@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp aijTabbedPane::::623:x, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp aijTabbedPane:::::x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "DEMO!!"
@@ -251,7 +251,7 @@ new FormModel {
 							}
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {seq l {space :::p, comp runSimbadButton:::::x, space u:::p, comp saveQueryButton:::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space s:::p, comp panel11::::425:x}}"
+							"$horizontalGroup": "par l {seq l {space :::p, comp runSimbadButton:::::p, space u:::p, comp saveQueryButton:::p::p, space s:::p, comp label6:::p::p, space u:::p, comp datePickerPanel:::p:143:p, space s:::p, comp panel11::::426:x}}"
 							"$verticalGroup": "par l {seq l {space :::p, par l {comp datePickerPanel::l:p:33:p, par c:l {comp saveQueryButton::c:p:30:p, comp runSimbadButton::c:p:30:p, comp label6::c:p::p}, comp panel11::l:p:60:p}, space :::x}}"
 						} ) {
 							name: "solarPanel"
@@ -306,6 +306,7 @@ new FormModel {
 									name: "sunSetField"
 									"text": "00:00"
 									"editable": false
+									"toolTipText": "Local Sunset time"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -315,6 +316,7 @@ new FormModel {
 									name: "twilightEndField"
 									"editable": false
 									"text": "00:00"
+									"toolTipText": "Local time when Astronomical Twilight ends"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -328,6 +330,7 @@ new FormModel {
 									name: "twilightStartField"
 									"editable": false
 									"text": "00:00"
+									"toolTipText": "Local time when Astronomical Twilight starts"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -341,6 +344,7 @@ new FormModel {
 									name: "sunRiseField"
 									"editable": false
 									"text": "00:00"
+									"toolTipText": "Local Sunrise time"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -411,6 +415,7 @@ new FormModel {
 									"text": "Distance"
 									"$buttonGroup": new FormReference( "buttonGroup1" )
 									"selected": true
+									"toolTipText": "Sorts table by increasing radial distance to target"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -419,6 +424,7 @@ new FormModel {
 									name: "deltaMagRadioButton"
 									"text": "|Delta Mag|"
 									"$buttonGroup": new FormReference( "buttonGroup1" )
+									"toolTipText": "<html>\nSorts table by increasing absolute\n<p>difference to Nominal Mag</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -445,16 +451,16 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JSpinner" ) {
 									name: "upperLimitSpinner"
-									"model": new javax.swing.SpinnerNumberModel( 0.0, -0.1, 5.0, 0.2 )
-									"toolTipText": "<html>\nSet the target mag upper limit\n<p>Setting Upper = 0 disables this limit</p>\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n</html>"
+									"model": new javax.swing.SpinnerNumberModel( 0.0, -0.01, 5.0, 0.1 )
+									"toolTipText": "<html>\nSet the target mag upper limit\n<p>Range: 0 - 5 mag in 0.1 mag increment</p>\n<p>Setting Upper = 0 disables this limit</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JSpinner" ) {
 									name: "lowerLimitSpinner"
-									"model": new javax.swing.SpinnerNumberModel( 0.0, -5.0, 0.1, 0.2 )
-									"toolTipText": "<html>\nSet the target mag lower limit\n<p>Setting Lower = 0 disables this limit</p>\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n</html>\n"
+									"model": new javax.swing.SpinnerNumberModel( 0.0, -5.0, 0.01, 0.1 )
+									"toolTipText": "<html>\nSet the target mag lower limit\n<p>Range: -5 - 0 mag in 0.1 mag increment</p>\n<p>Setting Lower = 0 disables this limit</p>\n</html>\n"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -471,6 +477,7 @@ new FormModel {
 									name: "isMagLimitsCheckBox"
 									"text": "Apply mag limits"
 									"selected": true
+									"toolTipText": "<html>\nApply mag limits to filter table rows\n<p>Default: apply limits</p>\n</html>\n"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -478,6 +485,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "upperLabel"
 									"text": "N/A"
+									"toolTipText": "<html>\nMag band upper limit\n<p>N/A: upper limit is disabled</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -490,6 +498,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lowerLabel"
 									"text": "N/A"
+									"toolTipText": "<html>\nMag band lower limit\n<p>N/A: lower limit is disabled</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableModifiers": 4
 										"JavaCodeGenerator.variableGetter": true
@@ -511,6 +520,7 @@ new FormModel {
 									name: "saveDssCheckBox"
 									"text": "Save DSS Fits File"
 									"selected": true
+									"toolTipText": "<html>\nDownload and save DSS fits file \n<p>to dss folder</p>\n<p>Default: save fits file</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -583,7 +593,7 @@ new FormModel {
 								name: "catalogQueryButton"
 								"text": "Run Query"
 								"font": #Font1
-								"toolTipText": "<html>\nRuns an ObjectId-based query on the SIMBAD astro database\n<p>If the query is successful:</p>\n<p>1. Updates SIMBAD Coordinate and Magnitude fields, and</p>\n<p>2. Saves current query params to aij_planner.properties file</p>\n</html>"
+								"toolTipText": "<html>\nRuns a 'Query Data' based online query \n<p>on the selected database</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -592,7 +602,7 @@ new FormModel {
 								name: "importRaDecButton"
 								"text": "Import RaDec Fille"
 								"font": #Font1
-								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								"toolTipText": "Opens a dialog to import radec table data "
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -601,7 +611,7 @@ new FormModel {
 								name: "saveRaDecButton"
 								"text": "Save RaDec File"
 								"font": #Font1
-								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								"toolTipText": "<html>\nSaves current table data to radec file text file\n<p>filename format [objectID].[filter].[fov].radec.txt</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -610,7 +620,7 @@ new FormModel {
 								name: "updateButton"
 								"text": "Update"
 								"font": #Font1
-								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								"toolTipText": "Applies filter settings to table rows"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -619,7 +629,7 @@ new FormModel {
 								name: "clearButton"
 								"text": "Clear"
 								"font": #Font1
-								"toolTipText": "Validates and saves current query entries to aij_planner.properties file"
+								"toolTipText": "Clear all"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -627,7 +637,7 @@ new FormModel {
 						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "CATALOGS WIP"
+					"title": "Catalogs"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 					"$horizontalGroup": "par l {seq l {space :::p, comp updateParamsButton:1::p:140:p, space u:::p, comp saveObserverButton:1::p:120:p, space ::628:x}, comp observerPanel::l:::x}"
@@ -635,7 +645,7 @@ new FormModel {
 				} ) {
 					name: "observerTab"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, par l {comp scrollPane2::::0:x, comp systemParamsPanel:::::x}, space :::p, par l {comp locationPanel:::p::p, comp observerNotesPanel:::::p}}}"
+						"$horizontalGroup": "par l {seq l {space :::p, par l {comp scrollPane2::::0:x, comp systemParamsPanel:::::x}, space :::p, par l:::p {comp locationPanel:::::x, comp observerNotesPanel:::::x}}}"
 						"$verticalGroup": "par l {seq l {space :::p, comp locationPanel:::p::p, space :::p, comp observerNotesPanel:::::x}, seq l {comp scrollPane2::::439:x, space :::p, comp systemParamsPanel:::p::p, space :::p}}"
 					} ) {
 						name: "observerPanel"
@@ -657,6 +667,7 @@ new FormModel {
 								name: "latitudeField"
 								"editable": false
 								"focusable": false
+								"toolTipText": "<html>\nLatitude of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -664,6 +675,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JTextField" ) {
 								name: "northSouthField"
 								"editable": false
+								"toolTipText": "<html>\nNorth / South\n<p>North positive latitude</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -677,6 +689,7 @@ new FormModel {
 								name: "longitudeText"
 								"editable": false
 								"focusable": false
+								"toolTipText": "<html>\nLongitude of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -684,6 +697,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JTextField" ) {
 								name: "eastWestField"
 								"editable": false
+								"toolTipText": "<html>\nWest / East\n<p>East positive longitude</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -697,6 +711,7 @@ new FormModel {
 								name: "altitudeField"
 								"editable": false
 								"focusable": false
+								"toolTipText": "<html>\nHeight of observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -710,6 +725,7 @@ new FormModel {
 								name: "utcOffsetField"
 								"editable": false
 								"focusable": false
+								"toolTipText": "<html>\nUTC offset at observing site\n<p>Refer AIJ Coordinate Converter</p>\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -729,7 +745,7 @@ new FormModel {
 								name: "horizPixelSizeAsecField"
 								"editable": false
 								"focusable": false
-								"toolTipText": "Horiz pixel size / arcsec"
+								"toolTipText": "<html>\nUnbinned horiz image scale (\"/pix)\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -742,7 +758,7 @@ new FormModel {
 								name: "horizFovAminField"
 								"editable": false
 								"focusable": false
-								"toolTipText": "Horiz FOV / arcmin"
+								"toolTipText": "Horiz FOV (')"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -751,7 +767,7 @@ new FormModel {
 								name: "vertPixelSizeAsecField"
 								"editable": false
 								"focusable": false
-								"toolTipText": "Vert pixel size / arcsec"
+								"toolTipText": "<html>\nUnbinned vert image scale (\"/pix)\n</html>"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
@@ -760,31 +776,26 @@ new FormModel {
 								name: "vertFovAminField"
 								"editable": false
 								"focusable": false
-								"toolTipText": "Vert FOV / arcmin"
+								"toolTipText": "Vert FOV (')"
 								auxiliary() {
 									"JavaCodeGenerator.variableGetter": true
 								}
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {comp scrollPane1::l::408:x}"
-							"$verticalGroup": "par l {comp scrollPane1::l::370:x}"
+							"$horizontalGroup": "par l {space :0:408:x}"
+							"$verticalGroup": "par l {space :0:370:x}"
 						} ) {
 							name: "observerNotesPanel"
-							"border": new javax.swing.border.TitledBorder( null, "NOTES:", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
-							add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-								name: "scrollPane1"
-								add( new FormComponent( "javax.swing.JTextArea" ) {
-									name: "textArea1"
-								} )
-							} )
+							"border": new javax.swing.border.TitledBorder( null, "Space for user notes", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
+							"toolTipText": "<html>\n<b>USER NOTES NOT IMPLEMENTED</b>\n</html>"
 						} )
 						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 							name: "scrollPane2"
 							"horizontalScrollBarPolicy": 31
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq {space :::p, par l {comp label20::t:p::p, comp label21::t:p::p, comp label22::t:p::p, comp label23::t:p::p, comp label24::t:p::p, comp label25::t:p::p, comp label26::t:p::p, comp label27::t:p::p, comp label28::t:p::p, comp label29::t:p::p, comp label30::t:p::p, comp label31::t:p::p, comp label32::t:p::p}, space :::p, par l {par t:::p {comp darkCurrentField::l::244:x, comp vertArraySizeField::l::244:x, comp horizArraySizeField::l::244:x, comp vertPixelSizeUmField::l::244:x, comp horizPixelSizeUmField::l::244:x, comp cameraField::l::244:x, comp focalLengthField::l::244:x, comp apertureField::l::244:x, comp teleShortField::l::244:x, comp nameField::l::244:x, comp codeField::l::244:x, comp readoutNoiseField::::244:x}, comp teleFullField::::256:x}, space :p:141:p}}"
-								"$verticalGroup": "par l {seq l {space :::p, par b {comp label20::b:p::p, comp codeField::b:p::p}, space :::p, par b {comp label21::b:p::p, comp nameField::b:p::p}, space s:::p, par b {comp label22::b:p::p, comp teleShortField::b:p::p}, space :::p, par b {comp label23::b:p::p, comp teleFullField::b:p::p}, space :::p, par b {comp label24::b:p::p, comp apertureField::b:p::p}, space :::p, par b {comp label25::b:p::p, comp focalLengthField::b:p::p}, space s:::p, par b {comp label26::b:p::p, comp cameraField::b:p::p}, space :::p, par b {comp label27::b:p::p, comp horizPixelSizeUmField::b:p::p}, space :::p, par b {comp label28::b:p::p, comp vertPixelSizeUmField::b:p::p}, space :::p, par b {comp label29::b:p::p, comp horizArraySizeField::b:p::p}, space :::p, par b {comp label30::b:p::p, comp vertArraySizeField::b:p::p}, space :::p, par b {comp label31::b:p::p, comp darkCurrentField::b:p::p}, space :::p, par b {comp label32::b:p::p, comp readoutNoiseField::b:p::p}, space ::52:x}}"
+								"$horizontalGroup": "par l {seq {space :::p, par l {comp label20::t:p::p, comp label21::t:p::p, comp label22::t:p::p, comp label23::t:p::p, comp label24::t:p::p, comp label25::t:p::p, comp label26::t:p::p, comp label27::t:p::p, comp label28::t:p::p, comp label29::t:p::p, comp label30::t:p::p, comp label31::t:p::p, comp label32::t:p::p, comp label45::t:p::p}, space :::p, par l {par t:::p {comp gainField::l::244:x, comp vertArraySizeField::l::244:x, comp horizArraySizeField::l::244:x, comp vertPixelSizeUmField::l::244:x, comp horizPixelSizeUmField::l::244:x, comp cameraField::l::244:x, comp focalLengthField::l::244:x, comp apertureField::l::244:x, comp teleShortField::l::244:x, comp nameField::l::244:x, comp codeField::l::244:x, comp readoutNoiseField::::244:x, comp darkCurrentField::::244:x}, comp teleFullField::::256:x}, space :p:141:p}}"
+								"$verticalGroup": "par l {seq l {space :::p, par b {comp label20::b:p::p, comp codeField::b:p::p}, space :::p, par b {comp label21::b:p::p, comp nameField::b:p::p}, space s:::p, par b {comp label22::b:p::p, comp teleShortField::b:p::p}, space :::p, par b {comp label23::b:p::p, comp teleFullField::b:p::p}, space :::p, par b {comp label24::b:p::p, comp apertureField::b:p::p}, space :::p, par b {comp label25::b:p::p, comp focalLengthField::b:p::p}, space s:::p, par b {comp label26::b:p::p, comp cameraField::b:p::p}, space :::p, par b {comp label27::b:p::p, comp horizPixelSizeUmField::b:p::p}, space :::p, par b {comp label28::b:p::p, comp vertPixelSizeUmField::b:p::p}, space :::p, par b {comp label29::b:p::p, comp horizArraySizeField::b:p::p}, space :::p, par b {comp label30::b:p::p, comp vertArraySizeField::b:p::p}, space s:::p, par b {comp label31::b:p::p, comp gainField::b:p::p}, space :::p, par b {comp label32::b:p::p, comp readoutNoiseField::b:p::p}, space :::p, par b {comp label45::b:p::p, comp darkCurrentField::b:p::p}, space ::13:x}}"
 							} ) {
 								name: "equipmentPanel2"
 								"border": new javax.swing.border.TitledBorder( null, "Observer & Equipment Details", 4, 0, new java.awt.Font( "Tahoma", 1, 12 ), null )
@@ -796,6 +807,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "codeField"
 									"font": &Font4 new java.awt.Font( "Tahoma", 0, 12 )
+									"toolTipText": "<html>\nObserver's BAA VSS code\n<p>(Iwhere available)</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -922,28 +934,45 @@ new FormModel {
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label31"
-									"text": "Dark current (e-/s/pixel):"
+									"text": "Gain (e-/count): "
 									"font": new java.awt.Font( "Tahoma", 0, 12 )
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
-									name: "darkCurrentField"
+									name: "gainField"
 									"font": #Font4
 									"editable": false
 									"focusable": false
+									"toolTipText": "<html>\nCCD gain\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "label32"
-									"text": "Readout Noise (e-/pixel):"
-									"font": new java.awt.Font( "Tahoma", 0, 12 )
+									"text": "Readout noise (e-/pix):"
+									"font": &Font7 new java.awt.Font( "Tahoma", 0, 12 )
 								} )
 								add( new FormComponent( "javax.swing.JTextField" ) {
 									name: "readoutNoiseField"
 									"font": #Font4
 									"editable": false
 									"focusable": false
+									"toolTipText": "<html>\nCCD readout noise\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>"
+									auxiliary() {
+										"JavaCodeGenerator.variableGetter": true
+									}
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label45"
+									"text": "Dark current (e-/s/pix):"
+									"font": #Font7
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "darkCurrentField"
+									"font": #Font4
+									"editable": false
+									"focusable": false
+									"toolTipText": "<html>\nCCD dark current\n<p>Refer AIJ Aperture Photometry Settings</p>\n</html>"
 									auxiliary() {
 										"JavaCodeGenerator.variableGetter": true
 									}
@@ -955,7 +984,7 @@ new FormModel {
 						name: "saveObserverButton"
 						"text": "Save"
 						"font": #Font1
-						"toolTipText": "Saves Observer and Equipment inputs t AIJ_Planner.properties file"
+						"toolTipText": "<html>\nSaves Observer and Equipment inputs to \n<p>Planner.properties file</p>\n</html>"
 						auxiliary() {
 							"JavaCodeGenerator.variableGetter": true
 						}
