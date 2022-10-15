@@ -127,7 +127,6 @@ public class CatalogsTab implements CatalogTabListener{
 	public void importRaDecSettings(double nominalMag, boolean isSortedByDeltaMag) {
 		var settings = new CatalogSettings();
 		settings.setNominalMagValue(nominalMag);
-		settings.setSortDeltaMagValue(! isSortedByDeltaMag);
 		settings.setSortDistanceValue(! isSortedByDeltaMag);
 		updateCatalogTabUi(settings);		
 	}
@@ -172,13 +171,11 @@ public class CatalogsTab implements CatalogTabListener{
 
 		// sort option
 		settings.setSortDistanceValue(sortDistance.isSelected());
-		settings.setSortDeltaMagValue(sortDeltaMag.isSelected());
 
 		// number of observations
 		settings.setnObsValue((int) nObs.getValue());
 		
 		settings.setSaveDssValue(dssFits.isSelected());
-
 		return settings;
 	}
 	

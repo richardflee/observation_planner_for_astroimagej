@@ -76,8 +76,7 @@ public class CatalogHandler {
 	
 	public void doImportRaDecfile(CatalogSettings settings) {
 		
-		var fr = new RaDecFileReader();
-		
+		var fr = new RaDecFileReader();		
 		if (! fr.isRaDecFileSelected()) {
 			return;
 		}

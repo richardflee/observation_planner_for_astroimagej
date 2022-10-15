@@ -46,11 +46,9 @@ public class CatalogTabPropertiesFile {
 			switch (prop.getProperty(SORT_BY)) {
 			case SORT_BY_DISTANCE:
 				settings.setSortDistanceValue(true);
-				settings.setSortDeltaMagValue(false);
 				break;
 			case SORT_BY_DELTAMAG:
 				settings.setSortDistanceValue(false);
-				settings.setSortDeltaMagValue(true);
 				break;
 			default:
 				var message = String.format("File read error:%s", AijPropsReadWriter.getPropertiesFilePath());
@@ -71,7 +69,6 @@ public class CatalogTabPropertiesFile {
 		
 		var settings = new CatalogSettings();
 		settings.setSortDistanceValue(true);
-		settings.setSortDeltaMagValue(! settings.isSortDistanceValue());		
 		CatalogTabPropertiesFile.writeProperties(settings);
 		
 		settings = CatalogTabPropertiesFile.readProerties();		
@@ -80,7 +77,6 @@ public class CatalogTabPropertiesFile {
 		System.out.println();
 		
 		settings.setSortDistanceValue(false);
-		settings.setSortDeltaMagValue(! settings.isSortDistanceValue());			
 		CatalogTabPropertiesFile.writeProperties(settings);
 		settings = CatalogTabPropertiesFile.readProerties();		
 		System.out.println(String.format("Sort by distance: %b", settings.isSortDistanceValue()));

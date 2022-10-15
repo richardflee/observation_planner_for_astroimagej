@@ -112,16 +112,15 @@ public class CatalogSettings {
 		return sortDistanceValue;
 	}
 
-	public void setSortDistanceValue(boolean distanceValue) {
-		this.sortDistanceValue = distanceValue;
-	}
 
 	public boolean isSortDeltaMagValue() {
 		return sortDeltaMagValue;
 	}
 
-	public void setSortDeltaMagValue(boolean deltaMagValue) {
-		this.sortDeltaMagValue = deltaMagValue;
+
+	public void setSortDistanceValue(boolean distanceValue) {
+		this.sortDistanceValue = distanceValue;
+		this.sortDeltaMagValue = ! distanceValue;		
 	}
 
 	public int getnObsValue() {
