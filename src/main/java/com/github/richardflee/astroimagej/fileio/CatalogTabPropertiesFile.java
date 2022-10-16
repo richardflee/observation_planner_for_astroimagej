@@ -25,10 +25,9 @@ public class CatalogTabPropertiesFile {
 		try (OutputStream output = new FileOutputStream(AijPropsReadWriter.getPropertiesFilePath())) {
 			if (settings.isSortDistanceValue() == true) {
 				prop.setProperty(SORT_BY, SORT_BY_DISTANCE);
-			}
-			if (settings.isSortDeltaMagValue() == true) {
+			} else {
 				prop.setProperty(SORT_BY, SORT_BY_DELTAMAG);
-			}
+			}			
 			prop.store(output, null);
 		} catch (IOException io) {
 			var message = String.format("File write error:%s", AijPropsReadWriter.getPropertiesFilePath());

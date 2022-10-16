@@ -942,6 +942,7 @@ public class ViewerUi extends JFrame {
 										.addComponent(sunRiseField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 										.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							);
+							panel11Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {sunRiseField, sunSetField, twilightEndField, twilightStartField});
 							panel11Layout.setVerticalGroup(
 								panel11Layout.createParallelGroup()
 									.addGroup(panel11Layout.createSequentialGroup()

@@ -288,7 +288,7 @@ new FormModel {
 								"font": new java.awt.Font( "Tahoma", 0, 12 )
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-								"$horizontalGroup": "par l {seq {space :::p, comp label33:::p::p, space :::p, comp sunSetField:::p:47:p, space u:::p, comp label34:::p::p, space :::p, comp twilightEndField:::p:28:p, space u:::p, comp label35:::p::p, space :5:5:p, comp twilightStartField:::p:47:p, space u:::p, comp label36:::p::p, space :5:5:p, comp sunRiseField:::p:47:p, space :::x}}"
+								"$horizontalGroup": "par l {seq {space :::p, comp label33:::p::p, space :::p, comp sunSetField:8::p:47:p, space u:::p, comp label34:::p::p, space :::p, comp twilightEndField:8::p:28:p, space u:::p, comp label35:::p::p, space :5:5:p, comp twilightStartField:8::p:47:p, space u:::p, comp label36:::p::p, space :5:5:p, comp sunRiseField:8::p:47:p, space :::x}}"
 								"$verticalGroup": "par l {seq l {space :::p, par l {seq {space :3:3:p, comp label36:::p::p}, comp sunRiseField:::p::p, par t {par l {seq {space :3:3:p, comp label35:::p::p}, comp twilightStartField:::p::p}, par b {comp label33::b:p::p, comp sunSetField::b:p::p, comp label34::b:p::p, comp twilightEndField::b:p::p}}}, space :::x}}"
 							} ) {
 								name: "panel11"

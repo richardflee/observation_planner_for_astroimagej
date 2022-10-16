@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
+import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.Observer;
 
 public class AijPropsReadWriter {
@@ -31,18 +32,18 @@ public class AijPropsReadWriter {
 
 	public static void writeDefaultPropsFile() {
 		
-		Path x = Paths.get(getPropertiesFilePath());
+		Path path = Paths.get(getPropertiesFilePath());
 		try {
-			Files.createFile(x);
+			Files.createFile(path);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		ObserverTabPropertiesFile.writeProperties(new Observer());
 		
 		TargetTabPropertiesFile.writeProperties(new CatalogQuery());
+		
+		CatalogTabPropertiesFile.writeProperties(new CatalogSettings());
 	}
 
 	public static boolean fileExists() {

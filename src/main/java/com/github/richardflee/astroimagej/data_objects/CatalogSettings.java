@@ -37,6 +37,8 @@ public class CatalogSettings {
 	public CatalogSettings() {
 		this.nominalValue = CatalogSettings.DEFAULT_TGT_MAG;
 		setDefaultSettings();
+		this.sortDistanceValue = true;
+		this.sortDeltaMagValue = false;
 	}
 	
 	
