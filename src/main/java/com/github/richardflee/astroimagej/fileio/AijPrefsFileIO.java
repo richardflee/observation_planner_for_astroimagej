@@ -52,19 +52,16 @@ public class AijPrefsFileIO {
 		try (InputStream input = new FileInputStream(getAijPrefsFilePath())) {
 			Properties prop = new Properties();
 			prop.load(input);
-			
-			double ccdGain = Double.valueOf(prop.getProperty(".aperture.ccdgain").toString());
-			double ccdNoise = Double.valueOf(prop.getProperty(".aperture.ccdnoise").toString());
-			double ccdDark = Double.valueOf(prop.getProperty(".aperture.ccddark").toString());
-			data = new NoiseData(ccdGain, ccdNoise, ccdDark);
+			String strGain = prop.getProperty(".aperture.ccdgain");
+			String strNoise = prop.getProperty(".aperture.ccdnoise");
+			String strDark = prop.getProperty(".aperture.ccddark");			
+			data = new NoiseData(strGain, strNoise, strDark);
 		} catch (NullPointerException | IOException ex) {
 			String message = "Failed to read ccd noise data: \n"  + getAijPrefsFilePath();
 			JOptionPane.showMessageDialog(null, message);
 		}
 		return data;
 	}
-	
-	
 	
 	public static boolean fileExists() {
 		var file = new File(getAijPrefsFilePath());
@@ -84,23 +81,6 @@ public class AijPrefsFileIO {
 	private static String getAijPrefsFilePath() {
 		var homePath = Paths.get(System.getProperty("user.home")).toAbsolutePath().toString();
 		return Paths.get(homePath, ".astroimagej", AIJ_PREFS_FILE).toString();
-	}
-	
-	public static void main(String[] args) {
-		
-		if (! AijPrefsFileIO.fileExists()) {
-			JOptionPane.showMessageDialog(null,  AijPrefsFileIO.errorMessage());
-			System.out.println(AijPrefsFileIO.errorMessage());
-			System.exit(0);
-		}
-		
-		var site = AijPrefsFileIO.readObservationSitePrefsData();
-		System.out.println(site.toString());
-		System.out.println();
-		
-		var noiseData = AijPrefsFileIO.readCcdNoisePrefsData();
-		System.out.println(noiseData.toString());
-		
 	}
 
 }

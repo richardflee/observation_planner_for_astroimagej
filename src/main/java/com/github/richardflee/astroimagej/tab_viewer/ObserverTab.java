@@ -109,18 +109,9 @@ public class ObserverTab {
 	 * writes CCD noise data from AIJ_Prefs.txt file to observert tab text controls
 	 */
 	public void setNoiseData(NoiseData noiseData) {
-		
-		boolean noData = Double.valueOf(noiseData.getCcdGain()).isNaN();
-		var data = noData ? "" : String.format("%.4f", noiseData.getCcdGain());
-		gainText.setText(data);
-		
-		noData = Double.valueOf(noiseData.getCcdNoise()).isNaN();
-		data = noData ? "" : String.format("%.1f",  noiseData.getCcdNoise());
-		readoutNoiseText.setText(data);
-		
-		noData = Double.valueOf(noiseData.getCcdDark()).isNaN();
-		data = noData ? "" : String.format("%.4f", noiseData.getCcdDark());
-		darkCurrentText.setText(data);		
+		gainText.setText(noiseData.getCcdGain());
+		readoutNoiseText.setText(noiseData.getCcdNoise());
+		darkCurrentText.setText(noiseData.getCcdDark());		
 	}
 	
 	public void setObservationSiteData() {

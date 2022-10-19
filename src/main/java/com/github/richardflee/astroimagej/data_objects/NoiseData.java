@@ -1,52 +1,47 @@
 package com.github.richardflee.astroimagej.data_objects;
 
+import java.util.regex.Pattern;
+
 public class NoiseData {
 	
-	private double ccdGain = 1.0;
-	private double ccdNoise = 0.0;
-	private double ccdDark = 0.00;
+	private String ccdGain = "";
+	private String ccdNoise = "";
+	private String ccdDark = "";
 	
+	private final Pattern PATTERN = Pattern.compile("-?\\d+(\\.\\d+)?");
 	
-	public NoiseData(double ccdGain, double ccdNoise, double ccdDark) {
+	public boolean isNumeric(String strNum) {
+	    if (strNum == null) {
+	        return false; 
+	    }
+	    return PATTERN.matcher(strNum).matches();
+	}
+	
+	public NoiseData(String ccdGain, String ccdNoise, String ccdDark) {
 		this.ccdGain = ccdGain;
 		this.ccdNoise = ccdNoise;
 		this.ccdDark = ccdDark;
 	}
 
-
-	public double getCcdNoise() {
-		return ccdNoise;
+	public String getCcdGain() {
+		var str = this.ccdGain;
+		return (isNumeric(str)) ? String.format("%.3f", Double.valueOf(str)) : "";
 	}
 
-
-	public void setCcdNoise(double ccdNoise) {
-		this.ccdNoise = ccdNoise;
+	public String getCcdNoise() {
+		var str = this.ccdNoise;
+		return (isNumeric(str)) ? String.format("%.1f", Double.valueOf(str)) : "";
 	}
 
-
-	public double getCcdDark() {
-		return ccdDark;
+	public String getCcdDark() {
+		var str = this.ccdDark;
+		return (isNumeric(str)) ?  String.format("%.3f", Double.valueOf(str)) : "";
 	}
-
-
-	public void setCcdDark(double ccdDark) {
-		this.ccdDark = ccdDark;
-	}
-
-
-	public double getCcdGain() {
-		return ccdGain;
-	}
-
-
-	public void setCcdGain(double ccdGain) {
-		this.ccdGain = ccdGain;
-	}
-
 
 	@Override
 	public String toString() {
-		return "NoiseData [ccdGain=" + ccdGain + ", ccdNoise=" + ccdNoise + ", ccdDark=" + ccdDark + "]";
+		return "NoiseData [strGain=" + ccdGain + ", strNoise=" + ccdNoise + ", strDark=" + ccdDark + ", PATTERN="
+				+ PATTERN + "]";
 	}
-
+	
 }
