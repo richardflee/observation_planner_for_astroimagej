@@ -7,6 +7,8 @@ import com.github.richardflee.astroimagej.catalogs.VspCatalog;
 import com.github.richardflee.astroimagej.charts.VspChart;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
+import com.github.richardflee.astroimagej.data_objects.FieldObject;
+import com.github.richardflee.astroimagej.fileio.CatalogTabPropertiesFile;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.RaDecFileReader;
 import com.github.richardflee.astroimagej.fileio.RaDecFileWriter;
@@ -21,10 +23,7 @@ public class CatalogHandler {
 	
 	private QueryResult result = null;
 	private VspChart vspChart = null;
-//	
-//	private RaDecFileReader radecFileReader = null;
-//	private RaDecFileWriter fileWriter = null;
-	
+
 	
 	public CatalogHandler() {
 		this.result = new QueryResult();
@@ -57,24 +56,35 @@ public class CatalogHandler {
 	 * 5. update catalog_table with rows object list
 	 */
 	
-	public void doCatalogQuery(CatalogSettings settings) {
-		 var query = TargetTabPropertiesFile.readProerties();
-		 this.result = new QueryResult();
-		 this.result.setQuery(query);
+	public void doRunCatalogQuery(CatalogSettings settings) {
+		 var query = TargetTabPropertiesFile.readProperties();
 		 
 		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 var fosCatalog = catalog.runQuery(query);	 
-		 this.result.addFieldObjects(fosCatalog);
+		 var fieldObjects = catalog.runQuery(query);		 
+		 this.result = new QueryResult(query, fieldObjects);
 		 
 		 if (settings.isSaveDssValue()) {
 			 var message = DssFitsWriter.downloadDssFits(query);
 			 JOptionPane.showMessageDialog(null, message);
 		 }
-		 updateTable(settings);
+		 updateCatalogTableRecords(settings);
+	}
+	
+	public void doRunCatalogQuery(double nominalMag) {
+		// assemble and run query
+		var query = TargetTabPropertiesFile.readProperties();
+		var catalog = CatalogFactory.createCatalog(query.getCatalogType());
+		var fieldObjects = catalog.runQuery(query);
+		
+		// compile query result object
+		this.result = new QueryResult(query, fieldObjects);
+		//var settings = new CatalogSettings(nominalMag);
+		
+		updateCatalogTableRecords(new CatalogSettings(nominalMag));
 	}
 	
 	
-	public void doImportRaDecfile(CatalogSettings settings) {
+	public void doImportRaDecfile() {
 		
 		var fr = new RaDecFileReader();		
 		if (! fr.isRaDecFileSelected()) {
@@ -82,41 +92,43 @@ public class CatalogHandler {
 		}
 		
 		this.result = fr.getRaDecResult();
-		var isSortedByDeltaMag = result.getFieldObjectsCollection().isSortedByDeltaMag();		
 		var nominalMag = fr.getRaDecNominalMag();
-		tabListener.importRaDecSettings(nominalMag, isSortedByDeltaMag);
-		updateTable(settings);
+		CatalogTabPropertiesFile.writeProperties(nominalMag);
+		
+		var radecQuery = result.getQuery();
+		TargetTabPropertiesFile.writeProperties(radecQuery);
+		
+		var isSortedByDistance = result.isSortedByDistance();
+		CatalogTabPropertiesFile.writeProperties(isSortedByDistance);
+		
+		tabListener.importRaDecSettings(nominalMag);		
+		updateCatalogTableRecords(new CatalogSettings(nominalMag));
 	}
 	
-	
+	public void doSaveRaDecFile(double nominalMag) {
+		new RaDecFileWriter().writeRaDecFile(this.result, nominalMag);		
+	}
 	
 	public void doUpdateTable(CatalogSettings settings) {
-		updateTable(settings);		
+		updateCatalogTableRecords(settings);		
 	}
 	
-	private void updateTable(CatalogSettings settings) { 
-		var tableRows = result.getTableRows(settings);
-		this.tableListener.updateTable(tableRows);		
-		this.tabListener.updateCounts(result.getFieldObjectsCollection());
-		
-		 var chartUri = new VspCatalog().downloadChartUri(this.result.getQuery());
-		 this.result.setChartUri(chartUri);
-		 this.vspChart.showChart(result, settings);
-	}
 	
-	public void doClearTable(CatalogSettings settings) {
+	public void doClearTable() {
 		this.result.clearFieldObjects();		
-		System.out.println("handler clear");
-		
+		this.tableListener.updateTable(null);		
+		this.tabListener.updateCounts(result.getFieldObjectsCollection());
+		this.vspChart.closeChart();
+	}
+	
+	private void updateCatalogTableRecords(CatalogSettings settings) { 
 		var tableRows = result.getTableRows(settings);
 		this.tableListener.updateTable(tableRows);		
 		this.tabListener.updateCounts(result.getFieldObjectsCollection());
 		
-	}
-	
-	
-	public void doSaveRaDecFile(CatalogSettings settings) {
-		new RaDecFileWriter().writeRaDecFile(this.result, settings);		
+		var chartUri = new VspCatalog().downloadChartUri(this.result.getQuery());
+		this.result.setChartUri(chartUri);
+		this.vspChart.showChart(result, settings);
 	}
 	
 	public static void main(String[] args) {

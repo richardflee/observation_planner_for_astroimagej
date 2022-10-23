@@ -8,6 +8,6 @@ public interface CatalogTabListener {
 
 	public void updateCounts(FieldObjectsCollection fieldObjects);
 	
-	public void importRaDecSettings(double nominalMag, boolean isSortedByDeltaMag);
+	public void importRaDecSettings(double nominalMag);
 	
 }

@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
-import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.enums.RaDecFilesEnum;
 import com.github.richardflee.astroimagej.utils.AstroCoords;
@@ -54,9 +53,9 @@ public class RaDecFileWriter extends RaDecFileBase {
 	 * @param query
 	 *     parameters of on-line database query
 	 */
-	public void writeRaDecFile(QueryResult result, CatalogSettings settings) {
+	public void writeRaDecFile(QueryResult result, double nominalMag) {
 		// converts query data to string list to write to radec file
-		List<String> lines = compileRaDecList(result, settings);
+		List<String> lines = compileRaDecList(result, nominalMag);
 
 		// write new radec file and update message
 		File file = getFile(result.getQuery());
@@ -125,8 +124,8 @@ public class RaDecFileWriter extends RaDecFileBase {
 	 * @param query catalog query data for this data set
 	 * @return data and comment line string array
 	 */
-	private List<String> compileRaDecList(QueryResult result, CatalogSettings settings) {
-		var target = FieldObject.compileTargetFromQuery(result.getQuery(), settings);
+	private List<String> compileRaDecList(QueryResult result, double nominalMag) {
+		var target = FieldObject.compileTargetFromQuery(result.getQuery(), nominalMag);
 		
 		List<FieldObject> filteredList = result.getFieldObjectsCollection().getFilteredFieldObjects();
 		filteredList.add(0, target);

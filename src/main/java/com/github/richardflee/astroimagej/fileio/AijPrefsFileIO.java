@@ -31,10 +31,10 @@ public class AijPrefsFileIO {
 
 			// import observation site parameters from AIJ_Prefs.txt & create new Site
 			// object
-			double siteLongDeg = Double.parseDouble(prop.getProperty(".coords.lon").toString());
-			double siteLatDeg = Double.parseDouble(prop.getProperty(".coords.lat").toString());
-			double siteElevation = Double.parseDouble(prop.getProperty(".coords.alt").toString());
-			double utcOffsetHr = Double.parseDouble(prop.getProperty(".coords.nowTimeZoneOffset").toString());
+			double siteLongDeg = Double.parseDouble(prop.getProperty(".dpcoords.lon").toString());
+			double siteLatDeg = Double.parseDouble(prop.getProperty(".dpcoords.lat").toString());
+			double siteElevation = Double.parseDouble(prop.getProperty(".dpcoords.alt").toString());
+			double utcOffsetHr = Double.parseDouble(prop.getProperty(".dpcoords.nowTimeZoneOffset").toString());
 
 			site = new ObservationSite(siteLongDeg, siteLatDeg, siteElevation, utcOffsetHr);
 		} catch (NullPointerException | IOException ex) {

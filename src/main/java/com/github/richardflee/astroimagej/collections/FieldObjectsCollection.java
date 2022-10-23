@@ -17,8 +17,8 @@ public class FieldObjectsCollection {
 	}
 	
 	
-	public void addFieldObjects(List<FieldObject> fos) {
-		this.fieldObjects.addAll(fos);
+	public void addFieldObjects(List<FieldObject> fieldObjects) {
+		this.fieldObjects.addAll(fieldObjects);
 	}
 	
 	public void update(FieldObject target) {
@@ -26,7 +26,7 @@ public class FieldObjectsCollection {
 		this.fieldObjects.stream().forEach(p -> p.setDeltaMag(target));
 	}
 	
-	public void sortByDistance(FieldObject target) {		
+	public void sortByDistance() {		
 		this.fieldObjects = this.fieldObjects.stream()
 				.sorted(Comparator.comparingDouble(p -> p.getRadSepAmin()))
 				.collect(Collectors.toList());	
@@ -38,7 +38,7 @@ public class FieldObjectsCollection {
 	 *     sorted list of field objeccts
 	 * @return true if sorted in order of increasing |mag diff|, false otherwise
 	 */
-	public void sortByDeltaMag(FieldObject target) {
+	public void sortByDeltaMag() {
 		this.fieldObjects = this.fieldObjects.stream()
 				.sorted(Comparator.comparingDouble(p -> Math.abs(p.getDeltaMag())))
 				.collect(Collectors.toList());		

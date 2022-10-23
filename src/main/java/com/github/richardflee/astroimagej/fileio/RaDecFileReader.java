@@ -37,17 +37,14 @@ public class RaDecFileReader extends RaDecFileBase {
 	private List<String> radecLines = null;
 	
 	public QueryResult getRaDecResult() {
-		var result = new QueryResult();
+		// radec query & field objects
 		var radecQuery = getRaDecQuery();
-		result.setQuery(radecQuery);
-		
-		var fos = getRaDecFieldObjects();
-		result.addFieldObjects(fos);
+		var fieldObjects = getRaDecFieldObjects();
+		var result = new QueryResult(radecQuery, fieldObjects);
 		
 		// extract chart uri
 		var chartUri = getChartUriLine();
 		result.setChartUri(chartUri);
-		
 		return result;
 	}
 	

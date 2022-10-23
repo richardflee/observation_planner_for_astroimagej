@@ -31,7 +31,7 @@ public class ObserverTabPropertiesFile {
 
 	public static void writeProperties(Observer observer) {
 
-		Properties prop = AijPropsReadWriter.getPlannerProps();
+		Properties prop = AijPropsReadWriter.getPlannerProperties();
 		try (OutputStream output = new FileOutputStream(AijPropsReadWriter.getPropertiesFilePath())) {
 			var strVal = observer.getObserverCode();
 			prop.setProperty(OBSERVER_CODE, strVal);

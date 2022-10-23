@@ -64,8 +64,10 @@ public class ViewerUi extends JFrame {
 		this.aijTabbedPane.addChangeListener(e -> {
 			switch (aijTabbedPane.getSelectedIndex()) {
 			case TARGET_TAB_IDX:
-				var query = TargetTabPropertiesFile.readProerties();
+				var query = TargetTabPropertiesFile.readProperties();
 				target_tab.applyQueryData(query);
+				target_tab.doSaveQueryData(query);
+				new SimbadPanelData(this).setSimbadData(null);
 				break;
 			case CATALOGS_TAB_IDX:
 				catalogs_tab.updateQueryPanel(this);

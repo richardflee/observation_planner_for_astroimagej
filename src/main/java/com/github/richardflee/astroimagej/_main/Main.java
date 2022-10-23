@@ -17,7 +17,7 @@ import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 public class Main {
 	
-	private static final String BUILD_NO = ".07";
+	private static final String BUILD_NO = ".08";
 
 	public static final String PLANNER_TITLE = "AstroImageJ Observation Planner";
 	public static final String PLANNER_VERSION = "1.00a" + BUILD_NO;
@@ -33,7 +33,7 @@ public class Main {
 			
 			// creates new properties file with default data if AIJ_Planner.properties not found
 			if (! AijPropsReadWriter.fileExists()) {
-				AijPropsReadWriter.writeDefaultPropsFile();
+				AijPropsReadWriter.writeDefaultPropertiesFile();
 				var message = AijPropsReadWriter.newFileMessage();
 				JOptionPane.showMessageDialog(null, message);
 			}

@@ -85,9 +85,9 @@ public class TargetTab {
 		this.filterCombo = viewer.getFilterCombo();
 		
 		// populate target tab textbox and drop down controls
-		var query = TargetTabPropertiesFile.readProerties();
+		var query = TargetTabPropertiesFile.readProperties();
 		this.applyQueryData(query);
-		this.populateFilterCombo(query.getMagBand());
+		//this.populateFilterCombo(query.getMagBand());
 		
 		// restricts text date entry to day/month/year pickers
 		configureDatePicker();		
@@ -193,7 +193,7 @@ public class TargetTab {
 		
 		var xData = IntStream.range(0, TimesConverter.MINS_IN_DAY).boxed().collect(Collectors.toList());
 		var startDate = LocalDate.now();
-		var fo = (BaseFieldObject) TargetTabPropertiesFile.readProerties();
+		var fo = (BaseFieldObject) TargetTabPropertiesFile.readProperties();
 		var yData = new ObjectTracker(site).computeAltitudeData(fo, startDate);	
 		chart.addSeries(ALTITUDE_SERIES, xData, yData).setMarker(SeriesMarkers.NONE);
 		chart.setTitle(getChartTitle(startDate));
@@ -230,24 +230,25 @@ public class TargetTab {
 		// save query data
 		save.addActionListener(e -> {
 			if (verifier.verifyAllTextInputs()) {
-				doSaveQueryData();
+				var query = compileQuery();
+				doSaveQueryData(query);
 				JOptionPane.showMessageDialog(null, AijPropsReadWriter.savedFileMessage());
 			}
 		});
 
 		// run cat\simbad query
 		runSimbadQuery.addActionListener(e -> {
-			System.out.println(verifier.verifyAllTextInputs());
 			if (verifier.verifyAllTextInputs()) {
-				var message = this.runSimbadQuery();				
-				doSaveQueryData();
+				var message = this.runSimbadQuery();	
+				var query = compileQuery();
+				doSaveQueryData(query);
 				JOptionPane.showMessageDialog(null, message);
 			}
 		});
 	}
 	
-	private void doSaveQueryData() {
-		TargetTabPropertiesFile.writeProperties(this.compileQuery());
+	public void doSaveQueryData(CatalogQuery query) {
+		TargetTabPropertiesFile.writeProperties(query);
 		doChartUpdate(datePicker.getDate());
 	}
 	

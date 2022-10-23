@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.richardflee.astroimagej.data_objects.CatalogQuery;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
 import com.github.richardflee.astroimagej.data_objects.FieldObject;
+import com.github.richardflee.astroimagej.fileio.CatalogTabPropertiesFile;
 
 /**
  * Objects of this class encapsulate results of queries of on-line astronomical
@@ -37,8 +38,14 @@ public class QueryResult {
 		this.foCollection = new FieldObjectsCollection();		
 	}
 	
-	public void addFieldObjects(List<FieldObject> fos) {
-		this.foCollection.addFieldObjects(fos);		
+	public QueryResult(CatalogQuery query, List<FieldObject> fieldObjects) {
+		this.query = query;
+		this.foCollection = new FieldObjectsCollection();		
+		this.addFieldObjects(fieldObjects);		
+	}
+	
+	private void addFieldObjects(List<FieldObject> fieldObjects) {
+		this.foCollection.addFieldObjects(fieldObjects);		
 	}
 	
 	public void clearFieldObjects() {
@@ -47,11 +54,13 @@ public class QueryResult {
 	}
 	
 	public List<FieldObject> getTableRows(CatalogSettings settings) {
-		var target = FieldObject.compileTargetFromQuery(this.query, settings);
+		var nominalMag = settings.getNominalMagValue();
+		var target = FieldObject.compileTargetFromQuery(this.query, nominalMag);
 		foCollection.update(target);
-		this.applySort(settings);
-		this.applyFilters(settings);
 		
+		var sortByDistance = CatalogTabPropertiesFile.isSortByDistance();
+		this.sortCatalogTable(sortByDistance);
+		this.applyFilters(settings);		
 		
 		List<FieldObject> tableRows = new ArrayList<>();
 		for (var fo : foCollection.getFieldObjects()) {
@@ -78,15 +87,23 @@ public class QueryResult {
 	public String getChartUri() {
 		return chartUri;
 	}
+	
+//	private boolean isSortedByDeltaMag() {
+//		return ! this.foCollection.isSortedByDeltaMag();
+//	}
+	
+	public boolean isSortedByDistance() {
+		return (! this.foCollection.isSortedByDeltaMag()); 
+	}
 
-	private void applySort(CatalogSettings settings) {
-		var target = FieldObject.compileTargetFromQuery(this.query, settings);		
-		if (settings.isSortDistanceValue()) {
-			foCollection.sortByDistance(target);
-		}
-		if (settings.isSortDeltaMagValue()) {
-			foCollection.sortByDeltaMag(target);
-		}
+	private void sortCatalogTable(boolean sortByDistance) {
+		// var nominalMag = settings.getNominalMagValue();
+		//var target = FieldObject.compileTargetFromQuery(this.query, nominalMag);
+		if (sortByDistance) {
+			foCollection.sortByDistance();
+		} else {
+			foCollection.sortByDeltaMag();			
+		}		
 	}
 	
 	private void applyFilters(CatalogSettings settings) {

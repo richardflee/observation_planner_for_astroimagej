@@ -1,5 +1,6 @@
 package com.github.richardflee.astroimagej.data_objects;
 
+import com.github.richardflee.astroimagej.fileio.CatalogTabPropertiesFile;
 
 /**
  * This class encapsulates catalog ui sort and filter controls methods and data
@@ -7,8 +8,8 @@ package com.github.richardflee.astroimagej.data_objects;
 public class CatalogSettings {
 	// boolean options
 	private boolean applyLimitsValue;
-	private boolean sortDistanceValue;
-	private boolean sortDeltaMagValue;
+//	private boolean sortDistanceValue;
+//	private boolean sortDeltaMagValue;
 	private boolean saveDssValue;
 	
 	// nominal mag + spinner limits
@@ -31,20 +32,25 @@ public class CatalogSettings {
 	/**
 	 * One parameter constructor specifies new target spinner value; resets filter
 	 * and sort controls to default values;
-	 * @param targetMag
+	 * @param nominalMag
 	 *     target spinner setting
 	 */
 	public CatalogSettings() {
 		this.nominalValue = CatalogSettings.DEFAULT_TGT_MAG;
-		setDefaultSettings();
-		this.sortDistanceValue = true;
-		this.sortDeltaMagValue = false;
+		setUiDefaultSettings();
+//		this.sortDistanceValue = true;
+//		this.sortDeltaMagValue = false;
+	}
+	
+	public CatalogSettings(double nominalMag) {
+		this();
+		this.nominalValue = nominalMag;
 	}
 	
 	
 	// resets filter defaults and state checkboxes to selected
 	// nominal mag & current sort selection are unchanged
-	public void setDefaultSettings() {
+	public void setUiDefaultSettings() {
 		
 		// number observations / APASS
 		nObsValue = 1;
@@ -111,19 +117,19 @@ public class CatalogSettings {
 	}
 
 	public boolean isSortDistanceValue() {
-		return sortDistanceValue;
+		return CatalogTabPropertiesFile.isSortByDistance();
 	}
 
 
 	public boolean isSortDeltaMagValue() {
-		return sortDeltaMagValue;
+		return (! isSortDistanceValue());
 	}
 
 
-	public void setSortDistanceValue(boolean distanceValue) {
-		this.sortDistanceValue = distanceValue;
-		this.sortDeltaMagValue = ! distanceValue;		
-	}
+//	public void setSortDistanceValue(boolean distanceValue) {
+//		this.sortDistanceValue = distanceValue;
+//		this.sortDeltaMagValue = ! distanceValue;		
+//	}
 
 	public int getnObsValue() {
 		return nObsValue;
@@ -171,14 +177,13 @@ public class CatalogSettings {
 		this.saveDssValue = saveDssValue;
 	}
 
-
 	@Override
 	public String toString() {
-		return "CatalogSettings [\napplyLimitsValue=" + applyLimitsValue + ", \nsortDistanceValue=" + sortDistanceValue
-				+ ", \nsortDeltaMagValue=" + sortDeltaMagValue + ", \nsaveDssValue=" + saveDssValue + ", \nnominalMagValue="
-				+ nominalValue + ", \nupperLimitValue=" + upperLimitValue + ", \nlowerLimitValue=" + lowerLimitValue
-				+ ", \nnObsValue=" + nObsValue + ", \ntotalRecordsValue=" + totalRecordsValue + ", \nfilteredRecordsValue="
-				+ filteredRecordsValue + ", \nselectedRecordsValue=" + selectedRecordsValue + "]";
+		return "CatalogSettings [applyLimitsValue=" + applyLimitsValue + ", saveDssValue=" + saveDssValue
+				+ ", nominalValue=" + nominalValue + ", upperLimitValue=" + upperLimitValue + ", lowerLimitValue="
+				+ lowerLimitValue + ", nObsValue=" + nObsValue + ", totalRecordsValue=" + totalRecordsValue
+				+ ", filteredRecordsValue=" + filteredRecordsValue + ", selectedRecordsValue=" + selectedRecordsValue
+				+ "]";
 	}
 
 	public static void main(String[] args) {
@@ -186,7 +191,6 @@ public class CatalogSettings {
 		System.out.println(s0.toString());
 		
 		var x = 0.09;
-		System.out.println((1.0 * Math.round(x * 10) / 10.0));
 		
 	}
 

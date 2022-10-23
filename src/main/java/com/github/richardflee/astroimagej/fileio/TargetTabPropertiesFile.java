@@ -32,7 +32,7 @@ public class TargetTabPropertiesFile {
 	private static final String FILTER = CLASS_PROPS_ID.concat("filter");
 	
 	public static void writeProperties(CatalogQuery query) { 
-		Properties prop = AijPropsReadWriter.getPlannerProps();
+		Properties prop = AijPropsReadWriter.getPlannerProperties();
 		try (OutputStream output = new FileOutputStream(AijPropsReadWriter.getPropertiesFilePath())) {
 			var strVal = query.getObjectId();
 			prop.setProperty(OBJECT_ID, strVal);
@@ -69,7 +69,7 @@ public class TargetTabPropertiesFile {
 	}
 	
 	
-	public static CatalogQuery readProerties() {
+	public static CatalogQuery readProperties() {
 		
 		var query = new CatalogQuery();		
 		try (InputStream input = new FileInputStream(AijPropsReadWriter.getPropertiesFilePath())) {			
@@ -113,7 +113,7 @@ public class TargetTabPropertiesFile {
 	
 	public static void main(String[] args) {	
 		
-		Properties prop = AijPropsReadWriter.getPlannerProps();
+		Properties prop = AijPropsReadWriter.getPlannerProperties();
 				
 		prop.setProperty(OBJECT_ID, "NOT_WASP");
 		System.out.println(prop.getProperty(OBJECT_ID));

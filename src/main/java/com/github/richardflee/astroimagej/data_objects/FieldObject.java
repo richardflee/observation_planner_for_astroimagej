@@ -53,17 +53,26 @@ public class FieldObject extends BaseFieldObject {
 		this.filtered = true;
 		this.selected = true;
 	}
-
 	
-	public static FieldObject compileTargetFromQuery(CatalogQuery query, CatalogSettings settings) {
+	public static FieldObject compileTargetFromQuery(CatalogQuery query, double nominalMag) {
 		var objectId = query.getObjectId();
 		var raHr = query.getRaHr();
 		var decDeg = query.getDecDeg();
-		var nominalMag = settings.getNominalMagValue();
 		var fo = new FieldObject(objectId, raHr, decDeg, nominalMag, 0.0);
 		fo.setApertureId(FieldObject.TGT_AP_LABEL);
 		return fo;
 	}
+
+	
+//	public static FieldObject compileTargetFromQuery(CatalogQuery query, CatalogSettings settings) {
+//		var objectId = query.getObjectId();
+//		var raHr = query.getRaHr();
+//		var decDeg = query.getDecDeg();
+//		var nominalMag = settings.getNominalMagValue();
+//		var fo = new FieldObject(objectId, raHr, decDeg, nominalMag, 0.0);
+//		fo.setApertureId(FieldObject.TGT_AP_LABEL);
+//		return fo;
+//	}
 	
 //	public FieldObject copy(FieldObject fieldObject) {
 //		var objectId = fieldObject.getObjectId();

@@ -18,7 +18,7 @@ public class AijPropsReadWriter {
 	private static final String PLANNER_PROPERTIES_FILE = "AIJ_Planner.properties";
 	
 	
-	public static Properties getPlannerProps() {
+	public static Properties getPlannerProperties() {
 		Properties prop = new Properties();
 		try (InputStream input = new FileInputStream(AijPropsReadWriter.getPropertiesFilePath())) {			
 			prop.load(input);			
@@ -30,7 +30,7 @@ public class AijPropsReadWriter {
 		return prop;
 	}
 
-	public static void writeDefaultPropsFile() {
+	public static void writeDefaultPropertiesFile() {
 		
 		Path path = Paths.get(getPropertiesFilePath());
 		try {
@@ -39,11 +39,10 @@ public class AijPropsReadWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ObserverTabPropertiesFile.writeProperties(new Observer());
-		
-		TargetTabPropertiesFile.writeProperties(new CatalogQuery());
-		
-		CatalogTabPropertiesFile.writeProperties(new CatalogSettings());
+		ObserverTabPropertiesFile.writeProperties(new Observer());		
+		TargetTabPropertiesFile.writeProperties(new CatalogQuery());		
+		CatalogTabPropertiesFile.writeProperties(true);
+		CatalogTabPropertiesFile.writeProperties(CatalogSettings.DEFAULT_TGT_MAG);
 	}
 
 	public static boolean fileExists() {
@@ -67,7 +66,7 @@ public class AijPropsReadWriter {
 
 	public static void main(String[] args) {
 
-		AijPropsReadWriter.writeDefaultPropsFile();
+		AijPropsReadWriter.writeDefaultPropertiesFile();
 
 		System.out.println("\nhere");
 

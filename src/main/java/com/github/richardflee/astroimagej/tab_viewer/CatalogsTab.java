@@ -56,13 +56,17 @@ public class CatalogsTab implements CatalogTabListener{
 	private JButton update = null;
 	private JButton clear = null;
 	
-	private boolean tablePopulated;
+	private ViewerUi viewer = null;
+	
+	private boolean isTablePopulated;
 	
 	private final int TABLE_WIDTH = 1000;
 	private final Integer[] COL_WIDTHS = {5, 22, 14, 14, 9, 9, 9, 9, 5, 4};
 	
+	
 	public CatalogsTab(ViewerUi viewer) {
 		
+		this.viewer = viewer;
 		this.tableModel = new TableModel();		
 		this.handler = new CatalogHandler();
 		handler.setTableModelListener(tableModel);
@@ -101,17 +105,19 @@ public class CatalogsTab implements CatalogTabListener{
 		this.sortDistance = viewer.getDistanceRadioButton();
 		this.sortDeltaMag = viewer.getDeltaMagRadioButton();
 		
-		var sortSettings = CatalogTabPropertiesFile.readProerties();
-		this.sortDistance.setSelected(sortSettings.isSortDistanceValue());
-		this.sortDeltaMag.setSelected(sortSettings.isSortDeltaMagValue());
+		var isSortByDistance = CatalogTabPropertiesFile.isSortByDistance();
+		this.sortDistance.setSelected(isSortByDistance);
+		this.sortDeltaMag.setSelected(! isSortByDistance);
 		
-		this.tablePopulated = false;
-		this.enableButtons(this.tablePopulated);	
+		this.isTablePopulated = false;
+		this.enableControls(this.isTablePopulated);	
+		
+		var nominalMag = CatalogTabPropertiesFile.readNominalMag();
+		setSpinnerNominalMag(nominalMag);
+		//this.nominal.setValue((double) nominalMag);
 		
 		// updateQueryPanel(viewer)
-		setupActionListeners();		
-		
-		
+		setupActionListeners();				
 	}
 	
 	@Override
@@ -120,19 +126,16 @@ public class CatalogsTab implements CatalogTabListener{
 		this.totalLabel.setText(String.valueOf(totalCounts));
 		this.filteredLabel.setText(String.valueOf(foCollection.getFilteredCount()));
 		this.selectedLabel.setText(String.valueOf(foCollection.getSelectedCount()));
-		this.tablePopulated = (totalCounts != 0);
+		this.isTablePopulated = (totalCounts != 0);
 	}
 	
 	@Override
-	public void importRaDecSettings(double nominalMag, boolean isSortedByDeltaMag) {
-		var settings = new CatalogSettings();
-		settings.setNominalMagValue(nominalMag);
-		settings.setSortDistanceValue(! isSortedByDeltaMag);
-		updateCatalogTabUi(settings);		
+	public void importRaDecSettings(double nominalMag) {
+		updateCatalogTabUi(new CatalogSettings(nominalMag));		
 	}
 	
 	public void updateQueryPanel(ViewerUi viewer) { 
-		var query = TargetTabPropertiesFile.readProerties();
+		var query = TargetTabPropertiesFile.readProperties();
 		var objectId = query.getObjectId();
 		var fov = query.getFovAmin();
 		var strVal = String.format("ID: %s | FOV: %.1f", objectId, fov);
@@ -147,18 +150,15 @@ public class CatalogsTab implements CatalogTabListener{
 		String filter = query.getMagBand();
 		var magLimit = query.getMagLimit();
 		strVal = String.format("Catalog: %s | Filter: %s | Mag: <%.1f", catalog, filter, magLimit);
-		viewer.getQueryCatFilterLabel().setText(strVal);
-		
+		viewer.getQueryCatFilterLabel().setText(strVal);	
 	}
-	
-	
 	
 	/*
 	 * Copies catalog ui user filter and sort selections to CatalogSettings object values 
 	 * 
 	 * @return compiled CatalogSettings object
 	 */
-	public CatalogSettings compileSettingsData() {
+	public CatalogSettings getUiSettings() {
 		CatalogSettings settings = new CatalogSettings();
 		
 		// target mag
@@ -169,9 +169,6 @@ public class CatalogsTab implements CatalogTabListener{
 		settings.setUpperLimitValue(Double.valueOf(upperLimit.getValue().toString()));
 		settings.setLowerLimitValue(Double.valueOf(lowerLimit.getValue().toString()));
 
-		// sort option
-		settings.setSortDistanceValue(sortDistance.isSelected());
-
 		// number of observations
 		settings.setnObsValue((int) nObs.getValue());
 		
@@ -179,68 +176,51 @@ public class CatalogsTab implements CatalogTabListener{
 		return settings;
 	}
 	
-	public CatalogSettings	compileApplyDefaultSettings() {
-		var settings = compileSettingsData();
-		settings.setDefaultSettings();
-		updateCatalogTabUi(settings);
-		// enableLimits(true);
-		return settings;
-	}
 	
-	public void updateCatalogTabUi(CatalogSettings settings) {
-		
+	public void updateCatalogTabUi(CatalogSettings settings) {		
 		nominal.setValue(settings.getNominalMagValue());
 		
 		applyLimits.setSelected(settings.isApplyLimitsValue());
 		upperLimit.setValue(settings.getUpperLimitValue());
 		lowerLimit.setValue(settings.getLowerLimitValue());
 		
-		sortDistance.setSelected(settings.isSortDistanceValue());
-		sortDeltaMag.setSelected(settings.isSortDeltaMagValue());
+		var isSortedByDistance = CatalogTabPropertiesFile.isSortByDistance();
+		sortDistance.setSelected(isSortedByDistance);
+		sortDeltaMag.setSelected(! isSortedByDistance);
 		dssFits.setSelected(settings.isSaveDssValue());
 		
 		nObs.setValue(settings.getnObsValue());		
 	}
 	
-//	private double getTargetMag() {
-//		return (Double) nominal.getValue();
-//	}
-	
-	
-//	/**
-//	 * Configures local catalog listener field to broadcast query & settings update messages
-//	 * 
-//	 * @param catalogDataListener reference to CatalogDataListener interface
-//	 */
-//	public void setCatalogDataListener(CatalogDataListener catalogDataListener) {
-//		this.catalogDataListener = catalogDataListener;
-//	}
 	
 	public void setupActionListeners() {
 		
-		// reset settings to default except tgt mag
 		runQuery.addActionListener(e -> {			
-			var settings = compileApplyDefaultSettings();
-			handler.doCatalogQuery(settings);
-			this.enableButtons(this.tablePopulated);			
+			double nominalMag = getSpinnerNominalMag();		// spinner
+			CatalogTabPropertiesFile.writeProperties(nominalMag);			
+			updateCatalogTabUi(new CatalogSettings(nominalMag));
+			
+			handler.doRunCatalogQuery(nominalMag);
+			this.enableControls(this.isTablePopulated);				
 		});
 		
 		
 		// import radec file data
 		importRaDec.addActionListener(e ->{
-			handler.doImportRaDecfile(new CatalogSettings());
-			this.enableButtons(this.tablePopulated);
+			handler.doImportRaDecfile();			
+			updateQueryPanel(this.viewer);			
+			this.enableControls(this.isTablePopulated);
 		});
 		
 		// saves table to radec file
 		saveRaDec.addActionListener(e -> {
-			var settings = compileSettingsData();
-			handler.doSaveRaDecFile(settings);
+			double nominalMag = getSpinnerNominalMag();
+			handler.doSaveRaDecFile(nominalMag);
 		});
 		
 		// updates table with current filter settings
 		update.addActionListener(e -> {
-			var settings = compileSettingsData();
+			var settings = getUiSettings();
 			handler.doUpdateTable(settings);
 			
 		});
@@ -248,9 +228,10 @@ public class CatalogsTab implements CatalogTabListener{
 		// clears table, resets catalog ui reset default values
 		// nominal mag & sort options are unchanged
 		clear.addActionListener(e ->{
-			var settings = compileApplyDefaultSettings();
-			handler.doClearTable(settings);
-			this.enableButtons(false);
+			var nominalMag = getSpinnerNominalMag();
+			updateCatalogTabUi(new CatalogSettings(nominalMag));
+			handler.doClearTable();
+			this.enableControls(false);
 		});
 		
 		this.upperLimit.addChangeListener(e -> updateLimits());
@@ -262,21 +243,25 @@ public class CatalogsTab implements CatalogTabListener{
 			enableLimits(isSelected);
 		});
 		
-		this.sortDistance.addActionListener(e -> updateSort());		
-		this.sortDeltaMag.addActionListener(e -> updateSort());		
+		this.sortDistance.addActionListener(e -> updateTableSortOrder(true));		
+		this.sortDeltaMag.addActionListener(e -> updateTableSortOrder(false));		
 	}
 		
-	private void updateSort() {
-		var settings = compileSettingsData();
-		CatalogTabPropertiesFile.writeProperties(compileSettingsData());
+	private void updateTableSortOrder(boolean isSortedByDistance) {
+		CatalogTabPropertiesFile.writeProperties(isSortedByDistance);
+		var settings = getUiSettings();
 		handler.doUpdateTable(settings);		
 	}
 	
 	
-	private void enableButtons(boolean isEnabled) {
+	private void enableControls(boolean isEnabled) {
+		// buttons
 		update.setEnabled(isEnabled);
 		clear.setEnabled(isEnabled);
 		saveRaDec.setEnabled(isEnabled);
+		// sort options
+		sortDistance.setEnabled(isEnabled);
+		sortDeltaMag.setEnabled(isEnabled);
 	}
 	
 	private void enableLimits(boolean isSelected) {
@@ -286,7 +271,7 @@ public class CatalogsTab implements CatalogTabListener{
 	}
 	
 	private void updateLimits() {
-		var settings = compileSettingsData();
+		var settings = getUiSettings();
 		updateUpperLimit(settings);
 		updateLowerLimit(settings);
 	}
@@ -307,22 +292,12 @@ public class CatalogsTab implements CatalogTabListener{
 		this.lowerLimitLabel.setText(str);		
 	}
 	
-	
-	
-	public void doSaveRaDecFile() {
-		System.out.println("import");
+	private double getSpinnerNominalMag() {
+		return Double.valueOf(nominal.getValue().toString());
 	}
 	
-	public void doImportRaDecfile() {
-		System.out.println("save");
-	}
-//
-//	public void doUpdateTable() {
-//		System.out.println("update");
-//	}
-	
-	public void doClearTable() {
-		
+	private void setSpinnerNominalMag(double nominalMag) {
+		this.nominal.setValue((double) nominalMag);
 	}
 	
 	
@@ -359,7 +334,5 @@ public class CatalogsTab implements CatalogTabListener{
 			return cellComponent;
 		}
 	}
-
-
 
 }
