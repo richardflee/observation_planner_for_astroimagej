@@ -83,7 +83,7 @@ public class VspChart {
 		}
 		
 		// sets field attribute values
-		this.fovAmin = result.getQuery().getFovAmin();
+		this.fovAmin = result.copyQuery().getFovAmin();
 		var tableRows = result.getTableRows(settings);
 		this.target = tableRows.get(0);
 
@@ -247,7 +247,7 @@ public class VspChart {
 	}
 
 	public void setFovAmin(QueryResult result) {
-		this.fovAmin = result.getQuery().getFovAmin();
+		this.fovAmin = result.copyQuery().getFovAmin();
 	}
 
 	public void setG2d(Graphics2D g2d) {

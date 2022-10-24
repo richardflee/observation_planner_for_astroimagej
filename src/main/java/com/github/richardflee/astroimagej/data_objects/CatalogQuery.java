@@ -29,6 +29,8 @@ public class CatalogQuery extends BaseFieldObject {
 		this.catalogType = CatalogsEnum.VSP;
 		this.magBand = "V";
 	}
+	
+	
 
 	/**
 	 * Copy constructor
@@ -43,6 +45,7 @@ public class CatalogQuery extends BaseFieldObject {
 		this.magBand = query.getMagBand();
 	}
 	
+
 	/**
 	 * Compiles query items and header and query data into string array
 	 * 

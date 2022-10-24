@@ -206,7 +206,7 @@ public class RaDecFileReader extends RaDecFileBase {
 		System.out.println(fr.getRadecFilepath());
 		
 		var result = fr.getRaDecResult();
-		System.out.println(result.getQuery().toString());
+		System.out.println(result.copyQuery().toString());
 		System.out.println(result.getChartUri());
 		System.out.println();
 		System.out.println(result.getFieldObjectsCollection().toString());

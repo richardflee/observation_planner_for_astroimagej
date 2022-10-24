@@ -201,6 +201,7 @@ public class CatalogsTab implements CatalogTabListener{
 			updateCatalogTabUi(new CatalogSettings(nominalMag));
 			
 			handler.doRunCatalogQuery(nominalMag);
+			handler.doDssFitsQuery(dssFits.isSelected());
 			this.enableControls(this.isTablePopulated);				
 		});
 		

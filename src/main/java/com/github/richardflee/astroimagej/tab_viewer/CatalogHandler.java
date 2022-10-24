@@ -7,7 +7,6 @@ import com.github.richardflee.astroimagej.catalogs.VspCatalog;
 import com.github.richardflee.astroimagej.charts.VspChart;
 import com.github.richardflee.astroimagej.collections.QueryResult;
 import com.github.richardflee.astroimagej.data_objects.CatalogSettings;
-import com.github.richardflee.astroimagej.data_objects.FieldObject;
 import com.github.richardflee.astroimagej.fileio.CatalogTabPropertiesFile;
 import com.github.richardflee.astroimagej.fileio.DssFitsWriter;
 import com.github.richardflee.astroimagej.fileio.RaDecFileReader;
@@ -56,20 +55,6 @@ public class CatalogHandler {
 	 * 5. update catalog_table with rows object list
 	 */
 	
-	public void doRunCatalogQuery(CatalogSettings settings) {
-		 var query = TargetTabPropertiesFile.readProperties();
-		 
-		 var catalog = CatalogFactory.createCatalog(query.getCatalogType());
-		 var fieldObjects = catalog.runQuery(query);		 
-		 this.result = new QueryResult(query, fieldObjects);
-		 
-		 if (settings.isSaveDssValue()) {
-			 var message = DssFitsWriter.downloadDssFits(query);
-			 JOptionPane.showMessageDialog(null, message);
-		 }
-		 updateCatalogTableRecords(settings);
-	}
-	
 	public void doRunCatalogQuery(double nominalMag) {
 		// assemble and run query
 		var query = TargetTabPropertiesFile.readProperties();
@@ -77,10 +62,15 @@ public class CatalogHandler {
 		var fieldObjects = catalog.runQuery(query);
 		
 		// compile query result object
-		this.result = new QueryResult(query, fieldObjects);
-		//var settings = new CatalogSettings(nominalMag);
-		
+		this.result = new QueryResult(query, fieldObjects);		
 		updateCatalogTableRecords(new CatalogSettings(nominalMag));
+	}
+	
+	public void doDssFitsQuery(boolean isDownloadDssFits) {
+		if (isDownloadDssFits) {
+			var message = DssFitsWriter.downloadDssFits(this.result.copyQuery());
+			JOptionPane.showMessageDialog(null, message);
+		}		
 	}
 	
 	
@@ -95,7 +85,7 @@ public class CatalogHandler {
 		var nominalMag = fr.getRaDecNominalMag();
 		CatalogTabPropertiesFile.writeProperties(nominalMag);
 		
-		var radecQuery = result.getQuery();
+		var radecQuery = result.copyQuery();
 		TargetTabPropertiesFile.writeProperties(radecQuery);
 		
 		var isSortedByDistance = result.isSortedByDistance();
@@ -122,11 +112,11 @@ public class CatalogHandler {
 	}
 	
 	private void updateCatalogTableRecords(CatalogSettings settings) { 
-		var tableRows = result.getTableRows(settings);
+		var tableRows = this.result.getTableRows(settings);
 		this.tableListener.updateTable(tableRows);		
 		this.tabListener.updateCounts(result.getFieldObjectsCollection());
 		
-		var chartUri = new VspCatalog().downloadChartUri(this.result.getQuery());
+		var chartUri = new VspCatalog().downloadChartUri(this.result.copyQuery());
 		this.result.setChartUri(chartUri);
 		this.vspChart.showChart(result, settings);
 	}

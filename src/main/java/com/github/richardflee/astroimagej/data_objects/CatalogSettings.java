@@ -187,10 +187,6 @@ public class CatalogSettings {
 	}
 
 	public static void main(String[] args) {
-		var s0 = new CatalogSettings();
-		System.out.println(s0.toString());
-		
-		var x = 0.09;
 		
 	}
 

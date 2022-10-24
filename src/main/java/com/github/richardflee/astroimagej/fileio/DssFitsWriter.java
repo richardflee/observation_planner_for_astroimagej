@@ -35,13 +35,13 @@ public class DssFitsWriter {
 	 *     sky coordinate and field-of-view data
 	 * @return message whether successful in writing DSS fits file
 	 */
-	public static String downloadDssFits(CatalogQuery query) {
+	public static String downloadDssFits(CatalogQuery dssQuery) {
 		// compile DSS url for query parameters
-		query.setCatalogType(CatalogsEnum.DSS);
-		String skyUrl = CatalogUrls.urlBuilder(query);
+		dssQuery.setCatalogType(CatalogsEnum.DSS);
+		String skyUrl = CatalogUrls.urlBuilder(dssQuery);
 
 		// connect a File variable with the compiled fits filename & get file path
-		File file = DssFitsWriter.getFile(query);
+		File file = DssFitsWriter.getFile(dssQuery);
 
 		// if fits file does not already exist
 		// attempts to download & save a new dss fits file

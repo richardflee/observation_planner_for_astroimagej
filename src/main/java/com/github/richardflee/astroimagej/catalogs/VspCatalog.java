@@ -103,12 +103,12 @@ public class VspCatalog implements AstroCatalog {
 	 * @param query curent CatalogQuery parameters
 	 * @return full uri text string extracted from VSP response
 	 */
-	public String downloadChartUri(CatalogQuery query) {
+	public String downloadChartUri(CatalogQuery chartQuery) {
 		String chartUri = null;
 		JsonNode root = null;
-		query.setCatalogType(CatalogsEnum.VSP);
+		chartQuery.setCatalogType(CatalogsEnum.VSP);
 		try {
-			root = objectMapper.readTree(new URL(CatalogUrls.urlBuilder(query)));
+			root = objectMapper.readTree(new URL(CatalogUrls.urlBuilder(chartQuery)));
 			// full uri may include extraneous text
 			chartUri = root.findPath("image_uri").asText();
 		} catch (IOException e) {

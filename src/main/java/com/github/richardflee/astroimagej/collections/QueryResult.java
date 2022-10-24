@@ -125,8 +125,8 @@ public class QueryResult {
 		this.foCollection = foCollection;
 	}
 
-	public CatalogQuery getQuery() {
-		return query;
+	public CatalogQuery copyQuery() {
+		return new CatalogQuery(query);
 	}
 	
 	

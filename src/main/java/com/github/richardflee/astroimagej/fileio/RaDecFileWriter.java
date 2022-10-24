@@ -58,7 +58,7 @@ public class RaDecFileWriter extends RaDecFileBase {
 		List<String> lines = compileRaDecList(result, nominalMag);
 
 		// write new radec file and update message
-		File file = getFile(result.getQuery());
+		File file = getFile(result.copyQuery());
 		String filePath = file.toString();
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
 			for (String line : lines) {
@@ -125,7 +125,7 @@ public class RaDecFileWriter extends RaDecFileBase {
 	 * @return data and comment line string array
 	 */
 	private List<String> compileRaDecList(QueryResult result, double nominalMag) {
-		var target = FieldObject.compileTargetFromQuery(result.getQuery(), nominalMag);
+		var target = FieldObject.compileTargetFromQuery(result.copyQuery(), nominalMag);
 		
 		List<FieldObject> filteredList = result.getFieldObjectsCollection().getFilteredFieldObjects();
 		filteredList.add(0, target);
@@ -155,8 +155,8 @@ public class RaDecFileWriter extends RaDecFileBase {
 
 		// query line
 		lines.add(RaDecFilesEnum.QUERY_DATA_LINE.getStrVal());
-		lines.add(result.getQuery().toFormattedString()[0]); // query item names
-		lines.add(result.getQuery().toFormattedString()[1]); // query data
+		lines.add(result.copyQuery().toFormattedString()[0]); // query item names
+		lines.add(result.copyQuery().toFormattedString()[1]); // query data
 
 		// chart line
 		lines.add(RaDecFilesEnum.CHART_URI_LINE.getStrVal());
