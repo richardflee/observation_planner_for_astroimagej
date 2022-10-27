@@ -13,14 +13,13 @@ import com.github.richardflee.astroimagej.fileio.AijPropsReadWriter;
 import com.github.richardflee.astroimagej.fileio.ObserverTabPropertiesFile;
 import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
-
-
 public class Main {
 	
-	private static final String BUILD_NO = ".14";
-
+	private static final String PLANNER_VERSION = "1.00a";
+	private static final String BUILD_NO = "";
+	
 	public static final String PLANNER_TITLE = "AstroImageJ Observation Planner";
-	public static final String PLANNER_VERSION = "1.00a" + BUILD_NO;
+	public static final String PLANNER_TITLE_VERSION = PLANNER_VERSION + BUILD_NO;
 
 		public static void runApp() {
 			
@@ -54,7 +53,7 @@ public class Main {
 			observer_tab.setObserverData(observer);
 			
 			// window title text
-			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_VERSION); 
+			var version = String.format("%s - %s", PLANNER_TITLE, PLANNER_TITLE_VERSION); 
 			viewer.setTitle(version);
 			viewer.setVisible(true);
 		}
