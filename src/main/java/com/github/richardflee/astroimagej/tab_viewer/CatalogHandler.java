@@ -96,7 +96,7 @@ public class CatalogHandler {
 	}
 	
 	public void doSaveRaDecFile(double nominalMag) {
-		new RaDecFileWriter().writeRaDecFile(this.result, nominalMag);		
+		new RaDecFileWriter().writeRaDecFile(this.result, nominalMag);
 	}
 	
 	public void doUpdateTable(CatalogSettings settings) {

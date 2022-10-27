@@ -17,7 +17,7 @@ import com.github.richardflee.astroimagej.tab_viewer.ViewerUi;
 
 public class Main {
 	
-	private static final String BUILD_NO = ".11";
+	private static final String BUILD_NO = ".14";
 
 	public static final String PLANNER_TITLE = "AstroImageJ Observation Planner";
 	public static final String PLANNER_VERSION = "1.00a" + BUILD_NO;
